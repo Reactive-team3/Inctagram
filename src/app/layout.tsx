@@ -2,6 +2,7 @@ import './globals.css'
 import { ReactNode } from 'react'
 import { Header } from '@/widgets/header'
 import styles from './layout.module.css'
+import '@/shared/config/styles/index.scss'
 // eslint-disable-next-line react-refresh/only-export-components
 export { metadata } from './metadata'
 
