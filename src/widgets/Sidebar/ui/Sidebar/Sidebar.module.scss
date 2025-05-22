@@ -1,0 +1,28 @@
+.sidebar {
+  width: 220px;
+  border-right: 1px solid var(--border-color);
+  height: calc(100vh - var(--header-height));
+  position: relative;
+  transition: width 0.3s;
+  display: flex;
+  flex-direction: column;
+  padding-left: 60px;
+  padding-top: 75px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 60px;
+}
+
+.exit {
+  margin-top: auto;
+}

@@ -1,0 +1,22 @@
+.item {
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    .link {
+      color: #4c8dff;
+    }
+    .icon {
+      fill: #4c8dff;
+    }
+  }
+}
+
+.link {
+  margin-left: 12px;
+  opacity: 1;
+}
+
+.icon {
+  fill: white;
+}

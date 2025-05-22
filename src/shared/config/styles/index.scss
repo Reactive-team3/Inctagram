@@ -1,3 +1,15 @@
-@import './normalize.scss';
-@import './fonts.scss';
-@import './variables.scss';
+@use './normalize.scss';
+@use './fonts.scss';
+@use './variables.scss';
+
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 20px;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+}
