@@ -13,7 +13,6 @@ COPY --from=dependencies /app/node_modules ./node_modules
 COPY package*.json ./
 COPY tsconfig.json ./
 COPY next.config.ts ./
-COPY next-env.d.ts ./
 
 COPY public ./public
 COPY src ./src
