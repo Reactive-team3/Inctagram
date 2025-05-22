@@ -1,17 +1,4 @@
 :root {
   //global variables here
-
-}
-
-// Icon base styles
-  .icon {
-    color: var(--icon-color);
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 1;
-
-    svg {
-      display: block;
-    }
-  }
-
+  --icon-color: #ffffff; // Default icon color
+ }
