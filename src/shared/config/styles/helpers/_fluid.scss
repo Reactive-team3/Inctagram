@@ -1,6 +1,5 @@
 @use 'sass:math';
 
-
 @function fluid($max: 100, $min: 10) {
   $maxViewportWidth: 1600;
   $minViewportWidth: 390;
@@ -14,8 +13,8 @@
   $yAxisIntersection: -$minWidth * $slope + $minSize;
 
   @return clamp(
-          #{$minSize * 1rem},
-          #{$yAxisIntersection * 1rem} + #{$slope * 100vw},
-          #{$maxSize * 1rem}
+    #{$minSize * 1rem},
+    #{$yAxisIntersection * 1rem} + #{$slope * 100vw},
+    #{$maxSize * 1rem}
   );
 }
