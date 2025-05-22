@@ -1,5 +1,3 @@
-# force rebuild - 2025-05-22
-RUN ls -la /app && du -sh /app
 FROM node:20.11-alpine as dependencies
 WORKDIR /app
 COPY package*.json ./
