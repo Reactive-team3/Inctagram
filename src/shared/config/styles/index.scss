@@ -1,6 +1,6 @@
-@import './normalize.scss';
-@import './fonts.scss';
-@import './variables.scss';
+@use './normalize.scss';
+@use './fonts.scss';
+@use './variables.scss';
 
 *::-webkit-scrollbar {
   width: 12px;
