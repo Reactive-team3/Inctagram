@@ -1,5 +1,6 @@
 import path from 'path'
 import type { NextConfig } from 'next'
+import type { RuleSetRule } from 'webpack'
 
 const nextConfig: NextConfig = {
   webpack(config) {
@@ -10,7 +11,9 @@ const nextConfig: NextConfig = {
     }
 
     // Grab the existing rule that handles SVG imports
-    const fileLoaderRule = config.module.rules.find(rule => rule.test?.test?.('.svg'))
+    const fileLoaderRule = config.module.rules.find(
+      (rule: RuleSetRule) => rule?.test instanceof RegExp && rule.test.test('.svg')
+    )
 
     config.module.rules.push(
       // Reapply the existing rule, but only for svg imports ending in ?url
