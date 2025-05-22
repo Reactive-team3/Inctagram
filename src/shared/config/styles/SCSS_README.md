@@ -1,4 +1,4 @@
-#  SCSS Архитектура и Автоимпорт
+# SCSS Архитектура и Автоимпорт
 
 ## Структура
 
@@ -30,7 +30,7 @@ loader.options.additionalData = `@use "@/shared/config/styles/helpers" as *;`
 Это значит, что **во все SCSS и module.scss файлы автоматически добавляется**:
 
 ```scss
-@use "@/shared/config/styles/helpers" as *;
+@use '@/shared/config/styles/helpers' as *;
 ```
 
 ---
@@ -75,7 +75,7 @@ loader.options.additionalData = `@use "@/shared/config/styles/helpers" as *;`
 3. Подключи в `_index.scss`:
 
 ```scss
-@forward "grid";
+@forward 'grid';
 ```
 
 Теперь `@include grid-center;` доступен в любом компоненте.
@@ -84,12 +84,12 @@ loader.options.additionalData = `@use "@/shared/config/styles/helpers" as *;`
 
 ## Примеры
 
-| Что                 | Пример                         |
-|---------------------|--------------------------------|
-| `rem()`             | `margin-top: rem(24);`         |
-| `fluid()`           | `font-size: fluid(28, 16);`    |
-| Media mixin         | `@include tablet { ... }`      |
-| Цвет из переменной  | `color: $color-primary;`       |
+| Что                | Пример                      |
+| ------------------ | --------------------------- |
+| `rem()`            | `margin-top: rem(24);`      |
+| `fluid()`          | `font-size: fluid(28, 16);` |
+| Media mixin        | `@include tablet { ... }`   |
+| Цвет из переменной | `color: $color-primary;`    |
 
 ---
 
