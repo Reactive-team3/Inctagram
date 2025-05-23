@@ -5,12 +5,13 @@ import styles from './layout.module.css'
 import '@/shared/config/styles/index.scss'
 import Sidebar from '@/widgets/Sidebar/ui/Sidebar/Sidebar'
 import MobileSideBar from '@/widgets/Sidebar/ui/MobileSideBar/MobileSideBar'
+import { inter } from '../../public/fonts/inter'
 // eslint-disable-next-line react-refresh/only-export-components
 export { metadata } from './metadata'
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ru">
+    <html lang="ru" className={inter.variable}>
       <body className={styles.root}>
         <div className={styles.wrapper}>
           <div className={styles.stickyHeader}>
