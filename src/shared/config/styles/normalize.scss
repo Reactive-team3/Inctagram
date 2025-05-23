@@ -1,3 +1,62 @@
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+input,
+button,
+select,
+textarea,
+optgroup,
+option {
+  font-family: var(--font-inter), sans-serif;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+}
+
+::placeholder {
+  font-size: fluid(16, 14);
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
 li {
   list-style: none;
 }
+
+body {
+  margin: 0;
+  letter-spacing: -0.03em;
+  font-family: var(--font-inter), sans-serif;
+
+  padding: 0 var(--scrollbar-width) 0 0;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+}
+
