@@ -26,6 +26,10 @@ option {
   font-style: inherit;
 }
 
+button {
+  all: unset;
+}
+
 ::placeholder {
   font-size: fluid(16, 14);
 }
@@ -59,4 +63,3 @@ img,
 svg {
   display: block;
 }
-
