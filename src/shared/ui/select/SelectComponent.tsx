@@ -5,14 +5,9 @@ import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import { clsx } from 'clsx'
 
 import s from './select.module.scss'
-import {
-  ComponentPropsWithoutRef,
-  ComponentRef,
-  forwardRef,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react'
+import { useSelectTriggerWidth } from '@/shared/hooks/useMaxOptionWidth'
+import { SelectOptions } from '@/shared/types/select'
 
 const SelectItem = forwardRef<
   ComponentRef<typeof Select.Item>,
@@ -27,17 +22,12 @@ const SelectItem = forwardRef<
 
 SelectItem.displayName = 'SelectItem'
 
-export type Options = {
-  label: string
-  value: string
-}
-
 export type variantType = 'simple' | 'pagination'
 
 interface SelectComponentProps {
   defaultValue: string
   onChangeAction: (value: string) => void
-  options: Options[]
+  options: SelectOptions[]
   variant?: variantType
   errorMessage?: string
   className?: string
@@ -53,41 +43,15 @@ export const SelectComponent = ({
   className,
   disabled,
 }: SelectComponentProps) => {
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const [contentWidth, setContentWidth] = useState<number>(0)
-
-  const measureRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (measureRef.current) {
-      const width = measureRef.current.offsetWidth
-      setContentWidth(width)
-    }
-  }, [options])
+  const [triggerRef, triggerWidth] = useSelectTriggerWidth(options)
 
   return (
     <div className={clsx(s.SelectWrapper, className)}>
-      <div
-        ref={measureRef}
-        style={{
-          position: 'absolute',
-          visibility: 'hidden',
-          whiteSpace: 'nowrap',
-          padding: '6px 12px',
-          fontSize: '14px',
-          fontFamily: 'inherit',
-        }}
-      >
-        {options.reduce(
-          (longest, item) => (item.label.length > longest.length ? item.label : longest),
-          ''
-        )}
-      </div>
       <Select.Root defaultValue={defaultValue} onValueChange={onChangeAction} disabled={disabled}>
         <Select.Trigger
           ref={triggerRef}
           className={clsx(s.SelectTrigger, s[variant])}
-          style={{ width: contentWidth }}
+          style={{ minWidth: triggerWidth }}
         >
           <Select.Value placeholder={defaultValue} />
           <Select.Icon className={s.SelectIcon}>
@@ -105,7 +69,10 @@ export const SelectComponent = ({
               <Select.Group className={s.SelectGroup}>
                 {options.map(opt => (
                   <SelectItem key={opt.value} value={opt.value}>
-                    <div className={s.selectTypography}>{opt.label}</div>
+                    <div className={s.selectOption}>
+                      {opt.icon && <span className={s.optionIcon}>{opt.icon}</span>}
+                      <span className={s.selectTypography}>{opt.label}</span>
+                    </div>
                   </SelectItem>
                 ))}
               </Select.Group>

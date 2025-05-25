@@ -1,33 +1,32 @@
 .SelectTrigger {
   font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: fluid(16, 14);
+  line-height: rem(24);
   letter-spacing: 0;
   vertical-align: middle;
-
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 12px;
-  border: 1px solid var(--border-select-inactive-color);
-  background-color: var(--color-dark-500);
-  color: var(--select-inactive-color);
+  padding: rem(6) rem(12);
+  border: rem(1) solid var(--color-dark-100);
+  background-color: var(--color-dark-900);
+  color: var(--color-light-900);
   cursor: pointer;
   transition: all 0.2s ease;
-  width: auto;
+  max-width: rem(200);
 
   &:hover {
-    color: var(--color-white);
+    color: var(--color-light-300);
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px var(--color-accent-700);
+    box-shadow: 0 0 0 rem(2) var(--color-accent-700);
   }
   &:focus-visible {
     outline: none;
-    border: 1px solid var(--color-primary-500);
+    border: rem(1) solid var(--color-accent-500);
   }
 
   &[data-placeholder] {
@@ -35,24 +34,32 @@
   }
 
   &[data-state='open'] {
-    background-color: var(--select-active-background);
-    color: var(--color-white);
-    border-color: var(--color-white);
+    background-color: var(--color-dark-500);
+    color: var(--color-light-300);
+    border-color: var(--color-light-300);
   }
 
   &[data-disabled] {
-    color: var(--border-select-inactive-color);
-    border-color: var(--border-select-inactive-color);
+    color: var(--color-dark-100);
+    border-color: var(--color-dark-100);
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
   }
 }
 
+.selectOption {
+  display: flex;
+  align-items: center;
+  gap: rem(10);
+}
+.optionIcon {
+  //margin-right: rem(10);
+}
 
 .SelectIcon {
   transition: transform 0.2s ease;
-  font-size: 20px !important;
+  font-size: rem(20) !important;
 }
 
 .SelectTrigger[data-state='open'] .SelectIcon {
@@ -64,13 +71,12 @@
 }
 
 .SelectContent {
-  background-color: var(--select-active-background);
-  border: 1px solid var(--border-select-active-color);
+  background-color: var(--color-dark-500);
+  border: rem(1) solid var(--color-light-100);
   border-top: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 rem(4) rem(14) rgba(0, 0, 0, 0.5);
   width: var(--radix-select-trigger-width);
   z-index: 1000;
-
 }
 .SelectWrapper {
   position: relative;
@@ -79,26 +85,26 @@
 .SelectGroup {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: rem(2);
 }
 
 .SelectItem {
-  padding: 6px 12px;
+  padding: rem(6) rem(12);
   color: var(--color-light-100);
   cursor: pointer;
-  font-size: 14px;
+  font-size: rem(14);
   position: relative;
   outline: none;
   transition: all 0.2s ease;
 
   &:hover {
-    color: var(--color-primary-500) !important;
-    background-color: var(--color-select-hover)!important;
+    color: var(--color-accent-500) !important;
+    background-color: var(--color-dark-300) !important;
   }
 
   &[data-highlighted] {
     background-color: var(--color-accent-700);
-    color: white;
+    color: var(--color-light-300);
   }
 
   &[data-disabled] {
@@ -109,7 +115,7 @@
 
 .SelectItemIndicator {
   position: absolute;
-  right: 10px;
+  right: rem(10);
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -119,7 +125,7 @@
 
 .SelectScrollButton {
   background-color: var(--color-dark-300);
-  height: 30px;
+  height: rem(30);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,9 +137,6 @@
 }
 
 .selectTypography {
-  font-size: 14px;
+  font-size: rem(14);
   color: inherit;
 }
-
-
-
