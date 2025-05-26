@@ -1,0 +1,143 @@
+
+.SelectTrigger {
+  font-weight: 400;
+  font-size: fluid(16, 14);
+  line-height: rem(24);
+  letter-spacing: 0;
+  vertical-align: middle;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: rem(6) rem(12);
+  border: rem(1) solid var(--color-dark-100);
+  background-color: var(--color-dark-900);
+  color: var(--color-light-900);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: rem(200);
+
+  &:hover {
+    color: var(--color-light-300);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 rem(2) var(--color-accent-700);
+  }
+  &:focus-visible {
+    outline: none;
+    border: rem(1) solid var(--color-accent-500);
+  }
+
+  &[data-placeholder] {
+    color: var(--color-light-100);
+  }
+
+  &[data-state='open'] {
+    background-color: var(--color-dark-500);
+    color: var(--color-light-300);
+    border-color: var(--color-light-300);
+  }
+
+  &[data-disabled] {
+    color: var(--color-dark-100);
+    border-color: var(--color-dark-100);
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.selectOption {
+  display: flex;
+  align-items: center;
+  gap: rem(10);
+}
+.optionIcon {
+  //margin-right: rem(10);
+}
+
+.SelectIcon {
+  transition: transform 0.2s ease;
+  font-size: rem(20) !important;
+}
+
+.SelectTrigger[data-state='open'] .SelectIcon {
+  transform: rotate(180deg);
+}
+
+.SelectIcon svg {
+  stroke-width: 2;
+}
+
+.SelectContent {
+  background-color: var(--color-dark-500);
+  border: rem(1) solid var(--color-light-100);
+  border-top: none;
+  box-shadow: 0 rem(4) rem(14) rgba(0, 0, 0, 0.5);
+  width: var(--radix-select-trigger-width);
+  z-index: 1000;
+}
+.SelectWrapper {
+  position: relative;
+}
+
+.SelectGroup {
+  display: flex;
+  flex-direction: column;
+  gap: rem(2);
+}
+
+.SelectItem {
+  padding: rem(6) rem(12);
+  color: var(--color-light-100);
+  cursor: pointer;
+  font-size: rem(14);
+  position: relative;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: var(--color-accent-500) !important;
+    background-color: var(--color-dark-300) !important;
+  }
+
+  &[data-highlighted] {
+    background-color: var(--color-accent-700);
+    color: var(--color-light-300);
+  }
+
+  &[data-disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.SelectItemIndicator {
+  position: absolute;
+  right: rem(10);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SelectScrollButton {
+  background-color: var(--color-dark-300);
+  height: rem(30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-accent-900);
+  }
+}
+
+.selectTypography {
+  font-size: rem(14);
+  color: inherit;
+}
