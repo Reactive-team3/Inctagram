@@ -1,0 +1,73 @@
+
+
+$accent-500: #397df6;
+$dark-100: #4c4c4c;
+$dark-300: #333333;
+$gray-dark: #1C2431; //в активном состоянии
+$hover:#101722; // при наведении
+
+
+
+.Root {
+  width: 100%;
+}
+
+.List {
+  display: flex;
+}
+
+.Trigger {
+  flex: 1;
+  height: rem(36);
+  background-color: transparent;
+  color: $accent-500;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: fluid(14, 16);
+  line-height: 1.5;
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid $accent-500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+
+  // Неактивное состояние
+  &[data-state='inactive'] {
+    color: $dark-100;
+    border-color: $dark-100;
+
+    &:hover {
+      background-color: $hover;
+    }
+  }
+
+  // Активное состояние
+  &[data-state='active'] {
+    color: $accent-500;
+    background-color: $gray-dark;
+    border-color:$accent-500;
+
+    &:hover {
+      background-color: $hover;
+    }
+  }
+
+  // Фокус
+  &:focus {
+    outline: none;
+    border: 2px solid $accent-500;
+    border-radius: 2px;
+    background-color: transparent;
+  }
+
+  // Отключенное состояние
+  &:disabled,
+  &[aria-disabled='true'] {
+    color: $dark-300;
+    cursor: not-allowed;
+    border-color: $dark-300;
+    background-color: transparent;
+    opacity: 0.6;
+  }
+}
