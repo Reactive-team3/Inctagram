@@ -1,7 +1,7 @@
 'use client'
 
 import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
-import styles from './Button.module.scss'
+import styles from './button.module.scss'
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
