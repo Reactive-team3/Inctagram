@@ -40,6 +40,10 @@ $light-500: #edf3fa;
 $light-700: #d5dae0;
 $light-900: #8d9094;
 
+//color for tabs
+$tabs-active: #1C2431;
+$tabs-hover: #101722;
+
 :root {
   //global variables here
   --header-height: 60px;
@@ -55,6 +59,10 @@ $light-900: #8d9094;
   --color-light-900: #{$light-900};
   //accent
   --color-accent-500: #{$accent-500};
+
+  //color for tabs
+  --color-tabs-active: #{$tabs-active};
+  --color-tabs-hover: #{$tabs-hover};
 
   --icon-color: #ffffff;
 

@@ -1,0 +1,67 @@
+
+
+
+
+.Root {
+  width: 100%;
+}
+
+.List {
+  display: flex;
+}
+
+.Trigger {
+  flex: 1;
+  height: rem(36);
+  background-color: transparent;
+  color: var(--color-accent-500);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: fluid(14, 16);
+  line-height: 1.5;
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid var(--color-accent-500);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+
+  // Inactive condition
+  &[data-state='inactive'] {
+    color: var(--color-dark-100);
+    border-color: var(--color-dark-100);
+
+    &:hover {
+      background-color: var(--color-tabs-hover);
+    }
+  }
+
+  // Active condition
+  &[data-state='active'] {
+    color: var(--color-accent-500);
+    background-color: var(--color-tabs-active);
+    border-color: var(--color-accent-500);
+
+    &:hover {
+      background-color: var(--color-tabs-hover);
+    }
+  }
+
+  // Focus
+  &:focus {
+    outline: none;
+    border: 2px solid var(--color-accent-500);
+    border-radius: 2px;
+    background-color: transparent;
+  }
+
+  // Disabled condition
+  &:disabled,
+  &[aria-disabled='true'] {
+    color: var(--color-dark-300);
+    cursor: not-allowed;
+    border-color: var(--color-dark-300);
+    background-color: transparent;
+    opacity: 0.6;
+  }
+}
