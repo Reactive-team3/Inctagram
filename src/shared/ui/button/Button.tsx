@@ -2,6 +2,7 @@
 
 import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 import styles from './button.module.scss'
+import { clsx } from 'clsx'
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
@@ -23,9 +24,7 @@ export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) 
     ...rest
   } = props
 
-  const classes = [styles.button, styles[variant], fullWidth && styles.fullWidth, className]
-    .filter(Boolean)
-    .join(' ')
+  const classes = clsx(styles.button, styles[variant], fullWidth && styles.fullWidth, className)
 
   const customStyle = {
     ...style,
