@@ -45,24 +45,50 @@ $light-900: #8d9094;
   --header-height: 60px;
   --border-color: #{$dark-300};
 
-  //dark
+  // Accent Colors
+  --color-accent-100: #{$accent-100};
+  --color-accent-300: #{$accent-300};
+  --color-accent-500: #{$accent-500};
+  --color-accent-700: #{$accent-700};
+  --color-accent-900: #{$accent-900};
+
+  // Success Colors
+  --color-success-100: #{$success-100};
+  --color-success-300: #{$success-300};
+  --color-success-500: #{$success-500};
+  --color-success-700: #{$success-700};
+  --color-success-900: #{$success-900};
+
+  // Danger Colors
+  --color-danger-100: #{$danger-100};
+  --color-danger-300: #{$danger-300};
+  --color-danger-500: #{$danger-500};
+  --color-danger-700: #{$danger-700};
+  --color-danger-900: #{$danger-900};
+
+  // Warning Colors
+  --color-warning-100: #{$warning-100};
+  --color-warning-300: #{$warning-300};
+  --color-warning-500: #{$warning-500};
+  --color-warning-700: #{$warning-700};
+  --color-warning-900: #{$warning-900};
+
+  // Dark Colors
   --color-dark-100: #{$dark-100};
   --color-dark-300: #{$dark-300};
   --color-dark-500: #{$dark-500};
-  //light
+  --color-dark-700: #{$dark-700};
+  --color-dark-900: #{$dark-900};
+
+  // Light Colors
   --color-light-100: #{$light-100};
   --color-light-300: #{$light-300};
+  --color-light-500: #{$light-500};
+  --color-light-700: #{$light-700};
   --color-light-900: #{$light-900};
-  //accent
-  --color-accent-500: #{$accent-500};
-  //danger
-  --color-danger-500: #{$danger-500};
-  --color-danger-900: #{$danger-900};
-  //Success
-  --color-success-500: #{$success-500};
-  --color-success-900: #{$success-900};
 
-  --icon-color: #ffffff;
+  //Icon color
+  --icon-color: #{$light-100};
 
   --font-family-inter: 'Inter', sans-serif;
   --font-weight-regular: 400;
