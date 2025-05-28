@@ -1,0 +1,46 @@
+{
+  "generatedAt": 1748210167095,
+  "userSince": 1748209545493,
+  "hasCustomBabel": false,
+  "hasCustomWebpack": true,
+  "hasStaticDirs": true,
+  "hasStorybookEslint": true,
+  "refCount": 0,
+  "metaFramework": { "name": "Next", "packageName": "next", "version": "15.3.2" },
+  "testPackages": {
+    "@storybook/testing-library": "0.2.1",
+    "@vitest/browser": "3.1.4",
+    "@vitest/coverage-v8": "3.1.4",
+    "playwright": "1.52.0",
+    "vitest": "3.1.4"
+  },
+  "hasRouterPackage": true,
+  "packageManager": { "type": "npm", "agent": "npm" },
+  "preview": { "usesGlobals": false },
+  "framework": { "name": "@storybook/nextjs", "options": {} },
+  "builder": "@storybook/builder-webpack5",
+  "renderer": "@storybook/react",
+  "portableStoriesFileCount": 0,
+  "applicationFileCount": 9,
+  "storybookVersion": "8.6.14",
+  "storybookVersionSpecifier": "8.6.14",
+  "language": "typescript",
+  "storybookPackages": {
+    "@storybook/addon-interactions": { "version": "8.6.14" },
+    "@storybook/blocks": { "version": "8.6.14" },
+    "@storybook/experimental-nextjs-vite": { "version": "8.6.14" },
+    "@storybook/nextjs": { "version": "8.6.14" },
+    "@storybook/preset-scss": { "version": null },
+    "@storybook/react": { "version": "8.6.14" },
+    "@storybook/test": { "version": "8.6.14" },
+    "@storybook/testing-library": { "version": "0.2.1" },
+    "eslint-plugin-storybook": { "version": "0.12.0" },
+    "storybook": { "version": "8.6.14" }
+  },
+  "addons": {
+    "@storybook/addon-essentials": { "version": "8.6.14" },
+    "@storybook/addon-onboarding": { "version": "8.6.14" },
+    "@chromatic-com/storybook": { "version": "3.2.6" },
+    "@storybook/experimental-addon-test": { "version": "8.6.14" }
+  }
+}
