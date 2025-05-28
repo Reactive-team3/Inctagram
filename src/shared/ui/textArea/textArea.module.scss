@@ -28,7 +28,7 @@
   border-radius: rem(4);
   font-size: rem(16);
   color: var(--color-light-900);
-  resize: vertical;
+  resize: none;
 
   &::placeholder {
     color: var(--color-dark-100);
