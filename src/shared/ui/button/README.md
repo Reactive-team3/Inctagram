@@ -1,6 +1,6 @@
 # Button Component
 
-Reusable UI button polymorphic component 
+Reusable UI button polymorphic component
 
 ---
 
@@ -15,6 +15,7 @@ Reusable UI button polymorphic component
 ---
 
 ## 📦 Usage
+
 ```tsx
 // Button variants
 <Button>Primary Button</Button>
@@ -40,3 +41,4 @@ Reusable UI button polymorphic component
 
 // Custom styling
 <Button className="my-custom-class">Styled Button</Button>
+```
