@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   margin: rem(20) 0;
-  background-color: black;
+  background-color: var(--color-dark-900);
   max-width: rem(535);
 }
 
@@ -41,8 +41,8 @@
 
   &.active {
     background-color: white;
-    color: black;
-    border-color: white;
+    color: var(--color-dark-900);
+    border-color: var(--color-light-100);
     border-radius: rem(2);
     font-weight: bold;
     transform: scale(1.05);
@@ -55,8 +55,13 @@
 }
 
 .paginationButton:focus {
-  background-color: black;
+  background-color: var(--color-dark-900);
   color: var(--color-light-100);
-  border: rem(2) solid #2f68cc;
+  border: rem(2) solid var(--color-accent-700);
   border-radius: rem(2);
+}
+
+.arrow {
+  width: rem(16);
+  height: rem(16);
 }
