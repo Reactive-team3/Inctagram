@@ -1,30 +1,26 @@
-
-
-
-
-.Root {
+.root {
   width: 100%;
 }
 
-.List {
+.list {
   display: flex;
+  width: 100%;
 }
 
-.Trigger {
+.trigger {
   flex: 1;
   height: rem(36);
   background-color: transparent;
-  color: var(--color-accent-500);
+  color: var(--color-dark-100);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: fluid(14, 16);
   line-height: 1.5;
   text-align: center;
   border: none;
-  border-bottom: 2px solid var(--color-accent-500);
+  border-bottom: rem(2) solid var(--color-dark-100);
   cursor: pointer;
   transition: all 0.2s ease;
-
 
   // Inactive condition
   &[data-state='inactive'] {
@@ -40,7 +36,7 @@
   &[data-state='active'] {
     color: var(--color-accent-500);
     background-color: var(--color-tabs-active);
-    border-color: var(--color-accent-500);
+    border-bottom: rem(2) solid var(--color-accent-500);
 
     &:hover {
       background-color: var(--color-tabs-hover);
@@ -50,8 +46,8 @@
   // Focus
   &:focus {
     outline: none;
-    border: 2px solid var(--color-accent-500);
-    border-radius: 2px;
+    border: rem(2) solid var(--color-accent-500);
+    border-radius: rem(2);
     background-color: transparent;
   }
 
@@ -64,4 +60,8 @@
     background-color: transparent;
     opacity: 0.6;
   }
+}
+
+.content {
+  padding: rem(16) 0;
 }
