@@ -1,3 +1,10 @@
+@mixin color-accent-hover {
+  &:hover {
+    background-color: var(--color-accent-900);
+  }
+}
+
+
 .root {
   width: 100%;
 }
@@ -28,18 +35,18 @@
     border-color: var(--color-dark-100);
 
     &:hover {
-      background-color: var(--color-tabs-hover);
+      @include color-accent-hover;
     }
   }
 
   // Active condition
   &[data-state='active'] {
     color: var(--color-accent-500);
-    background-color: var(--color-tabs-active);
+    background-color: var(--color-accent-100);
     border-bottom: rem(2) solid var(--color-accent-500);
 
     &:hover {
-      background-color: var(--color-tabs-hover);
+     @include color-accent-hover;
     }
   }
 
