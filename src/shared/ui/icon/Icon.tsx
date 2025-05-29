@@ -6,22 +6,16 @@ interface IconProps {
   className?: string
 }
 
-export default function Icon({
-  name,
-  width = 24,
-  height = 24,
-  color = 'default',
-  className = '',
-}: IconProps) {
+export default function Icon({ name, width = 24, height = 24, color, className = '' }: IconProps) {
   return (
     <svg
       width={width}
       height={height}
       className={`icon ${className}`}
-      style={{ color }}
+      style={color ? { color } : undefined}
       aria-hidden="true"
     >
-      <use href={`/icons/icons-sprite.svg#${name}`} />
+      <use href={`/icons/sprite/icons-sprite.svg#${name}`} />
     </svg>
   )
 }
