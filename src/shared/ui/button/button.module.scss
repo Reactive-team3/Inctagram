@@ -1,0 +1,113 @@
+.button {
+  border: none;
+  border-radius: rem(4);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+
+  /* spacing */
+  padding: rem(6) rem(24);
+  gap: rem(10);
+  margin: rem(8);
+
+  /* font */
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 600;
+  font-size: rem(16);
+  line-height: rem(24);
+  text-align: center;
+}
+
+.fullWidth {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.button:focus-visible {
+  outline: solid rem(2) var(--color-accent-700);
+}
+
+/* Primary Variant */
+.primary {
+  background-color: var(--color-accent-500);
+  color: var(--color-light-500);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-accent-100);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--color-accent-700);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: var(--color-accent-900);
+  }
+}
+
+/* Secondary Variant */
+.secondary {
+  background-color: var(--color-dark-300);
+  color: var(--color-light-500);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-dark-100);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--color-dark-700);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: var(--color-dark-500);
+  }
+}
+
+/* Outline Variant */
+.outline {
+  background-color: transparent;
+  color: var(--color-accent-500);
+  border: rem(1) solid var(--color-accent-500);
+
+  &:hover:not(:disabled) {
+    color: var(--color-accent-100);
+    border-color: var(--color-accent-100);
+  }
+
+  &:active:not(:disabled) {
+    color: var(--color-accent-700);
+    border-color: var(--color-accent-700);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--color-accent-900);
+    border-color: var(--color-accent-900);
+  }
+}
+
+/*Link Variant*/
+.text {
+  background-color: transparent;
+  color: var(--color-accent-500);
+  border: rem(4) solid transparent;
+
+  &:hover:not(:disabled) {
+    color: var(--color-accent-100);
+    text-decoration: underline;
+  }
+
+  &:active:not(:disabled) {
+    color: var(--color-accent-700);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--color-accent-900);
+  }
+}
