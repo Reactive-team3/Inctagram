@@ -17,11 +17,11 @@
   //&:hover {
   //  background: var(--color-accent-300);
   //}
-  &[data-orientation="vertical"] {
+  &[data-orientation='vertical'] {
     width: rem(10);
     padding: 0 3px;
   }
-  &[data-orientation="horizontal"] {
+  &[data-orientation='horizontal'] {
     flex-direction: column;
     height: rem(10);
     padding: 3px 0;
@@ -38,7 +38,7 @@
     background-color: var(--color-light-900);
   }
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
