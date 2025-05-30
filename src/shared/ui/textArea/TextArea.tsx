@@ -7,7 +7,7 @@ import { clsx } from 'clsx'
 interface TextAreaProps {
   label: string
   name: string
-  initialValue?: string
+  initialValue?: stringy
   maxLength?: number
   error?: string
   required?: boolean

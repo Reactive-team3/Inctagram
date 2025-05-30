@@ -1,8 +1,9 @@
-# SCSS Архитектура и Автоимпорт
+# SCSS Architecture and Auto-Import
 
-## Структура
+## Structure
 
-SCSS организован по FSD-принципам. Все функции, миксины и переменные лежат в `src/shared/config/helpers/`:
+SCSS is organized according to the FSD (Feature-Sliced Design) principles. All functions, mixins, and variables are 
+located in src/shared/config/helpers/:
 
 ```
 src/shared/config/styles/
@@ -19,15 +20,15 @@ src/shared/config/styles/
 
 ---
 
-## Настройка `next.config.ts`
+## next.config.ts Setup
 
-В проекте настроен Webpack на автоматическое подключение `global.scss`:
+The project’s Webpack config is set to automatically inject global.scss:
 
 ```ts
 loader.options.additionalData = `@use "@/shared/config/styles/helpers" as *;`
 ```
 
-Это значит, что **во все SCSS и module.scss файлы автоматически добавляется**:
+This means that all SCSS and .module.scss files automatically include:
 
 ```scss
 @use '@/shared/config/styles/helpers' as *;
@@ -35,9 +36,9 @@ loader.options.additionalData = `@use "@/shared/config/styles/helpers" as *;`
 
 ---
 
-## Как использовать
+## How to Use
 
-Просто пиши SCSS-функции и миксины — **никаких импортов не нужно**:
+Just write SCSS functions and mixins — no imports needed:
 
 ```scss
 .button {
@@ -52,18 +53,18 @@ loader.options.additionalData = `@use "@/shared/config/styles/helpers" as *;`
 
 ---
 
-## Что делать не нужно
+## What Not to Do
 
-- 🚫 Не импортируй вручную `rem.scss`, `fluid.scss`, `media.scss`
-- 🚫 Не пиши `@use` или `@import` в `.module.scss`
-- 🚫 Не копируй функции между файлами
+🚫 Do not manually import rem.scss, fluid.scss, or media.scss
+🚫 Do not write @use or @import in .module.scss files
+🚫 Do not copy functions between files
 
 ---
 
-## 🧱 Как добавить новый миксин или функцию
+## 🧱 How to Add a New Mixin or Function
 
-1. Создай новый файл `*.scss` в `helpers/`, например `_grid.scss`
-2. Добавь туда код:
+1. Create a new *.scss file in helpers/, e.g., _grid.scss
+2. Add your code inside:
 
 ```scss
 @mixin grid-center {
@@ -72,42 +73,41 @@ loader.options.additionalData = `@use "@/shared/config/styles/helpers" as *;`
 }
 ```
 
-3. Подключи в `_index.scss`:
+3. Import it in _index.scss:
 
 ```scss
 @forward 'grid';
 ```
 
-Теперь `@include grid-center;` доступен в любом компоненте.
+Now you can use @include grid-center; in any component.
 
 ---
 
-## Примеры
+## Examples
 
 | Что                | Пример                      |
 | ------------------ | --------------------------- |
 | `rem()`            | `margin-top: rem(24);`      |
 | `fluid()`          | `font-size: fluid(28, 16);` |
 | Media mixin        | `@include tablet { ... }`   |
-| Цвет из переменной | `color: $color-primary;`    |
+| Color variable	 | `color: $color-primary;`    |
 
 ---
 
-## Глобальные стили (не путать с helpers)
+## Global Styles (Not to Be Confused with Helpers)
 
-Файл `index.scss` подключается в `layout.tsx`:
+The index.scss file is imported in layout.tsx:
 
 ```scss
 @import './normalize.scss';
-@import './fonts.scss';
 @import './variables.scss';
 ```
 
-> Только для глобальных reset, шрифтов и базовых переменных.
+> Used only for global resets, fonts, and base variables.
 
 ---
 
-## Важно
+## Important
 
-Все SCSS-функции и миксины работают без явного импорта — за счёт `next.config.ts`.  
-Следи за `_index.scss`, чтобы он оставался единственным местом подключения.
+All SCSS functions and mixins work without explicit imports — thanks to next.config.ts.
+Keep _index.scss as the only place where everything is connected.
