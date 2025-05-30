@@ -2,7 +2,7 @@
 
 ## Structure
 
-SCSS is organized according to the FSD (Feature-Sliced Design) principles. All functions, mixins, and variables are 
+SCSS is organized according to the FSD (Feature-Sliced Design) principles. All functions, mixins, and variables are
 located in src/shared/config/helpers/:
 
 ```
@@ -63,7 +63,7 @@ Just write SCSS functions and mixins — no imports needed:
 
 ## 🧱 How to Add a New Mixin or Function
 
-1. Create a new *.scss file in helpers/, e.g., _grid.scss
+1. Create a new \*.scss file in helpers/, e.g., \_grid.scss
 2. Add your code inside:
 
 ```scss
@@ -73,7 +73,7 @@ Just write SCSS functions and mixins — no imports needed:
 }
 ```
 
-3. Import it in _index.scss:
+3. Import it in \_index.scss:
 
 ```scss
 @forward 'grid';
@@ -85,12 +85,12 @@ Now you can use @include grid-center; in any component.
 
 ## Examples
 
-| Что                | Пример                      |
-| ------------------ | --------------------------- |
-| `rem()`            | `margin-top: rem(24);`      |
-| `fluid()`          | `font-size: fluid(28, 16);` |
-| Media mixin        | `@include tablet { ... }`   |
-| Color variable	 | `color: $color-primary;`    |
+| Что            | Пример                      |
+| -------------- | --------------------------- |
+| `rem()`        | `margin-top: rem(24);`      |
+| `fluid()`      | `font-size: fluid(28, 16);` |
+| Media mixin    | `@include tablet { ... }`   |
+| Color variable | `color: $color-primary;`    |
 
 ---
 
@@ -110,4 +110,4 @@ The index.scss file is imported in layout.tsx:
 ## Important
 
 All SCSS functions and mixins work without explicit imports — thanks to next.config.ts.
-Keep _index.scss as the only place where everything is connected.
+Keep \_index.scss as the only place where everything is connected.
