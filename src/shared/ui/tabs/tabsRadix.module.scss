@@ -4,7 +4,6 @@
   }
 }
 
-
 .root {
   width: 100%;
 }
@@ -46,7 +45,7 @@
     border-bottom: rem(2) solid var(--color-accent-500);
 
     &:hover {
-     @include color-accent-hover;
+      @include color-accent-hover;
     }
   }
 
