@@ -1,0 +1,73 @@
+@mixin color-accent-hover {
+  &:hover {
+    background-color: var(--color-accent-900);
+  }
+}
+
+.root {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  width: 100%;
+}
+
+.trigger {
+  flex: 1;
+  height: rem(36);
+  background-color: transparent;
+  color: var(--color-dark-100);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: fluid(14, 16);
+  line-height: 1.5;
+  text-align: center;
+  border: none;
+  border-bottom: rem(2) solid var(--color-dark-100);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  // Inactive condition
+  &[data-state='inactive'] {
+    color: var(--color-dark-100);
+    border-color: var(--color-dark-100);
+
+    &:hover {
+      @include color-accent-hover;
+    }
+  }
+
+  // Active condition
+  &[data-state='active'] {
+    color: var(--color-accent-500);
+    background-color: var(--color-accent-100);
+    border-bottom: rem(2) solid var(--color-accent-500);
+
+    &:hover {
+      @include color-accent-hover;
+    }
+  }
+
+  // Focus
+  &:focus {
+    outline: none;
+    border: rem(2) solid var(--color-accent-500);
+    border-radius: rem(2);
+    background-color: transparent;
+  }
+
+  // Disabled condition
+  &:disabled,
+  &[aria-disabled='true'] {
+    color: var(--color-dark-300);
+    cursor: not-allowed;
+    border-color: var(--color-dark-300);
+    background-color: transparent;
+    opacity: 0.6;
+  }
+}
+
+.content {
+  padding: rem(16) 0;
+}
