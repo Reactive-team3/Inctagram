@@ -1,0 +1,21 @@
+.rmdp-wrapper {
+  background-color: var(--color-dark-700);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color-dark-300);
+  box-shadow: none !important;
+}
+.rmdp-calendar {
+  background-color: var(--color-dark-700);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color-dark-300);
+  box-shadow: none !important;
+}
+
+// Color for month and year
+.rmdp-header .rmdp-header-values span {
+  color: var(--color-light-100) !important;
+  font-weight: 800;
+  font-size: 16px;
+}
