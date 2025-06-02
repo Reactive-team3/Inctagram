@@ -1,6 +1,7 @@
 @use './normalize.scss';
 @use './variables.scss';
 @use './icon.scss';
+@use 'calendar-overrides';
 
 *::-webkit-scrollbar {
   width: 12px;
