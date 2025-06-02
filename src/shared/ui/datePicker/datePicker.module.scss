@@ -1,0 +1,63 @@
+.container {
+}
+
+.datePickerWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.datePickerCustomInput {
+  width: rem(262);
+  height: rem(36);
+  background-color: var(--color-dark-700);
+  color: var(--color-light-100);
+  border: rem(1) solid var(--color-dark-300);
+  padding: rem(6) rem(12);
+  font-size: rem(16);
+  border-radius: rem(4);
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--color-light-100);
+  }
+}
+
+.datePickerCustomInputError {
+  @extend .datePickerCustomInput;
+  border: rem(1) solid var(--color-danger-500);
+  color: var(--color-danger-500);
+  &::placeholder {
+    color: var(--color-danger-500);
+  }
+}
+
+.today {
+  color: var(--color-accent-500) !important;
+  font-weight: var(--font-weight-bold);
+  background-color: transparent !important;
+}
+
+.weekend {
+  color: var(--color-danger-300);
+  font-weight: bold;
+}
+
+.weekday {
+  color: var(--color-light-100);
+}
+
+.icon {
+  position: absolute;
+  right: rem(12);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.errorMessage {
+  color: var(--color-danger-500);
+  font-size: rem(16);
+}

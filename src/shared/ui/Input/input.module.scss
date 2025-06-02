@@ -1,0 +1,82 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8);
+  width: 100%;
+}
+
+.label {
+  font-size: rem(14);
+  color: var(--color-light-900);
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: rem(6) rem(12);
+  border: rem(1) solid var(--color-dark-100);
+  background-color: var(--color-dark-500);
+  border-radius: rem(4);
+  font-size: rem(16);
+  line-height: rem(24);
+  color: var(--color-light-900);
+
+  &::placeholder {
+    color: var(--color-dark-100);
+    opacity: 0.7;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-light-900);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-accent-500);
+    color: var(--color-light-100);
+  }
+
+  &:active {
+    border-color: var(--color-light-100);
+    color: var(--color-light-100);
+  }
+
+  &.error {
+    border-color: var(--color-danger-500);
+
+    &:focus {
+      border-color: var(--color-danger-500);
+    }
+
+    &:hover {
+      border-color: var(--color-danger-500);
+    }
+  }
+
+  &.disabled {
+    color: var(--color-dark-100);
+    cursor: not-allowed;
+  }
+}
+
+.passwordToggle {
+  position: absolute;
+  right: rem(12);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-light-900);
+}
+
+.errorText {
+  color: var(--color-danger-500);
+  font-size: rem(14);
+}
