@@ -33,7 +33,8 @@
     "react-dom": "19.0.0",
     "react-hook-form": "7.56.4",
     "react-multi-date-picker": "^4.5.2",
-    "react-redux": "9.2.0"
+    "react-redux": "9.2.0",
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "3.2.6",
