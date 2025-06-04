@@ -1,13 +1,13 @@
 .sidebar {
-  width: 220px;
-  border-right: 1px solid var(--border-color);
-  height: calc(100vh - var(--header-height));
+  width: rem(220);
+  border-right: rem(1) solid var(--border-color);
+  height: 100vh;
   position: relative;
   transition: width 0.3s;
   display: flex;
   flex-direction: column;
-  padding-left: 60px;
-  padding-top: 75px;
+  padding-left: rem(60);
+  padding-top: rem(75);
 }
 
 .nav {
@@ -19,8 +19,8 @@
 .navGroup {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  margin-bottom: 60px;
+  gap: rem(25);
+  margin-bottom: rem(60);
 }
 
 .exit {
