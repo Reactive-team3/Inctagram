@@ -1,0 +1,16 @@
+.form {
+  @include inputs-wrapper;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.submit {
+  align-self: center;
+  margin: 0;
+  width: rem(100);
+}
