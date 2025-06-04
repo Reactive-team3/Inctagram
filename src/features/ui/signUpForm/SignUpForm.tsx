@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { useForm } from 'react-hook-form'
 import { SignUpFormValues, signUpSchema } from '@/features/model/signUpSchema'
-import styles from './SignUpForm.module.scss'
+import styles from './signUpForm.module.scss'
 import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { Button } from '@/shared/ui/button/Button'
 import { ControlledCheckbox } from '@/shared/ui/controlled/ControlledСheckbox'
