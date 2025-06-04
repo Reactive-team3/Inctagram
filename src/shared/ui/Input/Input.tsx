@@ -16,6 +16,7 @@ export interface InputProps {
   showPasswordIcon?: boolean
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   onBlur?: () => void
+  onValueChange?: (value: string) => void
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -32,27 +33,20 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       showPasswordIcon = false,
       onChange,
       onBlur,
+      onValueChange,
       ...rest
     },
     ref
   ) => {
-    const [inputValue, setInputValue] = useState(value)
-    const [inputError, setInputError] = useState(error)
     const [showPassword, setShowPassword] = useState(false)
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.currentTarget.value
-      setInputValue(newValue)
-
-      if (inputError) {
-        setInputError('')
-      }
-
-      onChange?.(e)
-    }
 
     const handleBlur = () => {
       onBlur?.()
+    }
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      onChange?.(e)
+      onValueChange?.(e.target.value)
     }
 
     const toggleShowPassword = () => {
@@ -63,7 +57,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const inputClassName = clsx(
       styles.input,
-      inputError && styles.error,
+      error && styles.error,
       disabled && styles.disabled,
       className
     )
@@ -81,7 +75,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             id={name}
             name={name}
             type={inputType}
-            value={inputValue}
+            value={value}
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder={placeholder}
@@ -104,7 +98,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
 
-        {inputError && <span className={styles.errorText}>{inputError}</span>}
+        {error && <span className={styles.errorText}>{error}</span>}
       </div>
     )
   }

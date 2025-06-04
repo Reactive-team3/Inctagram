@@ -3,7 +3,7 @@
 import { ChangeEvent } from 'react'
 import styles from './checkbox.module.scss'
 
-type CheckboxProps = {
+export type CheckboxProps = {
   checked?: boolean
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
