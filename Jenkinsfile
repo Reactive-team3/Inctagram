@@ -7,8 +7,7 @@ pipeline {
         PORT = 3885
         NAMESPACE = "pickandstore-com"
         REGISTRY_HOSTNAME = "reactiveteam3"
-//         REGISTRY = "registry.hub.docker.com"
-        REGISTRY = "https://index.docker.io/v1/"
+        REGISTRY = "registry.hub.docker.com"
         PROJECT = "pick-and-store"
         DEPLOYMENT_NAME = "pick-and-store-deployment"
         IMAGE_NAME = "${env.BUILD_ID}_${env.ENV_TYPE}_${env.GIT_COMMIT}"
