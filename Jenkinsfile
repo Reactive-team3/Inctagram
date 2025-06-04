@@ -17,6 +17,7 @@ cq
     stages {
         stage('Clone repository') {
             steps {
+            echo 'Cloning repository...'
                 checkout scm
             }
         }
