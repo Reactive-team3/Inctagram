@@ -1,0 +1,20 @@
+.container {
+  width: 378px;
+  height: 504px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: #4c4b4b;
+}
+
+.socialLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
