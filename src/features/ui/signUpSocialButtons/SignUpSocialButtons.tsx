@@ -1,16 +1,17 @@
 'use client'
 import styles from './signUpSocialButtons.module.scss'
-import Icon from '@/shared/ui/icon/Icon'
+import Image from 'next/image'
+import { Button } from '@/shared/ui/button/Button'
 
 export const SignUpSocialButtons = () => {
   return (
     <div className={styles.socialButtons}>
-      <button className={styles.socialButton} type="button">
-        <Icon name="google" />
-      </button>
-      <button className={styles.socialButton} type="button">
-        <Icon name="done-all-outline" />
-      </button>
+      <Button variant="text" className={styles.socialButton} type="button">
+        <Image src="./icons/google.svg" alt="google" width={36} height={36} />
+      </Button>
+      <Button variant="text" className={styles.socialButton} type="button">
+        <Image src="./icons/github.svg" alt="github" width={36} height={36} />
+      </Button>
     </div>
   )
 }
