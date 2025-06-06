@@ -9,13 +9,14 @@ export const signUpSchema = z
       .regex(/^[a-zA-Z0-9_-]+$/, {
         message: 'Wrong symbols for Username',
       }),
-    email: z.string().email(),
+    email: z.string().email({ message: 'The email must match the format example@example.com' }),
     password: z
       .string()
       .min(6, { message: 'Password must be at least 6 characters' })
       .max(20, { message: 'Password must not be more then 20 characters' })
       .regex(/^[a-zA-Z0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/, {
-        message: 'Password is incorrect',
+        message:
+          'Password must contain a-z, A-Z,! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
       }),
     passwordConfirmation: z.string(),
 
@@ -49,7 +50,8 @@ export const signUpSchema = z
     if (!/^[a-zA-Z0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/.test(passwordConfirmation)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'Password confirmation contains invalid characters',
+        message:
+          'Password confirmation must contain a-z, A-Z,! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
         path: ['passwordConfirmation'],
       })
     }

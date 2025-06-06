@@ -2,6 +2,7 @@ import { Cards } from '@/shared/ui/cards/Cards'
 import { SignUpForm } from '@/features/ui/signUpForm/SignUpForm'
 import styles from './signUp.module.scss'
 import { Typography } from '@/shared/ui/typography/Typography'
+import { SignUpSocialButtons } from '@/features/ui/signUpSocialButtons/SignUpSocialButtons'
 
 const SingUp = () => {
   return (
@@ -10,7 +11,7 @@ const SingUp = () => {
         <Typography as="h1" variant="h1" className={styles.title}>
           Sign Up
         </Typography>
-        <div>Button group</div>
+        <SignUpSocialButtons />
         <SignUpForm />
       </Cards>
     </div>
