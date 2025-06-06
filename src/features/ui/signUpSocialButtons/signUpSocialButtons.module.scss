@@ -1,0 +1,26 @@
+.socialButtons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.socialButton {
+  //background-color: white;
+  //border: none;
+  //border-radius: 50%;
+  //padding: 12px;
+  //cursor: pointer;
+  //display: flex;
+  //align-items: center;
+  //justify-content: center;
+  //transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  svg {
+    color: #000;
+  }
+}

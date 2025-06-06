@@ -9,7 +9,7 @@ name 'string'-Required. (The name of the icon from the sprite)`
 
 ✅ Option
 
-1: Using Figma
+1: Using Figma1
 
 Open Figma and find the icon you want to use.
 Copy the icon name (for example: checkmark-outline).
