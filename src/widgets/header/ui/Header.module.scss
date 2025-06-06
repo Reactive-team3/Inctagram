@@ -1,21 +1,18 @@
 .header {
   display: flex;
-  padding: 0 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0 rem(60);
   width: 100%;
   height: var(--header-height);
   align-items: center;
   justify-content: space-between;
   background-color: #0d0d0d;
   color: #f4f4f5;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: rem(1) solid var(--border-color);
 }
 
 .name {
   cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .header {
-    padding: 0 15px;
-  }
 }
