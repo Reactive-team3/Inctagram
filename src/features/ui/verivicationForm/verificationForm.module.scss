@@ -1,0 +1,5 @@
+.form {
+  @include inputs-wrapper;
+
+  max-width: rem(229);
+}
