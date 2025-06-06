@@ -8,9 +8,9 @@
   width: fit-content;
 
   /* spacing */
-  padding: rem(6) rem(24);
+  padding: rem(6);
   gap: rem(10);
-  margin: rem(8);
+  //margin: rem(8);
 
   /* font */
   font-family: var(--font-inter), sans-serif;
@@ -18,12 +18,14 @@
   font-size: rem(16);
   line-height: rem(24);
   text-align: center;
+  transition: var(--transition);
 }
 
 .fullWidth {
   width: 100%;
   margin-left: 0;
   margin-right: 0;
+  padding: rem(6) 0;
 }
 
 .button:focus-visible {
