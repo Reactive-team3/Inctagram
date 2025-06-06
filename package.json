@@ -26,11 +26,13 @@
     "@radix-ui/react-slot": "1.2.3",
     "@radix-ui/react-tabs": "1.1.12",
     "@reduxjs/toolkit": "2.8.2",
+    "@types/react-google-recaptcha": "^2.1.9",
     "clsx": "2.1.1",
     "next": "15.3.2",
     "radix-ui": "^1.4.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "7.56.4",
     "react-multi-date-picker": "^4.5.2",
     "react-redux": "9.2.0"
