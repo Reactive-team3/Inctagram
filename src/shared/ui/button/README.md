@@ -24,7 +24,9 @@ Reusable UI button polymorphic component
 
 // As different elements
 <Button as="a" href="/page">Navigation Link</Button>
-<Button as={Link} to="/route">React Router Link</Button>
+
+// import Link from 'next/link
+<Button as={Link} href="/route">React Router Link</Button>
 
 // Full width responsive
 <Button fullWidth>Full Width Button</Button>
