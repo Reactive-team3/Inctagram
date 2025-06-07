@@ -1,0 +1,9 @@
+.buttons {
+  gap: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.forgotPasswordButton {
+  align-self: flex-end;
+}
