@@ -1,0 +1,22 @@
+
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: rem(20);
+}
+
+.loader {
+  align-self: center;
+  width: rem(50);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: rem(8) solid;
+  border-color: var(--color-accent-500) transparent;
+  animation: l1 1s infinite;
+}
+@keyframes l1 {
+  to {
+    transform: rotate(.5turn)
+  }
+}
