@@ -12,7 +12,7 @@ const Sidebar = () => {
               <SidebarItem
                 path={config.path}
                 text={config.text}
-                Icon={config.Icon}
+                name={config.name}
                 key={config.text}
               />
             )
@@ -25,7 +25,7 @@ const Sidebar = () => {
               <SidebarItem
                 path={config.path}
                 text={config.text}
-                Icon={config.Icon}
+                name={config.name}
                 key={config.text}
               />
             )
@@ -33,7 +33,7 @@ const Sidebar = () => {
         </ul>
 
         <ul className={`${styles.navGroup} ${styles.exit}`}>
-          <SidebarItem path={EXIT.path} text={EXIT.text} Icon={EXIT.Icon} key={EXIT.text} />
+          <SidebarItem path={EXIT.path} text={EXIT.text} name={EXIT.name} key={EXIT.text} />
         </ul>
       </nav>
     </aside>
