@@ -1,8 +1,10 @@
 'use client'
 
-import { ChangeEvent, forwardRef, useState } from 'react'
+import { ChangeEvent, ComponentProps, forwardRef, useState } from 'react'
 import styles from './input.module.scss'
 import { clsx } from 'clsx'
+import Icon from '@/shared/ui/icon/Icon'
+import { Button } from '@/shared/ui/button/Button'
 
 export interface InputProps {
   label?: string
@@ -13,7 +15,6 @@ export interface InputProps {
   error?: string
   disabled?: boolean
   className?: string
-  showPasswordIcon?: boolean
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   onBlur?: () => void
   onValueChange?: (value: string) => void
@@ -30,7 +31,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       error = '',
       disabled = false,
       className = '',
-      showPasswordIcon = false,
       onChange,
       onBlur,
       onValueChange,
@@ -39,7 +39,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     const [showPassword, setShowPassword] = useState(false)
+    const isShowPasswordButtonShown = type === 'password'
 
+    const finalType = getFinalType(type, showPassword)
     const handleBlur = () => {
       onBlur?.()
     }
@@ -48,12 +50,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       onChange?.(e)
       onValueChange?.(e.target.value)
     }
-
-    const toggleShowPassword = () => {
-      setShowPassword(!showPassword)
-    }
-
-    const inputType = type === 'password' && showPassword ? 'text' : type
 
     const inputClassName = clsx(
       styles.input,
@@ -74,7 +70,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <input
             id={name}
             name={name}
-            type={inputType}
+            type={finalType}
             value={value}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -85,16 +81,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...rest}
           />
 
-          {type === 'password' && showPasswordIcon && (
-            <button
+          {isShowPasswordButtonShown && (
+            <Button
               type="button"
+              variant="transparent"
               className={styles.passwordToggle}
-              onClick={toggleShowPassword}
+              onClick={() => setShowPassword(prev => !prev)}
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
-              {/* Здесь должна быть иконка глаза, но пока оставим заглушку */}
-              {showPassword ? '👁️' : '👁️'}
-            </button>
+              {showPassword ? <Icon name="eye-outline" /> : <Icon name="eye-off-outline" />}
+            </Button>
           )}
         </div>
 
@@ -103,5 +99,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     )
   }
 )
+
+function getFinalType(type: ComponentProps<'input'>['type'], showPassword: boolean) {
+  if (type === 'password' && showPassword) {
+    return 'text'
+  }
+  return type
+}
 
 Input.displayName = 'Input'
