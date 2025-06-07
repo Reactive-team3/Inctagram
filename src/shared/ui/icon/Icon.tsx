@@ -14,6 +14,7 @@ export default function Icon({ name, width = 24, height = 24, color, className =
       className={`icon ${className}`}
       style={color ? { color } : undefined}
       aria-hidden="true"
+      fill="currentColor"
     >
       <use href={`/icons/sprite/icons-sprite.svg#${name}`} />
     </svg>
