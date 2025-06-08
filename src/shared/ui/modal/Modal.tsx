@@ -37,7 +37,7 @@ export const Modal = ({
       <Dialog.Overlay className={s.Overlay} />
       <Dialog.Content className={clsx(s.Content, s[size])}>
         <Dialog.Title className={s.Title}>{modalTitle}</Dialog.Title>
-        <hr />
+        <hr className={s.divider} />
         <div className={className}>{children}</div>
         <Dialog.Close asChild>
           <button className={s.IconButton}>

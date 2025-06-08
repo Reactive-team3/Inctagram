@@ -1,6 +1,8 @@
 import styles from './Sidebar.module.scss'
 import { SidebarItem } from '@/widgets/Sidebar/ui/SidebarItem/SidebarItem'
-import { ADDITIONALLY, BASIC_NAVIGATION, EXIT } from '../../model/const/const'
+import { ADDITIONALLY, BASIC_NAVIGATION } from '../../model/const/const'
+import { LogOutButton } from '@/features/ui/logOutButton/LogOutButton'
+import { clsx } from 'clsx'
 
 const Sidebar = () => {
   return (
@@ -31,10 +33,7 @@ const Sidebar = () => {
             )
           })}
         </ul>
-
-        <ul className={`${styles.navGroup} ${styles.exit}`}>
-          <SidebarItem path={EXIT.path} text={EXIT.text} name={EXIT.name} key={EXIT.text} />
-        </ul>
+        <LogOutButton className={clsx(styles.navGroup, styles.exit)} />
       </nav>
     </aside>
   )

@@ -8,6 +8,8 @@ import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { Button } from '@/shared/ui/button/Button'
 import { ControlledCheckbox } from '@/shared/ui/controlled/ControlledСheckbox'
 import { Typography } from '@/shared/ui/typography/Typography'
+import { useRegisterMutation } from '@/features/auth/model/authApi'
+import { Loader } from '@/shared/ui/loader/Loader'
 
 export const SignUpForm = () => {
   const { control, handleSubmit, reset } = useForm<SignUpFormValues>({
@@ -19,9 +21,19 @@ export const SignUpForm = () => {
     },
   })
 
-  const onSubmit = (data: SignUpFormValues) => {
-    reset()
-    return data
+  const [register, { isLoading }] = useRegisterMutation()
+
+  const onSubmit = async (data: SignUpFormValues) => {
+    try {
+      await register({
+        email: data.email,
+        password: data.password,
+        username: data.username,
+      }).unwrap()
+      reset()
+    } catch (e) {
+      console.error('Registration failed', e)
+    }
   }
 
   return (
@@ -52,10 +64,10 @@ export const SignUpForm = () => {
         </Typography>
       </div>
 
-      <Button fullWidth type="submit">
+      <Button disabled={isLoading} fullWidth type="submit">
         Submit
       </Button>
-
+      {isLoading && <Loader />}
       <Typography variant="body1">Do you have an account?</Typography>
       <Typography as="h3" variant="link2">
         Sign In

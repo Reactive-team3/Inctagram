@@ -7,7 +7,7 @@ import { clsx } from 'clsx'
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
   children?: ReactNode
-  variant?: 'primary' | 'secondary' | 'outline' | 'text'
+  variant?: 'primary' | 'secondary' | 'outline' | 'text' | 'transparent'
   fullWidth?: boolean
   width?: string | number // ← Add this
   className?: string

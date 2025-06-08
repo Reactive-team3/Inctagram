@@ -5,6 +5,7 @@
   width: 100%;
 }
 
+
 .label {
   font-size: rem(14);
   color: var(--color-light-900);
@@ -14,6 +15,15 @@
   position: relative;
   display: flex;
   align-items: center;
+  max-width: 100%;
+}
+
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-light-100);
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .input {
@@ -25,6 +35,7 @@
   font-size: rem(16);
   line-height: rem(24);
   color: var(--color-light-900);
+
 
   &::placeholder {
     color: var(--color-dark-100);
@@ -77,6 +88,10 @@
 }
 
 .errorText {
+  display: inline-block;
   color: var(--color-danger-500);
   font-size: rem(14);
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }

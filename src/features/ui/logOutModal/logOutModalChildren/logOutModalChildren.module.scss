@@ -1,0 +1,25 @@
+.main {
+  padding: rem(30) rem(24) rem(36);
+}
+
+.text {
+  text-align: left;
+}
+
+.btn_field {
+  display: flex;
+  justify-content: end;
+  margin-top: rem(30);
+  gap: rem(24);
+}
+
+.btn_1 {
+  padding: rem(6) rem(34);
+}
+
+.btn_2 {
+  padding: rem(6) rem(37);
+}
+.span {
+  font-weight: 700;
+}
