@@ -9,7 +9,7 @@ export const NotificationContainer = () => {
   const dispatch = useDispatch()
   const notifications = useSelector((state: RootState) => state.notifications.notifications)
 
-  const handleClose = (id: number) => {
+  const handleClose = (id: string) => {
     dispatch(removeNotification(id))
   }
 
