@@ -1,7 +1,7 @@
 import { baseApi } from '@/shared/api/baseApi'
 import { RegisterRequest } from '@/features/auth/model/types'
 
-const authApi = baseApi.injectEndpoints({
+export const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     register: builder.mutation<void, RegisterRequest>({
       query: body => ({

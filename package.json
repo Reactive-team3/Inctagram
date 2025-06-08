@@ -15,7 +15,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix",
+      "eslint --max-warnings=0",
       "prettier --write"
     ]
   },
@@ -28,6 +28,7 @@
     "@radix-ui/react-tabs": "1.1.12",
     "@reduxjs/toolkit": "2.8.2",
     "clsx": "2.1.1",
+    "nanoid": "5.1.5",
     "next": "15.3.2",
     "radix-ui": "^1.4.2",
     "react": "19.0.0",

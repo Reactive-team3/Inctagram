@@ -1,7 +1,7 @@
 export type NotificationVariant = 'success' | 'error'
 
 export type Notification = {
-  id: number
+  id: string
   message: string
   variant: NotificationVariant
   duration?: number
