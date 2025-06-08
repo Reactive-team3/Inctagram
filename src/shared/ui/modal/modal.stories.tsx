@@ -1,8 +1,8 @@
-import { Modal, ModalProps } from '@/shared/ui/modal/Modal'
+import { Modal, ModalProps } from './Modal'
 import { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import { Button } from '@/shared/ui/button/Button'
-import { Typography } from '@/shared/ui/typography/Typography'
+import { Button } from '../button/Button'
+import { Typography } from '../typography/Typography'
 
 const meta = {
   title: 'Components/Modal',
