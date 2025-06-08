@@ -74,7 +74,7 @@ export const ReCaptcha = ({ onVerify, onExpired }: Props) => {
 //   // ↑ Now isValid = true or false
 //
 //   if (!isValid) {
-//     alert('Please verify you are not a robot')
+//     notifications('Please verify you are not a robot')
 //     return // STOPS HERE if validation failed
 //   }
 //
