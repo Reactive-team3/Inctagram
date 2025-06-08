@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { emailSchema, FormValues } from '@/features/model/forgotPasswordSchema'
 import { Button } from '@/shared/ui/button/Button'
 import { Typography } from '@/shared/ui/typography/Typography'
+import Image from 'next/image'
 
 export const ForgotPasswordForm = () => {
   const [active, setActive] = useState<boolean>(false) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -52,7 +53,14 @@ export const ForgotPasswordForm = () => {
 
           <div className={styles.checkBlock}>
             <Checkbox label="I'm not a robot" />
-            <div className={styles.captchaIcon}>🤖</div>
+            <Image
+              src="/icons/recaptcha.svg"
+              alt="recaptcha"
+              width={44}
+              height={55}
+              priority={false}
+              className={styles.captchaIcon}
+            />
           </div>
         </>
       ) : (
