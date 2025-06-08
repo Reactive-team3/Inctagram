@@ -1,7 +1,7 @@
 'use client'
 
 import styles from './alert.module.scss'
-import { Notification } from '@/shared/types/alert'
+import { Notification } from '@/shared/model/notifications/types'
 
 type Props = {
   notifications: Notification[]
