@@ -46,7 +46,7 @@ export const ForgotPasswordForm = () => {
             {isSubmitting ? 'Sending...' : 'Send Link'}
           </Button>
 
-          <Button type="button" className={styles.backButton}>
+          <Button type="button" variant="text" className={styles.backButton}>
             Back to Sign In
           </Button>
 
@@ -66,7 +66,7 @@ export const ForgotPasswordForm = () => {
             Send Link Again
           </Button>
 
-          <Button type="button" className={styles.backButton}>
+          <Button type="button" variant="text" className={styles.backButton}>
             Back to Sign In
           </Button>
         </>
