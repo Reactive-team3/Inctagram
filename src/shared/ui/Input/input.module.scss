@@ -5,7 +5,6 @@
   width: 100%;
 }
 
-
 .label {
   font-size: rem(14);
   color: var(--color-light-900);
@@ -17,7 +16,6 @@
   align-items: center;
   max-width: 100%;
 }
-
 
 .input:-webkit-autofill,
 .input:-webkit-autofill:hover,
@@ -35,7 +33,6 @@
   font-size: rem(16);
   line-height: rem(24);
   color: var(--color-light-900);
-
 
   &::placeholder {
     color: var(--color-dark-100);

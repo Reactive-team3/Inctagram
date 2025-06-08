@@ -78,6 +78,5 @@ export const Password: Story = {
     type: 'password',
     label: 'Password',
     placeholder: 'Password',
-    showPasswordIcon: true,
   },
 }
