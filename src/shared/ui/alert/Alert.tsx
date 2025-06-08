@@ -1,11 +1,11 @@
 'use client'
 
 import styles from './alert.module.scss'
-import { Notification } from '@/shared/types/alert'
+import { Notification } from '@/shared/model/notifications/types'
 
 type Props = {
   notifications: Notification[]
-  onCloseAction: (id: number) => void
+  onCloseAction: (id: string) => void
 }
 
 export const Alert = ({ notifications, onCloseAction }: Props) => {

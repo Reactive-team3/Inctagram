@@ -15,7 +15,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix",
+      "eslint --max-warnings=0",
       "prettier --write"
     ]
   },
@@ -29,6 +29,7 @@
     "@radix-ui/react-tabs": "1.1.12",
     "@reduxjs/toolkit": "2.8.2",
     "clsx": "2.1.1",
+    "nanoid": "5.1.5",
     "next": "15.3.2",
     "radix-ui": "^1.4.2",
     "react": "19.0.0",
@@ -60,6 +61,7 @@
     "@types/node": "20",
     "@types/react": "19",
     "@types/react-dom": "19",
+    "@types/react-google-recaptcha": "^2.1.9",
     "@typescript-eslint/eslint-plugin": "8.32.1",
     "@typescript-eslint/parser": "8.32.1",
     "@vitest/browser": "3.1.4",

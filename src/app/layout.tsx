@@ -5,6 +5,7 @@ import '@/shared/config/styles/index.scss'
 import { inter } from '../../public/fonts/inter'
 import { Header } from '@/widgets/header'
 import { Providers } from '@/app/providers'
+import { NotificationContainer } from '@/widgets/notifications/ui/NotificationContainer'
 // eslint-disable-next-line react-refresh/only-export-components
 export { metadata } from './metadata'
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Header />
             </div>
             {children}
+            <NotificationContainer />
           </main>
         </Providers>
       </body>
