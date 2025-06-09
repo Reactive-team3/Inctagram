@@ -6,4 +6,5 @@ export type RegisterRequest = {
 
 export type EmailResendingRequest = {
   email: string
+  recaptchaToken: string
 }

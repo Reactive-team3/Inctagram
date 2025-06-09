@@ -11,13 +11,20 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
     emailResending: builder.mutation<void, EmailResendingRequest>({
-      query: body => ({
+      query: ({ email, recaptchaToken }) => ({
         url: '/auth/registration-email-resending',
         method: 'POST',
-        body,
+        body: { email, recaptchaToken },
+      }),
+    }),
+    confirmEmail: builder.mutation<void, { code: string }>({
+      query: ({ code }) => ({
+        url: `/auth/registration-confirmation`,
+        method: 'POST',
+        body: { code },
       }),
     }),
   }),
 })
 
-export const { useRegisterMutation, useEmailResendingMutation } = authApi
+export const { useRegisterMutation, useEmailResendingMutation, useConfirmEmailMutation } = authApi
