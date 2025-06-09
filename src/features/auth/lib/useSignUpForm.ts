@@ -5,6 +5,7 @@ import { useRegisterMutation } from '@/features/auth/model/authApi'
 import { useDispatch } from 'react-redux'
 import { nanoid } from 'nanoid'
 import { addNotification } from '@/shared/model/notifications/notificationsSlice'
+import { useRouter } from 'next/navigation'
 
 export const useSignUpForm = () => {
   const form = useForm<SignUpFormValues>({
@@ -13,6 +14,7 @@ export const useSignUpForm = () => {
     defaultValues: { agreeToTerms: false },
   })
 
+  const router = useRouter()
   const [register, { isLoading }] = useRegisterMutation()
   const dispatch = useDispatch()
   const onSubmit = async (data: SignUpFormValues) => {
@@ -32,6 +34,7 @@ export const useSignUpForm = () => {
         })
       )
       form.reset()
+      router.push('/signup')
     }
   }
 

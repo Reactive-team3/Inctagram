@@ -1,30 +1,21 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { Button } from '@/shared/ui/button/Button'
-import { verificationSchema, VerificationValues } from '@/features/model/verificationSchema'
 import styles from './verificationForm.module.scss'
+import { useEmailResendingForm } from '@/features/auth/lib/useEmailResendingForm'
+import { Loader } from '@/shared/ui/loader/Loader'
 
 export const VerificationForm = () => {
-  const { control, handleSubmit, reset } = useForm<VerificationValues>({
-    resolver: zodResolver(verificationSchema),
-    mode: 'onBlur',
-    reValidateMode: 'onBlur',
-  })
-
-  const onSubmit = (data: VerificationValues) => {
-    reset()
-    return data
-  }
+  const { control, handleSubmit, onSubmit, isLoading } = useEmailResendingForm()
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <ControlledInput placeholder="Email" control={control} name="email" label="Email" />
-      <Button fullWidth type="submit">
+      <Button disabled={isLoading} fullWidth type="submit">
         Submit
       </Button>
+      {isLoading && <Loader />}
     </form>
   )
 }
