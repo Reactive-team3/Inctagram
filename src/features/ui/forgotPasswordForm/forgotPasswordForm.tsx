@@ -10,6 +10,7 @@ import { emailSchema, FormValues } from '@/features/model/forgotPasswordSchema'
 import { Button } from '@/shared/ui/button/Button'
 import { Typography } from '@/shared/ui/typography/Typography'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export const ForgotPasswordForm = () => {
   const [active, setActive] = useState<boolean>(false)
@@ -71,7 +72,7 @@ export const ForgotPasswordForm = () => {
             {isSubmitting ? 'Sending...' : 'Send Link'}
           </Button>
 
-          <Button type="button" variant="text" className={styles.backButton}>
+          <Button as={Link} variant="text" className={styles.backButton} href="/createNewPassword">
             Back to Sign In
           </Button>
 
@@ -102,7 +103,7 @@ export const ForgotPasswordForm = () => {
             Send Link Again
           </Button>
 
-          <Button type="button" variant="text" className={styles.backButton}>
+          <Button as={Link} href="/createNewPassword" variant="text" className={styles.backButton}>
             Back to Sign In
           </Button>
         </>
