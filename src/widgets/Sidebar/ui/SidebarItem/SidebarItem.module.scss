@@ -4,19 +4,19 @@
 
   &:hover {
     .link {
-      color: #4c8dff;
+      color: var(--color-accent-100);
     }
     .icon {
-      fill: #4c8dff;
+      fill: var(--color-accent-100);
     }
   }
 }
 
 .link {
-  margin-left: 12px;
+  margin-left: rem(12);
   opacity: 1;
 }
 
 .icon {
-  fill: white;
+  fill: var(--color-accent-100);
 }
