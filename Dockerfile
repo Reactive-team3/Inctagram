@@ -7,7 +7,6 @@ RUN npm install
 FROM node:20.11-alpine as builder
 WORKDIR /app
 COPY . .
-COPY .env.production .env.production
 COPY --from=dependencies /app/node_modules ./node_modules
 RUN npm run build:production
 
