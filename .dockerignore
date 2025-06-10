@@ -11,7 +11,7 @@ storybook-static
 *.cache
 *.tsbuildinfo
 *.env
-!/.env.production
+!.env.production
 *.DS_Store
 *.swp
 *.swo
