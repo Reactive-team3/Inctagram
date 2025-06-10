@@ -96,7 +96,7 @@ export const ForgotPasswordForm = () => {
             Send Link Again
           </Button>
 
-          <Button type="button" variant="text" className={styles.backButton}>
+          <Button as={Link} variant="text" className={styles.backButton} href="/signin">
             Back to Sign In
           </Button>
         </>
