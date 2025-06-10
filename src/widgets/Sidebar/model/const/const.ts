@@ -1,6 +1,6 @@
 import { SidebarItemType } from '@/widgets/Sidebar/model/types/sidebar'
 
-export const FirstNav: any = [
+export const FirstNav: SidebarItemType[] = [
   {
     name: 'home-outline',
     text: 'Home',

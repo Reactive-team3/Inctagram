@@ -3,7 +3,7 @@ import { AppDispatch, listenerMiddleware, RootState } from '@/app/store'
 import { addNotification } from '@/shared/model/notifications/notificationsSlice'
 import { nanoid } from 'nanoid'
 
-type ServerErrorPayload = {
+export type ServerErrorPayload = {
   status: number
   data?: {
     errorsMessages?: { field: string; message: string }[]
