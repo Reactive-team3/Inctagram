@@ -1,16 +1,14 @@
-'use client'
+import { EmailConfirmationClient } from '@/features/auth/ui/emailConfirmation/emailConfirmation'
 
-import styles from './confirm.module.scss'
-import { Loader } from '@/shared/ui/loader/Loader'
-import { useEmailConfirmation } from '@/features/auth/lib/useEmailConfirmation'
-const Page = () => {
-  useEmailConfirmation()
+const EmailConfirmation = async ({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}) => {
+  const params = await searchParams
+  const code = typeof params.code === 'string' ? params.code : undefined
 
-  return (
-    <div className={styles.confirm}>
-      <Loader />
-    </div>
-  )
+  return <EmailConfirmationClient code={code} />
 }
 
-export default Page
+export default EmailConfirmation
