@@ -5,6 +5,7 @@ import { SignInFormValues, signInSchema } from '@/features/model/signInSchema'
 import { nanoid } from 'nanoid'
 import { addNotification } from '@/shared/model/notifications/notificationsSlice'
 import { useSignInMutation } from '@/features/auth/model/authApi'
+import { setAccessToken } from '@/shared/model/auth/authSlice'
 
 export const useSignInForm = () => {
   const form = useForm<SignInFormValues>({
@@ -22,6 +23,9 @@ export const useSignInForm = () => {
     })
 
     if (!('error' in result)) {
+      // Store access token in Redux
+      dispatch(setAccessToken(result.data.accessToken))
+
       dispatch(
         addNotification({
           id: nanoid(),
@@ -31,6 +35,10 @@ export const useSignInForm = () => {
         })
       )
       form.reset()
+
+      // Redirect to create profile page
+      //todo
+      // router.push('/createProfile')
     }
   }
 
