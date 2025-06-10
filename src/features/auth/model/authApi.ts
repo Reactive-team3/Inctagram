@@ -1,5 +1,10 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { RegisterRequest, SignInRequest, SignInResponse } from '@/features/auth/model/types'
+import {
+  EmailResendingRequest,
+  RegisterRequest,
+  SignInRequest,
+  SignInResponse,
+} from '@/features/auth/model/types'
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -8,6 +13,20 @@ export const authApi = baseApi.injectEndpoints({
         url: '/auth/registration',
         method: 'POST',
         body,
+      }),
+    }),
+    emailResending: builder.mutation<void, EmailResendingRequest>({
+      query: ({ email, recaptchaToken }) => ({
+        url: '/auth/registration-email-resending',
+        method: 'POST',
+        body: { email, recaptchaToken },
+      }),
+    }),
+    confirmEmail: builder.mutation<void, { code: string }>({
+      query: ({ code }) => ({
+        url: `/auth/registration-confirmation`,
+        method: 'POST',
+        body: { code },
       }),
     }),
     signIn: builder.mutation<SignInResponse, SignInRequest>({
@@ -20,4 +39,9 @@ export const authApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useRegisterMutation, useSignInMutation } = authApi
+export const {
+  useRegisterMutation,
+  useEmailResendingMutation,
+  useConfirmEmailMutation,
+  useSignInMutation,
+} = authApi
