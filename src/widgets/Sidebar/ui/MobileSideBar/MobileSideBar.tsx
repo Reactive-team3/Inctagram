@@ -13,7 +13,7 @@ const MobileSideBar = () => {
                 isText={false}
                 path={config.path}
                 text={config.text}
-                Icon={config.Icon}
+                name={config.name}
                 key={config.text}
               />
             )

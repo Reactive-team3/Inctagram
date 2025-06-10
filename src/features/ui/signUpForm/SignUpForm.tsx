@@ -7,12 +7,16 @@ import { Typography } from '@/shared/ui/typography/Typography'
 import { Loader } from '@/shared/ui/loader/Loader'
 import { useSignUpForm } from '@/features/auth/lib/useSignUpForm'
 import Link from 'next/link'
+import SignUpModal from '@/shared/ui/signUpModal/SignUpModal'
 
 export const SignUpForm = () => {
-  const { control, handleSubmit, onSubmit, isLoading } = useSignUpForm()
+  const { control, handleSubmit, onSubmit, isLoading, modalOpen, onModalClose, email } =
+    useSignUpForm()
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <SignUpModal onClose={onModalClose} open={modalOpen} email={email} modalTitle="Email sent" />
+
       <ControlledInput placeholder="Username" control={control} name="username" label="Username" />
       <ControlledInput placeholder="Email" control={control} name="email" label="Email" />
       <ControlledInput

@@ -1,55 +1,61 @@
-import Home from '@/assets/icons/Home.svg'
-import Plus from '@/assets/icons/Plus.svg'
-import Profile from '@/assets/icons/Profile.svg'
-import Message from '@/assets/icons/Message.svg'
-import Search from '@/assets/icons/Search.svg'
-import Trending from '@/assets/icons/Trending.svg'
-import Bookmark from '@/assets/icons/Bookmark.svg'
 import { SidebarItemType } from '@/widgets/Sidebar/model/types/sidebar'
+
+export const FirstNav: SidebarItemType[] = [
+  {
+    name: 'home-outline',
+    text: 'Home',
+    path: '/',
+  },
+  {
+    name: 'plus-square-outline',
+    text: 'Plus',
+    path: '/plus-square',
+  },
+]
 
 export const BASIC_NAVIGATION: SidebarItemType[] = [
   {
     path: '/',
-    text: 'Главная',
-    Icon: Home,
+    text: 'Feed',
+    name: 'home-outline',
   },
   {
     path: '/create',
-    text: 'Создать',
-    Icon: Plus,
+    text: 'Create',
+    name: 'plus-square-outline',
   },
   {
     path: '/profile',
-    text: 'Мой профиль',
-    Icon: Profile,
+    text: 'My Profile',
+    name: 'person-outline',
   },
   {
     path: '/message',
-    text: 'Сообщения',
-    Icon: Message,
+    text: 'Messenger',
+    name: 'message-circle-outline',
   },
   {
     path: '/search',
-    text: 'Поиск',
-    Icon: Search,
+    text: 'Search',
+    name: 'search',
   },
 ]
 
 export const ADDITIONALLY: SidebarItemType[] = [
   {
     path: '/statistics',
-    text: 'Статистика',
-    Icon: Trending,
+    text: 'Statistics',
+    name: 'trending-up',
   },
   {
     path: '/favourites',
-    text: 'Избранное',
-    Icon: Bookmark,
+    text: 'Favorites',
+    name: 'bookmark-outline',
   },
 ]
 
 export const EXIT: SidebarItemType = {
   path: '/favourites',
-  text: 'Выход',
-  Icon: Bookmark,
+  text: 'Log Out',
+  name: 'log-out',
 }
