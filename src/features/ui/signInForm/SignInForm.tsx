@@ -1,23 +1,14 @@
 'use client'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
 import styles from './signInForm.module.scss'
 import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { Button } from '@/shared/ui/button/Button'
 import Link from 'next/link'
-import { SignInFormValues, signInSchema } from '@/features/model/signInSchema'
+import { Loader } from '@/shared/ui/loader/Loader'
+import { Typography } from '@/shared/ui/typography/Typography'
+import { useSignInForm } from '@/features/auth/lib/useSignInForm'
 
 export const SignInForm = () => {
-  const { control, handleSubmit, reset } = useForm<SignInFormValues>({
-    resolver: zodResolver(signInSchema),
-    mode: 'onBlur',
-    reValidateMode: 'onBlur',
-  })
-
-  const onSubmit = (data: SignInFormValues) => {
-    reset()
-    return data
-  }
+  const { control, handleSubmit, onSubmit, isLoading } = useSignInForm()
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -43,9 +34,8 @@ export const SignInForm = () => {
         <Button type="submit" fullWidth>
           Sign In
         </Button>
-        <Button as={Link} href="/signup" variant={'text'} style={{ color: 'white' }}>
-          Don’t have an account?
-        </Button>
+        {isLoading && <Loader />}
+        <Typography variant="body1">Don’t have an account?</Typography>
         <Button as={Link} href="/signup" variant={'text'}>
           Sign Up
         </Button>

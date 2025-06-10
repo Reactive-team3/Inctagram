@@ -3,3 +3,10 @@ export type RegisterRequest = {
   email: string
   password: string
 }
+export type SignInRequest = {
+  usernameOrEmail: string
+  password: string
+}
+export type SignInResponse = {
+  accessToken: string
+}
