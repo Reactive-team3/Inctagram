@@ -1,5 +1,10 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { EmailResendingRequest, RegisterRequest } from '@/features/auth/model/types'
+import {
+  EmailResendingRequest,
+  RegisterRequest,
+  SignInRequest,
+  SignInResponse,
+} from '@/features/auth/model/types'
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -24,7 +29,19 @@ export const authApi = baseApi.injectEndpoints({
         body: { code },
       }),
     }),
+    signIn: builder.mutation<SignInResponse, SignInRequest>({
+      query: body => ({
+        url: '/auth/login',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useRegisterMutation, useEmailResendingMutation, useConfirmEmailMutation } = authApi
+export const {
+  useRegisterMutation,
+  useEmailResendingMutation,
+  useConfirmEmailMutation,
+  useSignInMutation,
+} = authApi

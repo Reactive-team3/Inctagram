@@ -9,8 +9,10 @@ import {
   createNewPasswordSchema,
   createNewPasswordSchemaFormValues,
 } from '@/features/model/createNewPasswordSchema'
+import { useRouter } from 'next/navigation'
 
 export const CreateNewPasswordForm = () => {
+  const router = useRouter()
   const { control, handleSubmit, reset } = useForm<createNewPasswordSchemaFormValues>({
     resolver: zodResolver(createNewPasswordSchema),
     mode: 'onBlur',
@@ -19,7 +21,11 @@ export const CreateNewPasswordForm = () => {
 
   const onSubmit = (data: createNewPasswordSchemaFormValues) => {
     reset()
+    handleRedirect()
     return data
+  }
+  const handleRedirect = () => {
+    router.push('/signin')
   }
 
   return (

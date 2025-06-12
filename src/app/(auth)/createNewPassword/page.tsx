@@ -1,9 +1,9 @@
 import { Cards } from '@/shared/ui/cards/Cards'
-import { CreateNewPasswordForm } from '@/features/ui/createNewPassword/createNewPasswordForm'
+import { CreateNewPasswordForm } from '@/features/ui/createNewPasswordForm/createNewPasswordForm'
 import { Typography } from '@/shared/ui/typography/Typography'
 import styles from './createNewPassword.module.scss'
 
-const CreateNewPassword = () => {
+const Page = () => {
   return (
     <div>
       <Cards>
@@ -16,4 +16,4 @@ const CreateNewPassword = () => {
   )
 }
 
-export default CreateNewPassword
+export default Page

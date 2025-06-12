@@ -1,19 +1,19 @@
 'use client'
 
 import styles from './forgotPasswordForm.module.scss'
-import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import { emailSchema, FormValues } from '@/features/model/forgotPasswordSchema'
 import { Button } from '@/shared/ui/button/Button'
 import { Typography } from '@/shared/ui/typography/Typography'
-import Image from 'next/image'
+import Link from 'next/link'
+import { ReCaptcha } from '@/shared/ui/recaptcha/ReCaptcha'
 
 export const ForgotPasswordForm = () => {
   const [active, setActive] = useState<boolean>(false)
-  const [isRecaptchaVerified, setIsRecaptchaVerified] = useState<boolean>(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
   const {
     control,
@@ -34,17 +34,22 @@ export const ForgotPasswordForm = () => {
   const emailValue = watch('email')
 
   // Проверяем, валидна ли форма и подтвержден ли reCAPTCHA
-  const isFormValid = emailValue && !errors.email && isRecaptchaVerified
+  const isFormValid = emailValue && !errors.email && !!captchaToken
   const isButtonDisabled = isSubmitting || !isFormValid
 
   const onSubmit = async (data: FormValues) => {
     reset()
     setActive(true)
+    setCaptchaToken(null) // Сбрасываем токен после отправки
     return data
   }
 
-  const handleRecaptchaChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsRecaptchaVerified(e.target.checked)
+  const handleRecaptchaVerify = (token: string) => {
+    setCaptchaToken(token)
+  }
+
+  const handleRecaptchaExpired = () => {
+    setCaptchaToken(null)
   }
 
   return (
@@ -71,24 +76,13 @@ export const ForgotPasswordForm = () => {
             {isSubmitting ? 'Sending...' : 'Send Link'}
           </Button>
 
-          <Button type="button" variant="text" className={styles.backButton}>
+          <Button as={Link} variant="text" className={styles.backButton} href="/signin">
             Back to Sign In
           </Button>
 
-          <div className={styles.checkBlock}>
-            <Checkbox
-              label="I'm not a robot"
-              onChange={handleRecaptchaChange}
-              checked={isRecaptchaVerified}
-            />
-            <Image
-              src="/icons/recaptcha.svg"
-              alt="recaptcha"
-              width={44}
-              height={55}
-              priority={false}
-              className={styles.captchaIcon}
-            />
+          {/* ReCaptcha компонент */}
+          <div className={styles.recaptchaContainer}>
+            <ReCaptcha onVerify={handleRecaptchaVerify} onExpired={handleRecaptchaExpired} />
           </div>
         </>
       ) : (
@@ -102,7 +96,7 @@ export const ForgotPasswordForm = () => {
             Send Link Again
           </Button>
 
-          <Button type="button" variant="text" className={styles.backButton}>
+          <Button as={Link} variant="text" className={styles.backButton} href="/signin">
             Back to Sign In
           </Button>
         </>
