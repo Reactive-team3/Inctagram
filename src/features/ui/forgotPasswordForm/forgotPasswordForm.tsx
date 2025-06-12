@@ -1,18 +1,19 @@
 'use client'
 
-import styles from './forgotPasswordForm.module.scss'
-import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { emailSchema, FormValues } from '@/features/model/forgotPasswordSchema'
 import { Button } from '@/shared/ui/button/Button'
 import { Typography } from '@/shared/ui/typography/Typography'
-import Link from 'next/link'
+import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { ReCaptcha } from '@/shared/ui/recaptcha/ReCaptcha'
+import Link from 'next/link'
+import styles from './forgotPasswordForm.module.scss'
+import { usePasswordRecoveryMutation } from '@/features/auth/model/authApi'
 
 export const ForgotPasswordForm = () => {
-  const [active, setActive] = useState<boolean>(false)
+  const [active, setActive] = useState(false)
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
   const {
@@ -24,33 +25,34 @@ export const ForgotPasswordForm = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(emailSchema),
     mode: 'onBlur',
-    reValidateMode: 'onBlur',
-    defaultValues: {
-      email: '',
-    },
+    defaultValues: { email: '' },
   })
 
-  // Отслеживаем значение email поля
-  const emailValue = watch('email')
+  const [passwordRecovery, { isLoading }] = usePasswordRecoveryMutation()
 
-  // Проверяем, валидна ли форма и подтвержден ли reCAPTCHA
+  const emailValue = watch('email')
   const isFormValid = emailValue && !errors.email && !!captchaToken
   const isButtonDisabled = isSubmitting || !isFormValid
 
   const onSubmit = async (data: FormValues) => {
-    reset()
-    setActive(true)
-    setCaptchaToken(null) // Сбрасываем токен после отправки
-    return data
+    if (!captchaToken) return
+
+    try {
+      await passwordRecovery({
+        email: data.email,
+        recaptchaToken: captchaToken,
+      }).unwrap()
+
+      setActive(true)
+      reset()
+      setCaptchaToken(null)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
-  const handleRecaptchaVerify = (token: string) => {
-    setCaptchaToken(token)
-  }
-
-  const handleRecaptchaExpired = () => {
-    setCaptchaToken(null)
-  }
+  const handleRecaptchaVerify = (token: string) => setCaptchaToken(token)
+  const handleRecaptchaExpired = () => setCaptchaToken(null)
 
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
@@ -64,6 +66,7 @@ export const ForgotPasswordForm = () => {
       <Typography as="p" variant="subtitle1" className={styles.instructions}>
         Enter your email address and we will send you further instructions
       </Typography>
+
       {!active ? (
         <>
           <Button
@@ -73,14 +76,13 @@ export const ForgotPasswordForm = () => {
             variant="primary"
             disabled={isButtonDisabled}
           >
-            {isSubmitting ? 'Sending...' : 'Send Link'}
+            {isLoading ? 'Sending...' : 'Send Link'}
           </Button>
 
           <Button as={Link} variant="text" className={styles.backButton} href="/signin">
             Back to Sign In
           </Button>
 
-          {/* ReCaptcha компонент */}
           <div className={styles.recaptchaContainer}>
             <ReCaptcha onVerify={handleRecaptchaVerify} onExpired={handleRecaptchaExpired} />
           </div>
@@ -90,9 +92,9 @@ export const ForgotPasswordForm = () => {
           <Typography as="p" variant="subtitle2" className={styles.instructionsActive}>
             The link has been sent by email.
             <br />
-            If you dont receive an email send link again
+            If you don’t receive an email, try again.
           </Typography>
-          <Button fullWidth type="submit" className={styles.sendButton} disabled={isSubmitting}>
+          <Button fullWidth type="submit" className={styles.sendButton} disabled={isLoading}>
             Send Link Again
           </Button>
 
