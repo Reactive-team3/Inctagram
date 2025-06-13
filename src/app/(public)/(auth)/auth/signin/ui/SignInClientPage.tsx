@@ -1,21 +1,20 @@
 import { Cards } from '@/shared/ui/cards/Cards'
-import { SignUpForm } from '@/features/ui/signUpForm/SignUpForm'
-import styles from './signUp.module.scss'
 import { Typography } from '@/shared/ui/typography/Typography'
+import styles from './signIn.module.scss'
 import { SignUpSocialButtons } from '@/features/ui/signUpSocialButtons/SignUpSocialButtons'
+import { SignInForm } from '@/features/ui/signInForm/SignInForm'
+import React from 'react'
 
-const SingUp = () => {
+export const SignInClientPage = () => {
   return (
     <div>
       <Cards>
         <Typography as="h1" variant="h1" className={styles.title}>
-          Sign Up
+          Sign In
         </Typography>
         <SignUpSocialButtons />
-        <SignUpForm />
+        <SignInForm />
       </Cards>
     </div>
   )
 }
-
-export default SingUp

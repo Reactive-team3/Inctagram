@@ -1,19 +1,17 @@
 import { Cards } from '@/shared/ui/cards/Cards'
-import { CreateNewPasswordForm } from '@/features/ui/createNewPasswordForm/createNewPasswordForm'
 import { Typography } from '@/shared/ui/typography/Typography'
-import styles from './createNewPassword.module.scss'
+import styles from './forgotPassword.module.scss'
+import { ForgotPasswordForm } from '@/features/ui/forgotPasswordForm/forgotPasswordForm'
 
-const Page = () => {
+export const ForgotPasswordClientPage = () => {
   return (
     <div>
       <Cards>
         <Typography as="h1" variant="h1" className={styles.title}>
-          Create New Password
+          Forgot Password
         </Typography>
-        <CreateNewPasswordForm />
+        <ForgotPasswordForm />
       </Cards>
     </div>
   )
 }
-
-export default Page

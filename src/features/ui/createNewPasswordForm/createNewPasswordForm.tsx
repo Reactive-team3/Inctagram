@@ -10,6 +10,7 @@ import {
   createNewPasswordSchemaFormValues,
 } from '@/features/model/createNewPasswordSchema'
 import { useRouter } from 'next/navigation'
+import { publicRoutes } from '@/shared/config/routes/routes'
 
 export const CreateNewPasswordForm = () => {
   const router = useRouter()
@@ -25,7 +26,7 @@ export const CreateNewPasswordForm = () => {
     return data
   }
   const handleRedirect = () => {
-    router.push('/signin')
+    router.push(publicRoutes.auth.SIGNIN)
   }
 
   return (

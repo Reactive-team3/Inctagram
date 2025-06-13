@@ -1,11 +1,9 @@
 import { BackButton } from '@/shared/ui/backButton/BackButton'
 
-const Terms = () => {
+export const TermsClientPage = () => {
   return (
     <div>
       <BackButton />
     </div>
   )
 }
-
-export default Terms
