@@ -1,7 +1,6 @@
 'use client'
 
 import styles from './forgotPasswordForm.module.scss'
-import { Checkbox } from '@/shared/ui/Checkbox/Checkbox'
 import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,15 +8,19 @@ import { useState } from 'react'
 import { emailSchema, FormValues } from '@/features/model/forgotPasswordSchema'
 import { Button } from '@/shared/ui/button/Button'
 import { Typography } from '@/shared/ui/typography/Typography'
+import Link from 'next/link'
+import { ReCaptcha } from '@/shared/ui/recaptcha/ReCaptcha'
 
 export const ForgotPasswordForm = () => {
-  const [active, setActive] = useState<boolean>(false) // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [active, setActive] = useState<boolean>(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
   const {
     control,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    watch,
+    formState: { isSubmitting, errors },
   } = useForm<FormValues>({
     resolver: zodResolver(emailSchema),
     mode: 'onBlur',
@@ -27,32 +30,59 @@ export const ForgotPasswordForm = () => {
     },
   })
 
+  // Отслеживаем значение email поля
+  const emailValue = watch('email')
+
+  // Проверяем, валидна ли форма и подтвержден ли reCAPTCHA
+  const isFormValid = emailValue && !errors.email && !!captchaToken
+  const isButtonDisabled = isSubmitting || !isFormValid
+
   const onSubmit = async (data: FormValues) => {
     reset()
+    setActive(true)
+    setCaptchaToken(null) // Сбрасываем токен после отправки
     return data
+  }
+
+  const handleRecaptchaVerify = (token: string) => {
+    setCaptchaToken(token)
+  }
+
+  const handleRecaptchaExpired = () => {
+    setCaptchaToken(null)
   }
 
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-      <label className={styles.label}>Email</label>
-      <ControlledInput name="email" control={control} placeholder="example@example.com" />
+      <ControlledInput
+        name="email"
+        label="Email"
+        control={control}
+        placeholder="example@example.com"
+      />
 
-      <Typography as="p" variant="subtitle2" className={styles.instructions}>
+      <Typography as="p" variant="subtitle1" className={styles.instructions}>
         Enter your email address and we will send you further instructions
       </Typography>
       {!active ? (
         <>
-          <Button type="submit" className={styles.sendButton} disabled={isSubmitting}>
+          <Button
+            type="submit"
+            className={styles.sendButton}
+            fullWidth
+            variant="primary"
+            disabled={isButtonDisabled}
+          >
             {isSubmitting ? 'Sending...' : 'Send Link'}
           </Button>
 
-          <Button type="button" className={styles.backButton}>
+          <Button as={Link} variant="text" className={styles.backButton} href="/signin">
             Back to Sign In
           </Button>
 
-          <div className={styles.checkBlock}>
-            <Checkbox label="I'm not a robot" />
-            <div className={styles.captchaIcon}>🤖</div>
+          {/* ReCaptcha компонент */}
+          <div className={styles.recaptchaContainer}>
+            <ReCaptcha onVerify={handleRecaptchaVerify} onExpired={handleRecaptchaExpired} />
           </div>
         </>
       ) : (
@@ -60,13 +90,13 @@ export const ForgotPasswordForm = () => {
           <Typography as="p" variant="subtitle2" className={styles.instructionsActive}>
             The link has been sent by email.
             <br />
-            If you don’t receive an email send link again
+            If you dont receive an email send link again
           </Typography>
-          <Button type="submit" className={styles.sendButton} disabled={isSubmitting}>
+          <Button fullWidth type="submit" className={styles.sendButton} disabled={isSubmitting}>
             Send Link Again
           </Button>
 
-          <Button type="button" className={styles.backButton}>
+          <Button as={Link} variant="text" className={styles.backButton} href="/signin">
             Back to Sign In
           </Button>
         </>

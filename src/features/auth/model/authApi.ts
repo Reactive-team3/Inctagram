@@ -1,5 +1,10 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { RegisterRequest } from '@/features/auth/model/types'
+import {
+  EmailResendingRequest,
+  RegisterRequest,
+  SignInRequest,
+  SignInResponse,
+} from '@/features/auth/model/types'
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -10,7 +15,28 @@ export const authApi = baseApi.injectEndpoints({
         body,
       }),
     }),
-    logout: builder.mutation({
+    emailResending: builder.mutation<void, EmailResendingRequest>({
+      query: ({ email, recaptchaToken }) => ({
+        url: '/auth/registration-email-resending',
+        method: 'POST',
+        body: { email, recaptchaToken },
+      }),
+    }),
+    confirmEmail: builder.mutation<void, { code: string }>({
+      query: ({ code }) => ({
+        url: `/auth/registration-confirmation`,
+        method: 'POST',
+        body: { code },
+      }),
+    }),
+    signIn: builder.mutation<SignInResponse, SignInRequest>({
+      query: body => ({
+        url: '/auth/login',
+        method: 'POST',
+        body,
+      }),
+    }),
+    logout: builder.mutation<void, void>({
       query: () => ({
         url: '/auth/logout',
         method: 'POST',
@@ -19,4 +45,10 @@ export const authApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useRegisterMutation, useLogoutMutation } = authApi
+export const {
+  useRegisterMutation,
+  useEmailResendingMutation,
+  useConfirmEmailMutation,
+  useSignInMutation,
+  useLogoutMutation,
+} = authApi
