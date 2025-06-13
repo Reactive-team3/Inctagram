@@ -3,7 +3,7 @@ import { Typography } from '@/shared/ui/typography/Typography'
 import { VerificationForm } from '@/features/ui/verivicationForm/VerificationForm'
 import Image from 'next/image'
 
-const Verification = () => {
+export const VerificationClientPage = () => {
   return (
     <div className={styles.verificationPage}>
       <div className={styles.verificationActiveBlock}>
@@ -23,5 +23,3 @@ const Verification = () => {
     </div>
   )
 }
-
-export default Verification

@@ -1,10 +1,11 @@
-import styles from './congratulation.module.scss'
 import { Typography } from '@/shared/ui/typography/Typography'
-import Image from 'next/image'
 import { Button } from '@/shared/ui/button/Button'
 import Link from 'next/link'
+import Image from 'next/image'
+import styles from './congratulation.module.scss'
+import { publicRoutes } from '@/shared/config/routes/routes'
 
-const Congratulation = () => {
+export const CongratulationsClientPage = () => {
   return (
     <div className={styles.congratulationPage}>
       <div className={styles.congratulationActiveBlock}>
@@ -16,7 +17,7 @@ const Congratulation = () => {
             Your email has been confirmed
           </Typography>
         </div>
-        <Button as={Link} href="/signin">
+        <Button as={Link} href={publicRoutes.auth.SIGNIN}>
           Sign In
         </Button>
       </div>
@@ -26,5 +27,3 @@ const Congratulation = () => {
     </div>
   )
 }
-
-export default Congratulation

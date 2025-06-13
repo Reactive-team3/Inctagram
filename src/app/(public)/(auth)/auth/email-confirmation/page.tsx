@@ -1,4 +1,4 @@
-import { EmailConfirmationClient } from '@/features/auth/ui/emailConfirmation/emailConfirmation'
+import { EmailConfirmationClient } from '@/app/(public)/(auth)/auth/email-confirmation/ui/EmailConfirmationClientPage'
 
 const EmailConfirmation = async ({
   searchParams,
