@@ -8,6 +8,7 @@ import { Loader } from '@/shared/ui/loader/Loader'
 import { useSignUpForm } from '@/features/auth/lib/useSignUpForm'
 import Link from 'next/link'
 import SignUpModal from '@/shared/ui/signUpModal/SignUpModal'
+import { publicRoutes } from '@/shared/config/routes/routes'
 
 export const SignUpForm = () => {
   const { control, handleSubmit, onSubmit, isLoading, modalOpen, onModalClose, email } =
@@ -38,11 +39,11 @@ export const SignUpForm = () => {
         <ControlledCheckbox control={control} name={'agreeToTerms'} defaultValue={false} />
         <Typography as="div" variant="body2">
           I agree to the
-          <Button as={Link} variant="transparent" href="/terms">
+          <Button as={Link} variant="transparent" href={publicRoutes.auth.TERMS}>
             <Typography variant="link1">Terms of Service </Typography>
           </Button>
           and
-          <Button as={Link} variant="transparent" href="/policy">
+          <Button as={Link} variant="transparent" href={publicRoutes.auth.POLICY}>
             <Typography variant="link1">Privacy Policy</Typography>
           </Button>
         </Typography>
@@ -53,7 +54,7 @@ export const SignUpForm = () => {
       </Button>
       {isLoading && <Loader />}
       <Typography variant="body1">Do you have an account?</Typography>
-      <Button as={Link} variant="text" href="/signin">
+      <Button as={Link} variant="text" href={publicRoutes.auth.SIGNIN}>
         Sign In
       </Button>
     </form>

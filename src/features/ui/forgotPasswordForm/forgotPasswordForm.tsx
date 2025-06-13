@@ -10,6 +10,7 @@ import { Button } from '@/shared/ui/button/Button'
 import { Typography } from '@/shared/ui/typography/Typography'
 import Link from 'next/link'
 import { ReCaptcha } from '@/shared/ui/recaptcha/ReCaptcha'
+import { publicRoutes } from '@/shared/config/routes/routes'
 
 export const ForgotPasswordForm = () => {
   const [active, setActive] = useState<boolean>(false)
@@ -30,17 +31,15 @@ export const ForgotPasswordForm = () => {
     },
   })
 
-  // Отслеживаем значение email поля
   const emailValue = watch('email')
 
-  // Проверяем, валидна ли форма и подтвержден ли reCAPTCHA
   const isFormValid = emailValue && !errors.email && !!captchaToken
   const isButtonDisabled = isSubmitting || !isFormValid
 
   const onSubmit = async (data: FormValues) => {
     reset()
     setActive(true)
-    setCaptchaToken(null) // Сбрасываем токен после отправки
+    setCaptchaToken(null)
     return data
   }
 
@@ -76,7 +75,12 @@ export const ForgotPasswordForm = () => {
             {isSubmitting ? 'Sending...' : 'Send Link'}
           </Button>
 
-          <Button as={Link} variant="text" className={styles.backButton} href="/signin">
+          <Button
+            as={Link}
+            variant="text"
+            className={styles.backButton}
+            href={publicRoutes.auth.SIGNIN}
+          >
             Back to Sign In
           </Button>
 
@@ -96,7 +100,12 @@ export const ForgotPasswordForm = () => {
             Send Link Again
           </Button>
 
-          <Button as={Link} variant="text" className={styles.backButton} href="/signin">
+          <Button
+            as={Link}
+            variant="text"
+            className={styles.backButton}
+            href={publicRoutes.auth.SIGNIN}
+          >
             Back to Sign In
           </Button>
         </>

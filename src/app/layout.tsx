@@ -1,4 +1,4 @@
-import './globals.css'
+import '@/shared/config/styles/index.scss'
 import { ReactNode } from 'react'
 import styles from './layout.module.scss'
 import '@/shared/config/styles/index.scss'
