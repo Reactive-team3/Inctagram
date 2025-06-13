@@ -8,9 +8,13 @@ import { Button } from '@/shared/ui/button/Button'
 import { Typography } from '@/shared/ui/typography/Typography'
 import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { ReCaptcha } from '@/shared/ui/recaptcha/ReCaptcha'
+
 import Link from 'next/link'
 import styles from './forgotPasswordForm.module.scss'
 import { usePasswordRecoveryMutation } from '@/features/auth/model/authApi'
+
+import { publicRoutes } from '@/shared/config/routes/routes'
+
 
 export const ForgotPasswordForm = () => {
   const [active, setActive] = useState(false)
@@ -28,14 +32,24 @@ export const ForgotPasswordForm = () => {
     defaultValues: { email: '' },
   })
 
+
   const [passwordRecovery, { isLoading }] = usePasswordRecoveryMutation()
 
   const emailValue = watch('email')
+
   const isFormValid = emailValue && !errors.email && !!captchaToken
   const isButtonDisabled = isSubmitting || !isFormValid
 
   const onSubmit = async (data: FormValues) => {
+
     if (!captchaToken) return
+
+    reset()
+    setActive(true)
+    setCaptchaToken(null)
+    return data
+  }
+
 
     try {
       await passwordRecovery({
@@ -79,7 +93,12 @@ export const ForgotPasswordForm = () => {
             {isLoading ? 'Sending...' : 'Send Link'}
           </Button>
 
-          <Button as={Link} variant="text" className={styles.backButton} href="/signin">
+          <Button
+            as={Link}
+            variant="text"
+            className={styles.backButton}
+            href={publicRoutes.auth.SIGNIN}
+          >
             Back to Sign In
           </Button>
 
@@ -98,7 +117,12 @@ export const ForgotPasswordForm = () => {
             Send Link Again
           </Button>
 
-          <Button as={Link} variant="text" className={styles.backButton} href="/signin">
+          <Button
+            as={Link}
+            variant="text"
+            className={styles.backButton}
+            href={publicRoutes.auth.SIGNIN}
+          >
             Back to Sign In
           </Button>
         </>
