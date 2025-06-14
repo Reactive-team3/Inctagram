@@ -4,6 +4,7 @@ import { useEmailResendingMutation } from '@/features/auth/model/authApi'
 import { verificationSchema, VerificationValues } from '@/features/model/verificationSchema'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { publicRoutes } from '@/shared/config/routes/routes'
 
 export const useEmailResendingForm = () => {
   const form = useForm<VerificationValues>({
@@ -20,7 +21,7 @@ export const useEmailResendingForm = () => {
 
   const onModalClose = () => {
     setModalOpen(false)
-    router.replace('/signin')
+    router.replace(publicRoutes.auth.SIGNIN)
   }
 
   const onSubmit = async (data: VerificationValues) => {
