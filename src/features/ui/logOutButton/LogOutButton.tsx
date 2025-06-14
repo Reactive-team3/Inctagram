@@ -9,6 +9,16 @@ export type LogOutButtonProps = {
 }
 
 export const LogOutButton = ({ className }: LogOutButtonProps) => {
+  // const [logout] = useLogoutMutation()
+  // const router = useRouter()
+  // const handleLogout = async () => {
+  //   try {
+  //     await logout({ refreshtoken: 'some-token' }).unwrap()
+  //     router.push('/signin')
+  //   } catch (error) {
+  //     console.log('some error')
+  //   }
+  // }
   const [openModal, setOpenModal] = useState(false)
   const handleClose = () => setOpenModal(false)
   const handleOpen = () => setOpenModal(true)

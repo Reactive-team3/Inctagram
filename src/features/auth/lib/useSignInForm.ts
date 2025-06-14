@@ -37,8 +37,6 @@ export const useSignInForm = () => {
       form.reset()
 
       // Redirect to create profile page
-      //todo
-      // router.push('/createProfile')
     }
   }
 
