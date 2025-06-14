@@ -36,6 +36,16 @@ export const authApi = baseApi.injectEndpoints({
         body,
       }),
     }),
+    passwordRecovery: builder.mutation<void, EmailResendingRequest>({
+      query: ({ email, recaptchaToken }) => ({
+        url: '/auth/password-recovery',
+        method: 'POST',
+        body: {
+          email,
+          recaptchaToken,
+        },
+      }),
+    }),
   }),
 })
 
@@ -44,4 +54,5 @@ export const {
   useEmailResendingMutation,
   useConfirmEmailMutation,
   useSignInMutation,
+  usePasswordRecoveryMutation,
 } = authApi

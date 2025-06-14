@@ -1,58 +1,37 @@
 'use client'
 
-import styles from './forgotPasswordForm.module.scss'
-import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
-import { emailSchema, FormValues } from '@/features/model/forgotPasswordSchema'
 import { Button } from '@/shared/ui/button/Button'
 import { Typography } from '@/shared/ui/typography/Typography'
-import Link from 'next/link'
+import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { ReCaptcha } from '@/shared/ui/recaptcha/ReCaptcha'
+
+import Link from 'next/link'
+import styles from './forgotPasswordForm.module.scss'
+
 import { publicRoutes } from '@/shared/config/routes/routes'
+import { useForgotPassword } from '@/features/auth/lib/useForgotPassword'
+import { Loader } from '@/shared/ui/loader/Loader'
+import AuthModal from '@/shared/ui/signUpModal/AuthModal'
 
 export const ForgotPasswordForm = () => {
-  const [active, setActive] = useState<boolean>(false)
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
-
   const {
     control,
     handleSubmit,
-    reset,
-    watch,
-    formState: { isSubmitting, errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(emailSchema),
-    mode: 'onBlur',
-    reValidateMode: 'onBlur',
-    defaultValues: {
-      email: '',
-    },
-  })
-
-  const emailValue = watch('email')
-
-  const isFormValid = emailValue && !errors.email && !!captchaToken
-  const isButtonDisabled = isSubmitting || !isFormValid
-
-  const onSubmit = async (data: FormValues) => {
-    reset()
-    setActive(true)
-    setCaptchaToken(null)
-    return data
-  }
-
-  const handleRecaptchaVerify = (token: string) => {
-    setCaptchaToken(token)
-  }
-
-  const handleRecaptchaExpired = () => {
-    setCaptchaToken(null)
-  }
+    onSubmit,
+    isLoading,
+    setCaptchaToken,
+    modalOpen,
+    onModalClose,
+    email,
+    isLinkSent,
+  } = useForgotPassword()
 
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+      <AuthModal onClose={onModalClose} open={modalOpen} modalTitle="Email sent">
+        We have sent a link to confirm your email to {email}
+      </AuthModal>
+
       <ControlledInput
         name="email"
         label="Email"
@@ -63,16 +42,17 @@ export const ForgotPasswordForm = () => {
       <Typography as="p" variant="subtitle1" className={styles.instructions}>
         Enter your email address and we will send you further instructions
       </Typography>
-      {!active ? (
+
+      {!isLinkSent ? (
         <>
           <Button
             type="submit"
             className={styles.sendButton}
             fullWidth
             variant="primary"
-            disabled={isButtonDisabled}
+            disabled={isLoading}
           >
-            {isSubmitting ? 'Sending...' : 'Send Link'}
+            Send Link
           </Button>
 
           <Button
@@ -83,10 +63,9 @@ export const ForgotPasswordForm = () => {
           >
             Back to Sign In
           </Button>
-
-          {/* ReCaptcha компонент */}
+          {isLoading && <Loader />}
           <div className={styles.recaptchaContainer}>
-            <ReCaptcha onVerify={handleRecaptchaVerify} onExpired={handleRecaptchaExpired} />
+            <ReCaptcha onVerify={setCaptchaToken} onExpired={() => setCaptchaToken(null)} />
           </div>
         </>
       ) : (
@@ -94,9 +73,9 @@ export const ForgotPasswordForm = () => {
           <Typography as="p" variant="subtitle2" className={styles.instructionsActive}>
             The link has been sent by email.
             <br />
-            If you dont receive an email send link again
+            If you don’t receive an email, try again.
           </Typography>
-          <Button fullWidth type="submit" className={styles.sendButton} disabled={isSubmitting}>
+          <Button fullWidth type="submit" className={styles.sendButton} disabled={isLoading}>
             Send Link Again
           </Button>
 
