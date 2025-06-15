@@ -35,7 +35,7 @@ export const Modal = ({
   <Dialog.Root open={open} onOpenChange={onClose} {...rest}>
     <Dialog.Portal>
       <Dialog.Overlay className={s.Overlay} />
-      <Dialog.Content className={clsx(s.Content, s[size])}>
+      <Dialog.Content className={clsx(s.Content, s[size])} aria-describedby={undefined}>
         <Dialog.Title className={s.Title}>{modalTitle}</Dialog.Title>
         <hr className={s.divider} />
         <div className={className}>{children}</div>
