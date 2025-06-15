@@ -5,6 +5,9 @@ import { usePasswordRecoveryMutation } from '@/features/auth/model/authApi'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { publicRoutes } from '@/shared/config/routes/routes'
+import { addNotification } from '@/shared/model/notifications/notificationsSlice'
+import { nanoid } from 'nanoid'
+import { useDispatch } from 'react-redux'
 
 export const useForgotPassword = () => {
   const form = useForm<FormValues>({
@@ -19,6 +22,7 @@ export const useForgotPassword = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const [email, setEmail] = useState('')
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const onModalClose = () => {
     setModalOpen(false)
@@ -32,6 +36,14 @@ export const useForgotPassword = () => {
     })
 
     if (!('error' in result)) {
+      dispatch(
+        addNotification({
+          id: nanoid(),
+          message: 'Link was successfully sent',
+          variant: 'success',
+          duration: 4000,
+        })
+      )
       form.reset()
       setEmail(data.email)
       setModalOpen(true)
