@@ -5,17 +5,20 @@ import { SignInFormValues, signInSchema } from '@/features/model/signInSchema'
 import { nanoid } from 'nanoid'
 import { addNotification } from '@/shared/model/notifications/notificationsSlice'
 import { useSignInMutation } from '@/features/auth/model/authApi'
-import { setAccessToken } from '@/shared/model/auth/authSlice'
+import { setAccessToken, setUserEmail } from '@/shared/model/auth/authSlice'
+import { useRouter } from 'next/navigation'
 
 export const useSignInForm = () => {
+  const [signIn, { isLoading }] = useSignInMutation()
+  const router = useRouter()
+  const dispatch = useDispatch()
+
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     mode: 'onBlur',
     reValidateMode: 'onBlur',
   })
 
-  const [signIn, { isLoading }] = useSignInMutation()
-  const dispatch = useDispatch()
   const onSubmit = async (data: SignInFormValues) => {
     const result = await signIn({
       usernameOrEmail: data.email,
@@ -25,6 +28,7 @@ export const useSignInForm = () => {
     if (!('error' in result)) {
       // Store access token in Redux
       dispatch(setAccessToken(result.data.accessToken))
+      dispatch(setUserEmail(data.email))
 
       dispatch(
         addNotification({
@@ -35,10 +39,8 @@ export const useSignInForm = () => {
         })
       )
       form.reset()
-
       // Redirect to create profile page
-      //todo
-      // router.push('/createProfile')
+      router.push('/profile')
     }
   }
 

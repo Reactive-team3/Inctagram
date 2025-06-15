@@ -1,18 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { baseApi } from '@/shared/api/baseApi'
 import notificationsReducer from '@/shared/model/notifications/notificationsSlice'
-import userReducer from '@/shared/model/user/userSlice'
-import authReducer from '@/shared/model/auth/authSlice'
 import { listenerMiddleware } from '@/shared/config/listenerMiddleware/listenerMiddleware'
 
 import '@/shared/listeners/globalErrorListeners'
+import { authSlice } from '@/shared/model/auth/authSlice'
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     notifications: notificationsReducer,
-    user: userReducer,
-    auth: authReducer,
+    auth: authSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware).concat(baseApi.middleware),

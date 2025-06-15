@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { Loader } from '@/shared/ui/loader/Loader'
 import { Typography } from '@/shared/ui/typography/Typography'
 import { useSignInForm } from '@/features/auth/lib/useSignInForm'
-import { publicRoutes } from '@/shared/config/routes/routes'
 
 export const SignInForm = () => {
   const { control, handleSubmit, onSubmit, isLoading } = useSignInForm()
@@ -21,23 +20,23 @@ export const SignInForm = () => {
         label="Password"
         type="password"
       />
-
+      P@ssw0rd!
       <div className={styles.buttons}>
         <Button
           as={Link}
-          href={publicRoutes.auth.FORGOT_PASSWORD}
-          variant="text"
+          href="/forgot-password"
+          variant={'text'}
           className={styles.forgotPasswordButton}
           style={{ color: 'grey' }}
         >
           Forgot Password
         </Button>
-        <Button type="submit" fullWidth>
+        <Button type="submit" fullWidth disabled={isLoading}>
           Sign In
         </Button>
         {isLoading && <Loader />}
         <Typography variant="body1">Don’t have an account?</Typography>
-        <Button as={Link} href={publicRoutes.auth.SIGNUP} variant={'text'}>
+        <Button as={Link} href="/signup" variant="text">
           Sign Up
         </Button>
       </div>

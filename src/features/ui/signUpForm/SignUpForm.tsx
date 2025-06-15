@@ -7,8 +7,7 @@ import { Typography } from '@/shared/ui/typography/Typography'
 import { Loader } from '@/shared/ui/loader/Loader'
 import { useSignUpForm } from '@/features/auth/lib/useSignUpForm'
 import Link from 'next/link'
-import AuthModal from '@/shared/ui/signUpModal/AuthModal'
-import { publicRoutes } from '@/shared/config/routes/routes'
+import SignUpModal from '@/shared/ui/signUpModal/SignUpModal'
 
 export const SignUpForm = () => {
   const { control, handleSubmit, onSubmit, isLoading, modalOpen, onModalClose, email } =
@@ -16,9 +15,7 @@ export const SignUpForm = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <AuthModal onClose={onModalClose} open={modalOpen} modalTitle="Email sent">
-        We have sent a link to confirm your email to {email}
-      </AuthModal>
+      <SignUpModal onClose={onModalClose} open={modalOpen} email={email} modalTitle="Email sent" />
 
       <ControlledInput placeholder="Username" control={control} name="username" label="Username" />
       <ControlledInput placeholder="Email" control={control} name="email" label="Email" />
@@ -41,11 +38,11 @@ export const SignUpForm = () => {
         <ControlledCheckbox control={control} name={'agreeToTerms'} defaultValue={false} />
         <Typography as="div" variant="body2">
           I agree to the
-          <Button as={Link} variant="transparent" href={publicRoutes.auth.TERMS}>
+          <Button as={Link} variant="transparent" href="/terms">
             <Typography variant="link1">Terms of Service </Typography>
           </Button>
           and
-          <Button as={Link} variant="transparent" href={publicRoutes.auth.POLICY}>
+          <Button as={Link} variant="transparent" href="/policy">
             <Typography variant="link1">Privacy Policy</Typography>
           </Button>
         </Typography>
@@ -56,7 +53,7 @@ export const SignUpForm = () => {
       </Button>
       {isLoading && <Loader />}
       <Typography variant="body1">Do you have an account?</Typography>
-      <Button as={Link} variant="text" href={publicRoutes.auth.SIGNIN}>
+      <Button as={Link} variant="text" href="/signin">
         Sign In
       </Button>
     </form>

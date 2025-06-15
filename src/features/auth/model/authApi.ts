@@ -1,7 +1,6 @@
 import { baseApi } from '@/shared/api/baseApi'
 import {
   EmailResendingRequest,
-  NewPassword,
   RegisterRequest,
   SignInRequest,
   SignInResponse,
@@ -30,13 +29,6 @@ export const authApi = baseApi.injectEndpoints({
         body: { code },
       }),
     }),
-    newPassword: builder.mutation<void, NewPassword>({
-      query: ({ newPassword, recoveryCode }) => ({
-        url: `/auth/new-password`,
-        method: 'POST',
-        body: { newPassword, recoveryCode },
-      }),
-    }),
     signIn: builder.mutation<SignInResponse, SignInRequest>({
       query: body => ({
         url: '/auth/login',
@@ -44,14 +36,11 @@ export const authApi = baseApi.injectEndpoints({
         body,
       }),
     }),
-    passwordRecovery: builder.mutation<void, EmailResendingRequest>({
-      query: ({ email, recaptchaToken }) => ({
-        url: '/auth/password-recovery',
+    refreshToken: builder.mutation<SignInResponse, void>({
+      query: body => ({
+        url: '/auth/refresh-token',
         method: 'POST',
-        body: {
-          email,
-          recaptchaToken,
-        },
+        body, // empty object {}
       }),
     }),
   }),
@@ -62,6 +51,5 @@ export const {
   useEmailResendingMutation,
   useConfirmEmailMutation,
   useSignInMutation,
-  usePasswordRecoveryMutation,
-  useNewPasswordMutation,
+  useRefreshTokenMutation,
 } = authApi

@@ -15,7 +15,7 @@ export const FirstNav: SidebarItemType[] = [
 
 export const BASIC_NAVIGATION: SidebarItemType[] = [
   {
-    path: '/',
+    path: '/feed',
     text: 'Feed',
     name: 'home-outline',
   },

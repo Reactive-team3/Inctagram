@@ -1,18 +1,32 @@
 'use client'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import styles from './createNewPasswordForm.module.scss'
 import { ControlledInput } from '@/shared/ui/controlled/ControlledInput'
 import { Button } from '@/shared/ui/button/Button'
 import { Typography } from '@/shared/ui/typography/Typography'
+import {
+  createNewPasswordSchema,
+  createNewPasswordSchemaFormValues,
+} from '@/features/model/createNewPasswordSchema'
+import { useRouter } from 'next/navigation'
 
-import { useNewPassword } from '@/features/auth/lib/useNewPassword'
-import { Loader } from '@/shared/ui/loader/Loader'
+export const CreateNewPasswordForm = () => {
+  const router = useRouter()
+  const { control, handleSubmit, reset } = useForm<createNewPasswordSchemaFormValues>({
+    resolver: zodResolver(createNewPasswordSchema),
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
+  })
 
-type props = {
-  code?: string
-}
-
-export const CreateNewPasswordForm = ({ code }: props) => {
-  const { onSubmit, control, handleSubmit, isLoading } = useNewPassword({ code })
+  const onSubmit = (data: createNewPasswordSchemaFormValues) => {
+    reset()
+    handleRedirect()
+    return data
+  }
+  const handleRedirect = () => {
+    router.push('/signin')
+  }
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -37,8 +51,6 @@ export const CreateNewPasswordForm = ({ code }: props) => {
       <Button fullWidth type="submit" className={styles.buttonSubmit}>
         Create New Password
       </Button>
-
-      {isLoading && <Loader />}
     </form>
   )
 }
