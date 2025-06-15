@@ -5,19 +5,13 @@ import { Typography } from '@/shared/ui/typography/Typography'
 import { Button } from '@/shared/ui/button/Button'
 import { Modal, ModalProps } from '@/shared/ui/modal/Modal'
 
-type SignUpModalProps = ModalProps & {
-  email: string
-}
-
-const SignUpModal = (props: SignUpModalProps) => {
-  const { open, onClose, email, ...rest } = props
+const AuthModal = (props: ModalProps) => {
+  const { open, onClose, children, ...rest } = props
 
   return (
     <Modal {...rest} open={open} onClose={onClose} modalTitle="Email sent">
       <div className={styles.modal}>
-        <Typography variant="body1">
-          We have sent a link to confirm your email to {email}
-        </Typography>
+        <Typography variant="body1">{children}</Typography>
         <Button className={styles.button} onClick={onClose}>
           Ok
         </Button>
@@ -26,4 +20,4 @@ const SignUpModal = (props: SignUpModalProps) => {
   )
 }
 
-export default SignUpModal
+export default AuthModal

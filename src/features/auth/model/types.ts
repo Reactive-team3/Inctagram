@@ -14,3 +14,8 @@ export type SignInRequest = {
 export type SignInResponse = {
   accessToken: string
 }
+
+export type NewPassword = {
+  newPassword: string
+  recoveryCode: string
+}

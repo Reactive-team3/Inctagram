@@ -7,7 +7,7 @@ import { Typography } from '@/shared/ui/typography/Typography'
 import { Loader } from '@/shared/ui/loader/Loader'
 import { useSignUpForm } from '@/features/auth/lib/useSignUpForm'
 import Link from 'next/link'
-import SignUpModal from '@/shared/ui/signUpModal/SignUpModal'
+import AuthModal from '@/shared/ui/signUpModal/AuthModal'
 import { publicRoutes } from '@/shared/config/routes/routes'
 
 export const SignUpForm = () => {
@@ -16,7 +16,9 @@ export const SignUpForm = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <SignUpModal onClose={onModalClose} open={modalOpen} email={email} modalTitle="Email sent" />
+      <AuthModal onClose={onModalClose} open={modalOpen} modalTitle="Email sent">
+        We have sent a link to confirm your email to {email}
+      </AuthModal>
 
       <ControlledInput placeholder="Username" control={control} name="username" label="Username" />
       <ControlledInput placeholder="Email" control={control} name="email" label="Email" />
