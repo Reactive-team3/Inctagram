@@ -12,3 +12,6 @@ export const publicRoutes = {
   },
   PUBLIC_PAGE: '/hero-page',
 }
+export const privateRoutes = {
+  PROFILE: '/profile',
+}
