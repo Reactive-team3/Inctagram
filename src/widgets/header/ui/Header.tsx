@@ -12,7 +12,7 @@ export const Header = () => {
   const token = useSelector(selectAccessToken)
   const pathname = usePathname()
   const isAuthPage = pathname === publicRoutes.auth.SIGNIN || pathname === publicRoutes.auth.SIGNUP
-  console.warn('Token exists:', !!token)
+
   return (
     <header className={styles.header}>
       <span className={styles.name}>Instagram</span>
