@@ -1,13 +1,13 @@
 import { BackButton } from '@/shared/ui/backButton/BackButton'
 import { Typography } from '@/shared/ui/typography/Typography'
-import styles from './terms.module.scss'
+import styles from './policy.module.scss'
 
-const Terms = () => {
+const Policy = () => {
   return (
     <div className={styles.container}>
       <BackButton />
       <Typography variant="h1" className={styles.title}>
-        Terms of Service
+        Privacy Policy
       </Typography>
       <Typography as="div" variant="body1" className={styles.textContainer}>
         <Typography as="p" variant="subtitle1">
@@ -92,5 +92,4 @@ const Terms = () => {
     </div>
   )
 }
-
-export default Terms
+export default Policy

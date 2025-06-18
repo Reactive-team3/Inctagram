@@ -6,11 +6,10 @@ import Icon from '@/shared/ui/icon/Icon'
 import styles from './backButton.module.scss'
 export const BackButton = () => {
   const router = useRouter()
-
   return (
-    <Button variant="transparent" onClick={() => router.back()}>
+    <Button className={styles.button} variant="transparent" onClick={() => router.back()}>
       <Icon name="arrow-forward" className={styles.icon} />
-      <span>Back</span>
+      <span>Back to Sign Up</span>
     </Button>
   )
 }
