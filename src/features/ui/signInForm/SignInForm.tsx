@@ -21,7 +21,6 @@ export const SignInForm = () => {
         label="Password"
         type="password"
       />
-
       <div className={styles.buttons}>
         <Button
           as={Link}
