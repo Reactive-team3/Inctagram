@@ -6,6 +6,8 @@ import { nanoid } from 'nanoid'
 import { addNotification } from '@/shared/model/notifications/notificationsSlice'
 import { useSignInMutation } from '@/features/auth/model/authApi'
 import { setAccessToken } from '@/shared/model/auth/authSlice'
+import { privateRoutes } from '@/shared/config/routes/routes'
+import { useRouter } from 'next/navigation'
 
 export const useSignInForm = () => {
   const form = useForm<SignInFormValues>({
@@ -16,6 +18,7 @@ export const useSignInForm = () => {
 
   const [signIn, { isLoading }] = useSignInMutation()
   const dispatch = useDispatch()
+  const router = useRouter()
   const onSubmit = async (data: SignInFormValues) => {
     const result = await signIn({
       usernameOrEmail: data.email,
@@ -35,10 +38,8 @@ export const useSignInForm = () => {
         })
       )
       form.reset()
-
       // Redirect to create profile page
-      //todo
-      // router.push('/createProfile')
+      router.push(privateRoutes.PROFILE)
     }
   }
 
