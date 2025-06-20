@@ -11,7 +11,15 @@ export const publicRoutes = {
     POLICY: '/auth/policy',
   },
   PUBLIC_PAGE: '/hero-page',
+  MAIN_PAGE: '/',
 }
 export const privateRoutes = {
-  PROFILE: '/profile',
+  FEED: '/feed',
+  CREATE: '/create',
+  MY_PROFILE: '/my-profile',
+  PROFILE_SETTINGS: '/profile-settings',
+  MESSENGER: '/messenger',
+  SEARCH: '/search',
+  STATISTICS: '/statistics',
+  FAVORITES: '/favorites',
 }
