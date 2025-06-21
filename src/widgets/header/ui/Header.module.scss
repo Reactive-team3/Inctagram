@@ -16,3 +16,7 @@
 .name {
   cursor: pointer;
 }
+.buttons {
+  display: flex;
+  gap: rem(5);
+}

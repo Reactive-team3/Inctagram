@@ -19,8 +19,7 @@ export function ProtectedRoute({ children }: Props) {
   const [checked, setChecked] = useState(false)
 
   // RTK Query hook для обновления токена
-  const [refreshToken, { isLoading: refreshLoading }] = useRefreshTokenMutation()
-
+  const [refreshToken, { isLoading: refreshisLoading }] = useRefreshTokenMutation()
   useEffect(() => {
     async function checkAuth() {
       if (!token) {
@@ -39,36 +38,7 @@ export function ProtectedRoute({ children }: Props) {
     checkAuth()
   }, [token, dispatch, router, refreshToken])
 
-  if (!checked || refreshLoading) return <Loader />
+  if (!checked || refreshisLoading) return <Loader />
 
   return <>{children}</>
 }
-// 'use client'
-// import { useSelector } from 'react-redux'
-// import { useRouter } from 'next/navigation'
-// import React, { useEffect, useState } from 'react'
-// import { selectAccessToken } from '@/shared/model/auth/authSlice'
-// import { Loader } from '@/shared/ui/loader/Loader'
-//
-// interface Props {
-//   children: React.ReactNode
-// }
-//
-// export function ProtectedRoute({ children }: Props) {
-//   const token = useSelector(selectAccessToken)
-//   const router = useRouter()
-//   const [checked, setChecked] = useState(false)
-//
-//   useEffect(() => {
-//     if (!token) {
-//       // router.replace(publicRoutes.auth.SIGNIN)
-//       router.replace('/')
-//     } else {
-//       setChecked(true)
-//     }
-//   }, [token, router])
-//
-//   if (!checked) return <Loader />
-//
-//   return <>{children}</>
-// }

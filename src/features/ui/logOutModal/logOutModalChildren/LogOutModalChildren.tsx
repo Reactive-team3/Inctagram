@@ -35,7 +35,7 @@ export const LogOutModalChildren = ({ onClick, emailName }: logOutModalChildrenP
           duration: 4000,
         })
       )
-      router.push(publicRoutes.auth.SIGNIN)
+      router.push(publicRoutes.MAIN_PAGE)
     } catch (e) {
       if (e) {
         dispatch(clearNotifications())

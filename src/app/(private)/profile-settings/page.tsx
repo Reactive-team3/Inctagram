@@ -1,7 +1,7 @@
 import React from 'react'
 import ProfileTabs from '@/widgets/profileTabs/ui/profileTabs'
 
-const Profile = () => {
+const ProfileSettings = () => {
   return (
     <div>
       <ProfileTabs />
@@ -9,4 +9,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default ProfileSettings

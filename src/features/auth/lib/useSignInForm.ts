@@ -39,7 +39,7 @@ export const useSignInForm = () => {
       )
       form.reset()
       // Redirect to create profile page
-      router.push(privateRoutes.PROFILE)
+      router.push(privateRoutes.PROFILE_SETTINGS)
     }
   }
 
