@@ -2,7 +2,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { selectAccessToken, setAccessToken } from '@/shared/model/auth/authSlice'
+import {
+  selectAccessToken,
+  selectIsLoggingOut,
+  setAccessToken,
+} from '@/shared/model/auth/authSlice'
 import { useRefreshTokenMutation } from '@/features/auth/model/authApi'
 import { Loader } from '@/shared/ui/loader/Loader'
 import { publicRoutes } from '@/shared/config/routes/routes'
@@ -13,15 +17,22 @@ interface Props {
 
 export function ProtectedRoute({ children }: Props) {
   const token = useSelector(selectAccessToken)
+  const isLoggingOut = useSelector(selectIsLoggingOut)
   const dispatch = useDispatch()
   const router = useRouter()
 
   const [checked, setChecked] = useState(false)
 
-  // RTK Query hook для обновления токена
   const [refreshToken, { isLoading: refreshisLoading }] = useRefreshTokenMutation()
+
   useEffect(() => {
     async function checkAuth() {
+      // Don't refresh token during logout process
+      if (isLoggingOut) {
+        router.replace(publicRoutes.MAIN_PAGE)
+        return
+      }
+
       if (!token) {
         try {
           const res = await refreshToken().unwrap()
@@ -36,9 +47,10 @@ export function ProtectedRoute({ children }: Props) {
     }
 
     checkAuth()
-  }, [token, dispatch, router, refreshToken])
+  }, [token, isLoggingOut, dispatch, router, refreshToken])
 
-  if (!checked || refreshisLoading) return <Loader />
+  // Show loader during auth check or logout process
+  if (!checked || refreshisLoading || isLoggingOut) return <Loader />
 
   return <>{children}</>
 }
