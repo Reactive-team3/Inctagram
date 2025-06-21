@@ -38,7 +38,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <span className={styles.name}>Instagram</span>
-      <div className="flex items-center gap-4">
+      <div className={styles.buttons}>
         <SelectComponent
           defaultValue={selectedLanguage}
           onChangeAction={handleLanguageChange}
