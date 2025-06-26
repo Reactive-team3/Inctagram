@@ -38,18 +38,11 @@ export const Slider: React.FC<{
   }
 
   return (
-    <div style={{ position: 'relative', height: '100%' }}>
-      <div style={{ overflow: 'hidden', height: '100%' }}>
-        <div
-          ref={sliderInnerRef}
-          style={{
-            display: 'flex',
-            transition: 'transform 0.5s ease',
-            height: '100%',
-          }}
-        >
+    <div className={styles.sliderContainer}>
+      <div className={styles.sliderWrapper}>
+        <div ref={sliderInnerRef} className={styles.sliderInner}>
           {slides.map(slide => (
-            <div key={slide.id} style={{ flexShrink: 0, height: '100%', position: 'relative' }}>
+            <div key={slide.id} className={styles.slide}>
               {slide.content}
             </div>
           ))}
@@ -70,7 +63,7 @@ export const Slider: React.FC<{
             <button
               key={index}
               onClick={() => onIndexChangeAction(index)}
-              className={styles.sliderDots}
+              className={`${styles.sliderDots} ${index === currentIndex ? styles.activeDot : styles.inactiveDot}`}
               style={{ backgroundColor: index === currentIndex ? 'blue' : 'white' }}
             />
           ))}
