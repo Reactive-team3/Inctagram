@@ -1,0 +1,44 @@
+
+.sliderArrowNext {
+  position: absolute;
+  right: rem(10);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  color: white;
+  cursor: pointer;
+
+}
+
+.sliderArrowPrev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+  justify-content: center;
+  left: rem(10);
+}
+
+.dotsContainer{
+  position: absolute;
+  bottom: rem(10);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: rem(8);
+  zIndex: 10;
+}
+
+
+.sliderDots {
+  width: rem(8);
+  height: rem(8);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+
