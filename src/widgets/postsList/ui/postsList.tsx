@@ -20,8 +20,14 @@ export const PostsList = () => {
       },
       timestamp: '22 min ago',
       slides: [
-        { id: '1-0', content: <Image src="/user-images/image.png" alt="Slide 1" fill /> },
-        { id: '1-1', content: <Image src="/user-images/image.png" alt="Slide 2" fill /> },
+        {
+          id: '1-0',
+          content: <Image src="/user-images/image.png" alt="Slide 1" width={234} height={240} />,
+        },
+        {
+          id: '1-1',
+          content: <Image src="/user-images/image.png" alt="Slide 2" width={234} height={240} />,
+        },
       ],
     },
     {
@@ -37,8 +43,14 @@ export const PostsList = () => {
       },
       timestamp: '1 hour ago',
       slides: [
-        { id: '2-0', content: <Image src="/user-images/image.png" alt="Slide 1" fill /> },
-        { id: '2-1', content: <Image src="/user-images/image.png" alt="Slide 2" fill /> },
+        {
+          id: '2-0',
+          content: <Image src="/user-images/image.png" alt="Slide 1" width={234} height={240} />,
+        },
+        {
+          id: '2-1',
+          content: <Image src="/user-images/image.png" alt="Slide 2" width={234} height={240} />,
+        },
       ],
     },
     {
@@ -54,8 +66,14 @@ export const PostsList = () => {
       },
       timestamp: '1 hour ago',
       slides: [
-        { id: '3-0', content: <Image src="/user-images/image.png" alt="Slide 1" fill /> },
-        { id: '3-1', content: <Image src="/user-images/image.png" alt="Slide 2" fill /> },
+        {
+          id: '3-0',
+          content: <Image src="/user-images/image.png" alt="Slide 1" width={234} height={240} />,
+        },
+        {
+          id: '3-1',
+          content: <Image src="/user-images/image.png" alt="Slide 2" width={234} height={240} />,
+        },
       ],
     },
     {
@@ -71,8 +89,14 @@ export const PostsList = () => {
       },
       timestamp: '1 hour ago',
       slides: [
-        { id: '4-0', content: <Image src="/user-images/image.png" alt="Slide 1" fill /> },
-        { id: '4-1', content: <Image src="/user-images/image.png" alt="Slide 2" fill /> },
+        {
+          id: '4-0',
+          content: <Image src="/user-images/image.png" alt="Slide 1" width={234} height={240} />,
+        },
+        {
+          id: '4-1',
+          content: <Image src="/user-images/image.png" alt="Slide 2" width={234} height={240} />,
+        },
       ],
     },
   ])
