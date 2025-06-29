@@ -1,41 +1,12 @@
 import styles from './page.module.scss'
-import { Cards } from '@/shared/ui/cards/Cards'
-import { Typography } from '@/shared/ui/typography/Typography'
-import React from 'react'
+import { RegisteredUsers } from '@/widgets/registeredUsers/ui/registeredUsers'
+import { PostsList } from '@/widgets/postsList/ui/postsList'
 
 export default function HomePage() {
   return (
     <main className={styles.container}>
-      Public page content
-      <div className={styles.cards}>
-        <Cards>
-          <Typography as="h1" variant="h1" className={styles.title}>
-            URL profile
-          </Typography>
-          <Typography as="p" variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cupiditate fuga in,
-            mollitia nesciunt nisi praesentium ratione saepe sed vel?
-          </Typography>
-        </Cards>
-        <Cards>
-          <Typography as="h1" variant="h1" className={styles.title}>
-            URL profile
-          </Typography>
-          <Typography as="p" variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cupiditate fuga in,
-            mollitia nesciunt nisi praesentium ratione saepe sed vel?
-          </Typography>
-        </Cards>
-        <Cards>
-          <Typography as="h1" variant="h1" className={styles.title}>
-            URL profile
-          </Typography>
-          <Typography as="p" variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cupiditate fuga in,
-            mollitia nesciunt nisi praesentium ratione saepe sed vel?
-          </Typography>
-        </Cards>
-      </div>
+      <RegisteredUsers />
+      <PostsList />
     </main>
   )
 }

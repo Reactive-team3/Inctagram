@@ -1,0 +1,42 @@
+.registredContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: rem(72);
+  padding: 0 rem(24);
+  background-color: var(--color-dark-500);
+
+  .numberContainer {
+    display: flex;
+    width: rem(203);
+    height: rem(48);
+    background-color: var(--color-dark-700);
+
+    ul {
+      display: flex;
+      align-items: center;
+      margin: 0 auto;
+      list-style: none;
+      gap: rem(3);
+
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: rem(24);
+        height: rem(24);
+        position: relative;
+
+        &:not(:last-child)::after {
+          content: '';
+          position: absolute;
+          left: 100%;
+          margin-left: rem(2);
+          width: rem(1);
+          height: rem(30);
+          background-color: var(--color-dark-300);
+        }
+      }
+    }
+  }
+}
