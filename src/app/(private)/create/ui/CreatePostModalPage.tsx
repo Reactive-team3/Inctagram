@@ -90,38 +90,6 @@ export const CreatePostModalPage = () => {
     }
   }
 
-  // const handlePublish = async () => {
-  //   if (!selectedFile) {
-  //     //todo
-  //     alert('Please select an image.')
-  //     return
-  //   }
-  //
-  //   try {
-  //     const result = await createPost({
-  //       description: description || 'My new post', // или из state
-  //       images: [selectedFile], // важно: массив File
-  //     }).unwrap()
-  //
-  //     console.log('Post created:', result)
-  //
-  //     dispatch(
-  //       addNotification({
-  //         id: nanoid(),
-  //         message: 'Successfully Post Created',
-  //         variant: 'success',
-  //         duration: 4000,
-  //       })
-  //     )
-  //
-  //     router.push(privateRoutes.MY_PROFILE)
-  //   } catch (e) {
-  //     console.error('Failed to create post:', e)
-  //     //todo
-  //     alert('Something went wrong')
-  //   }
-  // }
-
   const getModalSize = (step: string): { size: ModalSize } => {
     switch (step) {
       case 'select':
