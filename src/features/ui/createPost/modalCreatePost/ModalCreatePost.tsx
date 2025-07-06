@@ -4,13 +4,13 @@ import { Dialog } from 'radix-ui'
 import s from './modalCreatePost.module.scss'
 import { clsx } from 'clsx'
 
-type ModalSize = 'lg' | 'md' | 'sm'
+export type ModalSize = 'lg' | 'md' | 'sm'
 
 // Define size configurations
 const MODAL_SIZES: Record<ModalSize, { width: number; height: number }> = {
   sm: { width: 400, height: 300 },
-  md: { width: 492, height: 564 },
-  lg: { width: 972, height: 564 },
+  md: { width: 492, height: 550 },
+  lg: { width: 972, height: 550 },
 }
 
 export type ModalProps = {

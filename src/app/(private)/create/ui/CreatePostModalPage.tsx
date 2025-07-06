@@ -1,52 +1,44 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { Button } from '@/shared/ui/button/Button'
 import Icon from '@/shared/ui/icon/Icon'
 import styles from './createPostModalPage.module.scss'
-import { ModalCreatePost } from '@/app/(private)/create/ui/modalCreatePost/ModalCreatePost'
+import {
+  ModalCreatePost,
+  ModalSize,
+} from '@/features/ui/createPost/modalCreatePost/ModalCreatePost'
 import { TextArea } from '@/shared/ui/textArea/TextArea'
 import { useCreatePostMutation } from '@/features/postApi/model/postApi'
 import { addNotification } from '@/shared/model/notifications/notificationsSlice'
 import { nanoid } from 'nanoid'
 import { privateRoutes } from '@/shared/config/routes/routes'
 import { useDispatch } from 'react-redux'
-
-type ModalSize = 'lg' | 'md' | 'sm'
+import { ZoomSlider } from '@/features/ui/createPost/zoomSlider/ZoomSlider'
+import { ImageGalleryPreview } from '@/features/ui/createPost/imageGalleryPreview/ImageGalleryPreview'
+import { ImageCarousel } from '@/features/ui/createPost/imageCarousel/ImageCarousel'
+import { Loader } from '@/shared/ui/loader/Loader'
+import { ImageUploader } from '@/shared/ui/imageUploader/ImageUploader'
 
 export const CreatePostModalPage = () => {
-  const router = useRouter()
-  const fileInputRef = useRef<HTMLInputElement>(null)
-
   const [step, setStep] = useState<'select' | 'crop' | 'preview'>('select')
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [selectedFile, setSelectedFile] = useState<File[]>([])
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [description, setDescription] = useState('')
+  const [showSlider, setShowSlider] = useState(false)
+  const [showImagePopup, setShowImagePopup] = useState(false)
+  const [zoom, setZoom] = useState(1)
 
   const [createPost, { isLoading }] = useCreatePostMutation()
   const dispatch = useDispatch()
-
+  const router = useRouter()
   const handleClose = () => router.back()
 
-  const handleUploadClick = () => fileInputRef.current?.click()
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    const isValidType = ['image/jpeg', 'image/png'].includes(file.type)
-    const isValidSize = file.size <= 20 * 1024 * 1024
-
-    if (!isValidType || !isValidSize) {
-      //todo
-      alert('Only JPEG/PNG files up to 20MB allowed')
-      return
-    }
-
-    setSelectedFile(file)
-    setPreviewUrl(URL.createObjectURL(file))
+  const handleFileChange = (files: File[]) => {
+    setSelectedFile(prev => [...prev, ...files])
+    setPreviewUrl(URL.createObjectURL(files[0]))
     setStep('crop')
   }
 
@@ -67,8 +59,10 @@ export const CreatePostModalPage = () => {
     }
 
     const formData = new FormData()
-    formData.append('description', description || 'My new post')
-    formData.append('images', selectedFile)
+    formData.append('description', description)
+    selectedFile.forEach(file => {
+      formData.append('images', file)
+    })
 
     try {
       await createPost(formData).unwrap()
@@ -139,7 +133,7 @@ export const CreatePostModalPage = () => {
             <Button variant="text" onClick={handleBack}>
               Back
             </Button>
-            <span>Publication</span>
+            {isLoading ? <Loader /> : 'Publication'}
             <Button variant="text" onClick={handlePublish} disabled={isLoading}>
               Publish
             </Button>
@@ -150,6 +144,34 @@ export const CreatePostModalPage = () => {
     }
   }
   const modalConfig = getModalSize(step)
+
+  const handleShowSlider = () => {
+    setShowSlider(prev => {
+      if (!prev) setShowImagePopup(false)
+      return !prev
+    })
+  }
+  const handleShowImagePopup = () => {
+    setShowImagePopup(prev => {
+      if (!prev) setShowSlider(false)
+      return !prev
+    })
+  }
+
+  const onRemoveAction = (index: number) => {
+    setSelectedFile(prev => {
+      const updated = prev.filter((_, i) => i !== index)
+
+      if (updated.length > 0) {
+        // If the removed image was the current preview, update it to the first one
+        setPreviewUrl(URL.createObjectURL(updated[0]))
+      } else {
+        setPreviewUrl(null)
+      }
+      return updated
+    })
+  }
+
   return (
     <ModalCreatePost
       open={true}
@@ -158,28 +180,46 @@ export const CreatePostModalPage = () => {
       size={modalConfig.size}
     >
       <div className={styles.container}>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/jpeg,image/png"
-          onChange={handleFileChange}
-          hidden
-        />
-
         {step === 'select' && (
           <div className={styles.placeholder}>
             <div className={styles.imageFrame}>
               <Icon name="image-outline" width={48} height={48} />
             </div>
-            <div className={styles.bottomButton}>
-              <Button onClick={handleUploadClick}>Select from computer</Button>
-            </div>
+            <ImageUploader onAddImageAction={handleFileChange}>
+              <Button>Select from computer</Button>
+            </ImageUploader>
           </div>
         )}
 
         {step === 'crop' && (
           <div className={styles.imagePreview}>
-            {previewUrl && <Image src={previewUrl} alt="Selected" fill className={styles.image} />}
+            <ImageCarousel images={selectedFile} zoom={zoom} />
+            <div className={styles.buttonsOverlay}>
+              <Button variant="secondary" onClick={handleNext}>
+                <Icon name="expand" />
+              </Button>
+
+              <div className={styles.sliderWrapper}>
+                {showSlider && <ZoomSlider zoom={zoom} onChangeAction={setZoom} />}
+                <Button variant="secondary" onClick={handleShowSlider}>
+                  <Icon name="maximize" color={showSlider ? 'var(--color-accent-500)' : ''} />
+                </Button>
+              </div>
+              <div>
+                <div className={styles.imageGalleryWrapper}>
+                  {showImagePopup && (
+                    <ImageGalleryPreview
+                      images={selectedFile}
+                      onAddImageAction={newFiles => setSelectedFile(prev => [...prev, ...newFiles])}
+                      onRemoveAction={onRemoveAction}
+                    />
+                  )}
+                </div>
+                <Button variant="secondary" onClick={handleShowImagePopup}>
+                  <Icon name="image" color={showImagePopup ? 'var(--color-accent-500)' : ''} />
+                </Button>
+              </div>
+            </div>
           </div>
         )}
 
