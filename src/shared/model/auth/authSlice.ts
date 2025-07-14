@@ -1,13 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface AuthState {
   accessToken: string | null
-  isLoggingOut: boolean
+  isLoggingIn: boolean
+  authChecked: boolean
 }
 
 const initialState: AuthState = {
   accessToken: null,
-  isLoggingOut: false,
+  isLoggingIn: false,
+  authChecked: false,
 }
 
 export const authSlice = createSlice({
@@ -16,20 +18,24 @@ export const authSlice = createSlice({
   reducers: {
     setAccessToken: (state, action) => {
       state.accessToken = action.payload
-      state.isLoggingOut = false
+    },
+    setIsLoggingIn: (state, action) => {
+      state.isLoggingIn = action.payload
+    },
+    setAuthChecked(state, action: PayloadAction<boolean>) {
+      state.authChecked = action.payload
     },
     clearAuth: state => {
       state.accessToken = null
-      state.isLoggingOut = true
     },
   },
 })
 
-export const { setAccessToken, clearAuth } = authSlice.actions
+export const { setAccessToken, clearAuth, setAuthChecked, setIsLoggingIn } = authSlice.actions
 
 // Selectors
 export const selectAccessToken = (state: { auth: AuthState }) => state.auth.accessToken
 export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.accessToken !== null
-export const selectIsLoggingOut = (state: { auth: AuthState }) => state.auth.isLoggingOut
+export const selectIsLoggingIn = (state: { auth: AuthState }) => state.auth.isLoggingIn
 
 export default authSlice.reducer

@@ -5,6 +5,7 @@ import {
   RegisterRequest,
   SignInRequest,
   SignInResponse,
+  User,
 } from '@/features/auth/model/types'
 
 export const authApi = baseApi.injectEndpoints({
@@ -38,6 +39,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
     signIn: builder.mutation<SignInResponse, SignInRequest>({
+      invalidatesTags: ['me'],
       query: body => ({
         url: '/auth/login',
         method: 'POST',
@@ -55,6 +57,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
     logout: builder.mutation<void, void>({
+      invalidatesTags: ['me'],
       query: () => ({
         url: '/auth/logout',
         method: 'POST',
@@ -66,11 +69,16 @@ export const authApi = baseApi.injectEndpoints({
         method: 'POST',
       }),
     }),
+    me: builder.query<User, void>({
+      providesTags: ['me'],
+      query: () => '/auth/me',
+    }),
   }),
 })
 
 export const {
   useRegisterMutation,
+  useMeQuery,
   useEmailResendingMutation,
   useConfirmEmailMutation,
   useSignInMutation,
