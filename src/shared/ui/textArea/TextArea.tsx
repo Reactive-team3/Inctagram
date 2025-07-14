@@ -15,6 +15,8 @@ interface TextAreaProps {
   disabled?: boolean
   rows?: number
   className?: string
+  width?: string
+  onChange?: (value: string) => void
 }
 
 export const TextArea = ({
@@ -26,6 +28,8 @@ export const TextArea = ({
   disabled = false,
   rows = 4,
   className = '',
+  width,
+  onChange,
 }: TextAreaProps) => {
   const [value, setValue] = useState(initialValue)
   const [error, setError] = useState('')
@@ -35,6 +39,7 @@ export const TextArea = ({
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.currentTarget.value
     setValue(newValue)
+    onChange?.(newValue)
     if (error) {
       setError('')
     }
@@ -54,7 +59,7 @@ export const TextArea = ({
     className
   )
   return (
-    <div className={`${styles.textareaContainer} ${className}`}>
+    <div className={`${styles.textareaContainer} ${className}`} style={{ width }}>
       <label className={styles.label} htmlFor={name}>
         {label}
       </label>
