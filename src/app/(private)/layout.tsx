@@ -9,9 +9,12 @@ import { Loader } from '@/shared/ui/loader/Loader'
 import { useMeQuery } from '@/features/auth/model/authApi'
 import { redirect } from 'next/navigation'
 import { publicRoutes } from '@/shared/config/routes/routes'
+import { setUser } from '@/shared/model/user/userSlice'
+import { useDispatch } from 'react-redux'
 
 export default function PrivetLayout({ children }: { children: ReactNode }) {
   const { data, isLoading, isError } = useMeQuery()
+  const dispatch = useDispatch()
 
   const isAuthenticated = !!data?.userId
 
@@ -20,6 +23,10 @@ export default function PrivetLayout({ children }: { children: ReactNode }) {
       redirect(publicRoutes.auth.SIGNIN)
     }
   }, [isLoading, isAuthenticated, isError])
+
+  useEffect(() => {
+    dispatch(setUser(data))
+  }, [data, dispatch])
 
   if (isLoading) return <Loader />
 

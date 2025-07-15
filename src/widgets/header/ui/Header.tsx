@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { publicRoutes } from '@/shared/config/routes/routes'
 import Image from 'next/image'
 import { SelectComponent } from '@/shared/ui/select/SelectComponent'
+import { UserState } from '@/shared/model/user/userSlice'
 
 //Hardcode
 const languageOptions = [
@@ -22,11 +23,7 @@ const languageOptions = [
 ]
 
 type HeaderProps = {
-  data?: {
-    email?: string
-    userId?: string
-    username?: string
-  }
+  data?: UserState | null
 }
 
 export const Header = ({ data }: HeaderProps) => {

@@ -1,14 +1,11 @@
 'use client'
 
-import { useMeQuery } from '@/features/auth/model/authApi'
 import { Header } from '@/widgets/header'
 import { useSelector } from 'react-redux'
-import { selectIsLoggingIn } from '@/shared/model/auth/authSlice'
+import { selectUser } from '@/shared/model/user/userSlice'
 
 export const HeaderWrapper = () => {
-  const isLoggedIn = useSelector(selectIsLoggingIn)
-
-  const { data } = useMeQuery(undefined, { skip: isLoggedIn })
+  const data = useSelector(selectUser)
   return (
     <>
       <Header data={data} />
