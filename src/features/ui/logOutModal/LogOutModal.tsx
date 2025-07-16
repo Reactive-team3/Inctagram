@@ -4,7 +4,7 @@ import { LogOutModalChildren } from '@/features/ui/logOutModal/logOutModalChildr
 export type LogOutModalProps = {
   open: boolean
   onClose: () => void
-  emailName: string
+  emailName: string | undefined
 }
 
 export const LogOutModal = ({ open, onClose, emailName }: LogOutModalProps) => {
