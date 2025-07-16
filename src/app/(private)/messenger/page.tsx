@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Message = () => {
+const Messenger = () => {
   return <div>Message</div>
 }
 
-export default Message
+export default Messenger

@@ -1,4 +1,5 @@
 import { SidebarItemType } from '@/widgets/Sidebar/model/types/sidebar'
+import { privateRoutes } from '@/shared/config/routes/routes'
 
 export const FirstNav: SidebarItemType[] = [
   {
@@ -15,27 +16,27 @@ export const FirstNav: SidebarItemType[] = [
 
 export const BASIC_NAVIGATION: SidebarItemType[] = [
   {
-    path: '/feed',
+    path: privateRoutes.FEED,
     text: 'Feed',
     name: 'home-outline',
   },
   {
-    path: '/create',
+    path: privateRoutes.CREATE,
     text: 'Create',
     name: 'plus-square-outline',
   },
   {
-    path: '/profile',
+    path: privateRoutes.MY_PROFILE,
     text: 'My Profile',
     name: 'person-outline',
   },
   {
-    path: '/message',
+    path: privateRoutes.MESSENGER,
     text: 'Messenger',
     name: 'message-circle-outline',
   },
   {
-    path: '/search',
+    path: privateRoutes.SEARCH,
     text: 'Search',
     name: 'search',
   },
@@ -43,12 +44,12 @@ export const BASIC_NAVIGATION: SidebarItemType[] = [
 
 export const ADDITIONALLY: SidebarItemType[] = [
   {
-    path: '/statistics',
+    path: privateRoutes.STATISTICS,
     text: 'Statistics',
     name: 'trending-up',
   },
   {
-    path: '/favourites',
+    path: privateRoutes.FAVORITES,
     text: 'Favorites',
     name: 'bookmark-outline',
   },

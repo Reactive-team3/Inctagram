@@ -15,7 +15,7 @@ import { publicRoutes } from '@/shared/config/routes/routes'
 
 type logOutModalChildrenProps = {
   onClick: () => void
-  emailName: string
+  emailName: string | undefined
 }
 
 export const LogOutModalChildren = ({ onClick, emailName }: logOutModalChildrenProps) => {
@@ -35,7 +35,7 @@ export const LogOutModalChildren = ({ onClick, emailName }: logOutModalChildrenP
           duration: 4000,
         })
       )
-      router.push(publicRoutes.auth.SIGNIN)
+      router.push(publicRoutes.MAIN_PAGE)
     } catch (e) {
       if (e) {
         dispatch(clearNotifications())

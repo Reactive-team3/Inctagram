@@ -1,0 +1,98 @@
+.cardsContainer {
+  display: flex;
+  margin-top: rem(36);
+  gap: rem(12);
+}
+
+.cardsPostContainer {
+  .card {
+    display: flex;
+    overflow: hidden;
+    width: rem(234);
+    padding: 0;
+    flex-direction: column;
+    position: relative;
+    height: rem(391);
+    .sliderWrapper {
+      height: rem(240);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image {
+      width: 100%;
+    }
+
+    .profileContainer {
+      display: flex;
+      align-items: center;
+      margin-top: rem(12);
+
+      .imageSmall {
+        border-radius: 50%;
+        margin-right: rem(12);
+        margin-bottom: rem(12);
+      }
+    }
+
+    .time {
+      color: var(--color-light-900);
+    }
+
+    .textWrapper {
+      margin: 0;
+      padding: 0;
+      .text {
+        display: inline-block;
+        position: relative;
+        margin-top: rem(-4);
+        text-align: left;
+        color: var(--color-light-100);
+        overflow: hidden;
+        .showMore {
+          font-weight: 400;
+          font-size: rem(14);
+          line-height: rem(1);
+          padding: 0;
+          border: 0;
+          margin-left: rem(4);
+          cursor: pointer;
+          background: none;
+          text-decoration: underline;
+          position: absolute;
+          right: rem(2);
+          bottom: rem(10);
+        }
+
+        .hide {
+          margin: 0;
+          font-weight: 400;
+          font-size: rem(14);
+          line-height: rem(1);
+          padding: 0;
+          border: 0;
+          margin-left: rem(4);
+          cursor: pointer;
+          background: none;
+          text-decoration: underline;
+          display: inline;
+        }
+      }
+    }
+
+    .hiddenText {
+      position: absolute;
+      visibility: hidden;
+      pointer-events: none;
+      top: rem(-9999);
+      left: 0;
+      width: 100%;
+    }
+
+    .showMore:disabled {
+      opacity: 1;
+      cursor: not-allowed;
+      text-decoration: none;
+    }
+  }
+}
