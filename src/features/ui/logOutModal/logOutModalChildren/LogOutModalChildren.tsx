@@ -15,7 +15,7 @@ import { publicRoutes } from '@/shared/config/routes/routes'
 
 type logOutModalChildrenProps = {
   onClick: () => void
-  emailName: string
+  emailName: string | undefined
 }
 
 export const LogOutModalChildren = ({ onClick, emailName }: logOutModalChildrenProps) => {
