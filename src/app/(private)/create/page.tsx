@@ -1,7 +1,7 @@
-import React from 'react'
+import { CreatePostModalPage } from '@/app/(private)/create/ui/CreatePostModalPage'
 
 const Create = () => {
-  return <div>Create</div>
+  return <CreatePostModalPage />
 }
 
 export default Create

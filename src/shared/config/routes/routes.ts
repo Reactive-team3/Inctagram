@@ -9,6 +9,7 @@ export const publicRoutes = {
     TERMS: '/auth/terms',
     VERIFICATION: '/auth/verification',
     POLICY: '/auth/policy',
+    GOOGLE_CALLBACK: '/auth/google/callback',
   },
   PUBLIC_PAGE: '/hero-page',
   MAIN_PAGE: '/',
