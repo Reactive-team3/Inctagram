@@ -5,7 +5,7 @@ import { SignInFormValues, signInSchema } from '@/features/model/signInSchema'
 import { nanoid } from 'nanoid'
 import { addNotification } from '@/shared/model/notifications/notificationsSlice'
 import { useSignInMutation } from '@/features/auth/model/authApi'
-import { setAccessToken } from '@/shared/model/auth/authSlice'
+import { setIsLoggingIn } from '@/shared/model/auth/authSlice'
 import { privateRoutes } from '@/shared/config/routes/routes'
 import { useRouter } from 'next/navigation'
 
@@ -27,8 +27,8 @@ export const useSignInForm = () => {
 
     if (!('error' in result)) {
       // Store access token in Redux
-      dispatch(setAccessToken(result.data.accessToken))
-
+      // dispatch(setAccessToken(result.data.accessToken))
+      dispatch(setIsLoggingIn(true))
       dispatch(
         addNotification({
           id: nanoid(),

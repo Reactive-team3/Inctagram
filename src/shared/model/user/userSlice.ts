@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-type UserState = {
+export type UserState = {
   userId: string
   email: string
   username: string
@@ -17,6 +17,5 @@ export const userSlice = createSlice({
   },
 })
 export const { setUser, clearUser } = userSlice.actions
-export const selectUser = (state: UserState | null) => state
-
+export const selectUser = (state: { user: UserState }) => state.user
 export default userSlice.reducer

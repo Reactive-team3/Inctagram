@@ -20,7 +20,7 @@ export type NewPassword = {
   recoveryCode: string
 }
 
-export type UserData = {
+export type User = {
   username: string
   email: string
   userId: string
