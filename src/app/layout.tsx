@@ -3,9 +3,9 @@ import { ReactNode } from 'react'
 import styles from './layout.module.scss'
 import '@/shared/config/styles/index.scss'
 import { inter } from '../../public/fonts/inter'
-import { Header } from '@/widgets/header'
 import { Providers } from '@/app/providers'
 import { NotificationContainer } from '@/widgets/notifications/ui/NotificationContainer'
+import { HeaderWrapper } from '@/widgets/headerWrapper/ui/HeaderWrapper'
 // eslint-disable-next-line react-refresh/only-export-components
 export { metadata } from './metadata'
 
@@ -15,9 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={styles.root}>
         <Providers>
           <main className={styles.main}>
-            <div className={styles.stickyHeader}>
-              <Header />
-            </div>
+            <HeaderWrapper />
             {children}
             <NotificationContainer />
           </main>

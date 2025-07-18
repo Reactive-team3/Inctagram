@@ -5,7 +5,7 @@ import {
   RegisterRequest,
   SignInRequest,
   SignInResponse,
-  UserData,
+  User,
 } from '@/features/auth/model/types'
 
 export const authApi = baseApi.injectEndpoints({
@@ -61,12 +61,6 @@ export const authApi = baseApi.injectEndpoints({
         method: 'POST',
       }),
     }),
-    refreshToken: builder.mutation<{ accessToken: string }, void>({
-      query: () => ({
-        url: '/auth/refresh-token',
-        method: 'POST',
-      }),
-    }),
     googleOAuthCallback: builder.query<{ accessToken: string }, void>({
       query: () => ({
         url: '/auth/google/callback',
@@ -74,10 +68,10 @@ export const authApi = baseApi.injectEndpoints({
         credentials: 'include',
       }),
     }),
-    me: builder.query<UserData, void>({
+    refreshToken: builder.mutation<{ accessToken: string }, void>({
       query: () => ({
-        url: '/auth/me',
-        method: 'GET',
+        url: '/auth/refresh-token',
+        method: 'POST',
       }),
     }),
     google: builder.query<void, void>({
@@ -85,6 +79,10 @@ export const authApi = baseApi.injectEndpoints({
         url: '/auth/google',
         method: 'GET',
       }),
+    }),
+    me: builder.query<User, void>({
+      providesTags: ['me'],
+      query: () => '/auth/me',
     }),
   }),
 })
@@ -97,8 +95,7 @@ export const {
   usePasswordRecoveryMutation,
   useNewPasswordMutation,
   useLogoutMutation,
-  useRefreshTokenMutation,
-  useGoogleOAuthCallbackQuery,
   useMeQuery,
-  useLazyGoogleQuery,
+  useGoogleOAuthCallbackQuery,
+  useRefreshTokenMutation,
 } = authApi
