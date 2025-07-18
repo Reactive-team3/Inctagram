@@ -1,17 +1,15 @@
 import { Typography } from '@/shared/ui/typography/Typography'
 import { Button } from '@/shared/ui/button/Button'
-import { useRouter } from 'next/navigation'
 import s from './logOutModalChildren.module.scss'
 import { useDispatch } from 'react-redux'
 import { useLogoutMutation } from '@/features/auth/model/authApi'
-import { clearAuth } from '@/shared/model/auth/authSlice'
-import { baseApi } from '@/shared/api/baseApi'
 import {
   addNotification,
   clearNotifications,
 } from '@/shared/model/notifications/notificationsSlice'
 import { nanoid } from 'nanoid'
 import { publicRoutes } from '@/shared/config/routes/routes'
+import { setIsLoggingIn } from '@/shared/model/auth/authSlice'
 
 type logOutModalChildrenProps = {
   onClick: () => void
@@ -21,12 +19,12 @@ type logOutModalChildrenProps = {
 export const LogOutModalChildren = ({ onClick, emailName }: logOutModalChildrenProps) => {
   const [logout] = useLogoutMutation()
   const dispatch = useDispatch()
-  const router = useRouter()
   const handleLogout = async () => {
     try {
+      // dispatch(clearAuth())
       await logout().unwrap()
-      dispatch(clearAuth())
-      dispatch(baseApi.util.resetApiState())
+      // dispatch(baseApi.util.resetApiState())
+      dispatch(setIsLoggingIn(true))
       dispatch(
         addNotification({
           id: nanoid(),
@@ -35,7 +33,8 @@ export const LogOutModalChildren = ({ onClick, emailName }: logOutModalChildrenP
           duration: 4000,
         })
       )
-      router.push(publicRoutes.MAIN_PAGE)
+      // router.push(publicRoutes.MAIN_PAGE)
+      window.location.href = publicRoutes.MAIN_PAGE
     } catch (e) {
       if (e) {
         dispatch(clearNotifications())

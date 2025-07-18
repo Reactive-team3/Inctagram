@@ -5,6 +5,7 @@ import {
   RegisterRequest,
   SignInRequest,
   SignInResponse,
+  User,
 } from '@/features/auth/model/types'
 
 export const authApi = baseApi.injectEndpoints({
@@ -60,11 +61,28 @@ export const authApi = baseApi.injectEndpoints({
         method: 'POST',
       }),
     }),
+    googleOAuthCallback: builder.query<{ accessToken: string }, void>({
+      query: () => ({
+        url: '/auth/google/callback',
+        method: 'GET',
+        credentials: 'include',
+      }),
+    }),
     refreshToken: builder.mutation<{ accessToken: string }, void>({
       query: () => ({
         url: '/auth/refresh-token',
         method: 'POST',
       }),
+    }),
+    google: builder.query<void, void>({
+      query: () => ({
+        url: '/auth/google',
+        method: 'GET',
+      }),
+    }),
+    me: builder.query<User, void>({
+      providesTags: ['me'],
+      query: () => '/auth/me',
     }),
   }),
 })
@@ -77,5 +95,7 @@ export const {
   usePasswordRecoveryMutation,
   useNewPasswordMutation,
   useLogoutMutation,
+  useMeQuery,
+  useGoogleOAuthCallbackQuery,
   useRefreshTokenMutation,
 } = authApi

@@ -1,0 +1,9 @@
+.slider {
+  position: absolute;
+  bottom: rem(40);
+  right: rem(-63);
+  width: rem(130);
+  padding: rem(4);
+  background-color: var(--color-dark-300);
+  z-index: 3;
+}

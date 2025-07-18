@@ -4,6 +4,7 @@ interface IconProps {
   height?: number
   color?: string
   className?: string
+  style?: React.CSSProperties
 }
 
 export default function Icon({ name, width = 24, height = 24, color, className = '' }: IconProps) {

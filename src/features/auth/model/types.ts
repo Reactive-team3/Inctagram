@@ -19,3 +19,9 @@ export type NewPassword = {
   newPassword: string
   recoveryCode: string
 }
+
+export type User = {
+  username: string
+  email: string
+  userId: string
+}
