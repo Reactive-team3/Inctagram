@@ -10,6 +10,7 @@ export const publicRoutes = {
     VERIFICATION: '/auth/verification',
     POLICY: '/auth/policy',
     GOOGLE_CALLBACK: '/auth/google/callback',
+    GITHUB_CALLBACK: '/auth/github/callback',
   },
   PUBLIC_PAGE: '/hero-page',
   MAIN_PAGE: '/',
