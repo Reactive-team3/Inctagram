@@ -11,10 +11,15 @@ import { Loader } from '@/shared/ui/loader/Loader'
 import { useGetUserPostsQuery } from '@/features/postApi/model/postApi'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/shared/model/user/userSlice'
+import MyPost from '@/app/(private)/my-post/page'
 
 const MyProfile = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
+
+  // Состояния для модального окна
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
 
   const userMe = useSelector(selectUser)
 
@@ -53,12 +58,38 @@ const MyProfile = () => {
     [isFetching, hasMore]
   )
 
-  // Update  hasMore when receiving new data
+  // Update hasMore when receiving new data
   React.useEffect(() => {
     if (data) {
       setHasMore(currentPage < data.pagesCount)
     }
   }, [data, currentPage])
+
+  // Функция для открытия модального окна на конкретном посте
+  const handleOpenModal = useCallback(
+    (postId: number) => {
+      if (!data?.items) return
+
+      // Находим индекс поста в массиве всех постов
+      const postIndex = data.items.findIndex(post => post.id === postId)
+      if (postIndex !== -1) {
+        setCurrentSlideIndex(postIndex)
+        setIsModalOpen(true)
+      }
+    },
+    [data?.items]
+  )
+
+  // Функция для закрытия модального окна
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false)
+    setCurrentSlideIndex(0)
+  }, [])
+
+  // Функция для изменения индекса слайда
+  const handleSlideIndexChange = useCallback((newIndex: number) => {
+    setCurrentSlideIndex(newIndex)
+  }, [])
 
   //Show the download if the user data is not yet loaded
   if (isLoading) {
@@ -140,7 +171,13 @@ const MyProfile = () => {
                     alt={post.description}
                     width={234}
                     height={228}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => handleOpenModal(post.id)}
                   />
                 ) : (
                   <div
@@ -173,6 +210,15 @@ const MyProfile = () => {
           {isFetching && <Loader />}
         </div>
       </Scroll>
+
+      {/* Модальное окно с слайдером */}
+      <MyPost
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        posts={data?.items || []}
+        currentIndex={currentSlideIndex}
+        onIndexChange={handleSlideIndexChange}
+      />
     </div>
   )
 }
