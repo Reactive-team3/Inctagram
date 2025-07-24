@@ -21,7 +21,6 @@
     }
   }
 
-
   .informationBlockPost {
     width: rem(480);
     .userBlock {
@@ -42,9 +41,7 @@
           object-fit: cover;
         }
         .userUrl {
-
         }
-
       }
       .buttonIcon {
         margin-right: rem(18);
@@ -74,13 +71,11 @@
           width: rem(113);
           height: rem(24);
           margin-top: rem(12);
-          margin-left: rem(12)
+          margin-left: rem(12);
         }
       }
     }
-
   }
-
 }
 
 .content {
@@ -96,6 +91,4 @@
   width: rem(48);
   height: rem(48);
   background-color: rgba(255, 255, 255, 0.3);
-
-
 }
