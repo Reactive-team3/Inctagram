@@ -1,13 +1,13 @@
 'use client'
-import React, { useMemo, useState, useRef, useEffect } from 'react'
+import React, { useMemo } from 'react'
 import Image from 'next/image'
 import { Typography } from '@/shared/ui/typography/Typography'
 import { Modal } from '@/shared/ui/modal/Modal'
 import { Dialog } from 'radix-ui'
 import Icon from '@/shared/ui/icon/Icon'
 import { Slider } from '@/shared/ui/slider/slider'
-import { Button } from '@/shared/ui/button/Button'
 import styles from './myPost.module.scss'
+import { DropdownMenu } from '@/shared/ui/dropdownMenu/dropdownMenu'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/shared/model/user/userSlice'
 
@@ -23,46 +23,20 @@ type MyPostProps = {
   posts: Post[]
   currentIndex: number
   onIndexChange: (index: number) => void
+  onEditPost?: (postId: number) => void
+  onDeletePost?: (postId: number) => void
 }
 
-const MyPost = ({ isOpen, onClose, posts, currentIndex, onIndexChange }: MyPostProps) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
-  const buttonRef = useRef<HTMLDivElement>(null)
-
+const MyPost = ({
+  isOpen,
+  onClose,
+  posts,
+  currentIndex,
+  onIndexChange,
+  onEditPost,
+  onDeletePost,
+}: MyPostProps) => {
   const userMe = useSelector(selectUser)
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-
-  // Закрытие меню при клике вне его области
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        isMenuOpen &&
-        menuRef.current &&
-        buttonRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
-        setIsMenuOpen(false)
-      }
-    }
-
-    if (isMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isMenuOpen])
-
-  // Закрытие меню при закрытии модального окна
-  useEffect(() => {
-    if (!isOpen) {
-      setIsMenuOpen(false)
-    }
-  }, [isOpen])
 
   // Подготавливаем слайды для всех постов
   const slides = useMemo(() => {
@@ -89,9 +63,25 @@ const MyPost = ({ isOpen, onClose, posts, currentIndex, onIndexChange }: MyPostP
     }))
   }, [posts])
 
+  const handleEditPost = () => {
+    const currentPost = posts[currentIndex]
+    if (currentPost && onEditPost) {
+      onEditPost(currentPost.id)
+    }
+  }
+
+  const handleDeletePost = () => {
+    const currentPost = posts[currentIndex]
+    if (currentPost && onDeletePost) {
+      onDeletePost(currentPost.id)
+    }
+  }
+
   if (!isOpen || slides.length === 0) {
     return null
   }
+
+  const currentPost = posts[currentIndex]
 
   return (
     <Modal
@@ -129,26 +119,17 @@ const MyPost = ({ isOpen, onClose, posts, currentIndex, onIndexChange }: MyPostP
               {userMe?.username}
             </Typography>
           </div>
-          <div ref={buttonRef}>
-            <Button as="button" variant="text" className={styles.buttonIcon} onClick={toggleMenu}>
-              <Icon name="more-horizontal" className={styles.icon} />
-            </Button>
-          </div>
-          {isMenuOpen && (
-            <div className={styles.menu} ref={menuRef}>
-              <div className={styles.edit}>
-                <Icon name="edi-2-outline" />
-                <Button as="button" variant="transparent">
-                  Edit Post
-                </Button>
-              </div>
-              <div className={styles.delete}>
-                <Icon name="trash-outline" />
-                <Button as="button" variant="transparent">
-                  Delete Post
-                </Button>
-              </div>
-            </div>
+          <DropdownMenu
+            className={styles.buttonIcon}
+            onEditClick={handleEditPost}
+            onDeleteClick={handleDeletePost}
+          />
+        </div>
+        <div>
+          {currentPost?.description && (
+            <Typography as="p" variant="body1">
+              {currentPost.description}
+            </Typography>
           )}
         </div>
       </div>
