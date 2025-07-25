@@ -15,8 +15,8 @@
     width: rem(490);
     .imagModal {
       max-width: 100%;
-      height: rem(564);
-      //max-height: 100%;
+      //max-height: rem(564);
+      max-height: 100%;
       object-fit: cover;
     }
   }
@@ -41,37 +41,6 @@
           object-fit: cover;
         }
         .userUrl {
-        }
-      }
-      .buttonIcon {
-        margin-right: rem(18);
-      }
-      .menu {
-        display: flex;
-        flex-direction: column;
-        height: rem(85);
-        width: rem(137);
-        background-color: #0d0d0d;
-        position: absolute;
-        right: 20px;
-        top: 40px;
-        .edit {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: rem(95);
-          height: rem(24);
-          margin-top: rem(13);
-          margin-left: rem(12);
-        }
-        .delete {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: rem(113);
-          height: rem(24);
-          margin-top: rem(12);
-          margin-left: rem(12);
         }
       }
     }
