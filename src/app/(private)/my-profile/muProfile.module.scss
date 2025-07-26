@@ -1,0 +1,78 @@
+.container {
+  position: relative;
+  width: rem(975);
+  margin: 0 auto;
+  margin-top: 36px;
+  .wrapperPhotoProfile {
+    display: flex;
+    justify-content: space-between;
+    .photo {
+      display: block;
+      width: rem(204);
+      height: rem(204);
+      border-radius: 50%;
+      background-color: white;
+      margin-right: 38px;
+    }
+    .wrapperProfilleInformation {
+      width: rem(730);
+      display: flex;
+      flex-direction: column;
+      .profileBlock {
+        display: flex;
+        justify-content: space-between;
+      }
+      .wrapperStatistics {
+        display: flex;
+        gap: rem(100);
+        .statisticsBlock {
+          margin-top: rem(20);
+          width: rem(63);
+          height: rem(48);
+          display: flex;
+          flex-direction: column;
+
+          font-weight: 700;
+          font-size: rem(14);
+          line-height: rem(24);
+        }
+      }
+      .text {
+        margin-top: rem(28);
+        text-align: left;
+      }
+    }
+  }
+
+  .scrollContainer {
+    margin-top: rem(48);
+    .wrapperUserPhoto {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(rem(234), 1fr));
+      gap: rem(12);
+      .userPhoto {
+        width: 100%;
+        height: rem(228);
+        background-color: #990f2b;
+      }
+    }
+
+    .noPostsWrapper {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(rem(234), 1fr));
+      gap: rem(12);
+      .noPostsImage {
+        width: 100%;
+        height: rem(228);
+        background-color: #990f2b;
+      }
+    }
+  }
+}
+
+.noPostsText {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+}
