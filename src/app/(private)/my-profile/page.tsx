@@ -8,7 +8,7 @@ import { Typography } from '@/shared/ui/typography/Typography'
 import { Scroll } from '@/shared/ui/scroll/Scroll'
 import Image from 'next/image'
 import { Loader } from '@/shared/ui/loader/Loader'
-import { useGetUserPostsQuery } from '@/features/postApi/model/postApi'
+import { useDeletePostMutation, useGetUserPostsQuery } from '@/features/postApi/model/postApi'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/shared/model/user/userSlice'
 import MyPost from '@/app/(private)/my-post/page'
@@ -27,7 +27,7 @@ const MyProfile = () => {
   const userId = userMe?.userId ? parseInt(userMe.userId) : undefined
 
   //We use a single request for all pages
-  const { data, isFetching, isLoading } = useGetUserPostsQuery(
+  const { data, isFetching } = useGetUserPostsQuery(
     {
       userId: userId!,
       pageNumber: currentPage,
@@ -35,10 +35,12 @@ const MyProfile = () => {
     },
     {
       skip: !userId,
-      // Do not reboot the data when re -mount the component
+      // Do not reboot the data when re-mount the component
       refetchOnMountOrArgChange: false,
     }
   )
+
+  const [deletePost] = useDeletePostMutation()
 
   // handler for endless scrolling
   const observer = useRef<IntersectionObserver | null>(null)
@@ -91,14 +93,22 @@ const MyProfile = () => {
     setCurrentSlideIndex(newIndex)
   }, [])
 
+  const onDeletePost = useCallback(
+    (id: number) => {
+      deletePost({ id })
+      setIsModalOpen(false)
+    },
+    [deletePost]
+  )
+
   //Show the download if the user data is not yet loaded
-  if (isLoading) {
-    return (
-      <div className={styles.container}>
-        <Loader />
-      </div>
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className={styles.container}>
+  //       <Loader />
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className={styles.container}>
@@ -218,6 +228,7 @@ const MyProfile = () => {
         posts={data?.items || []}
         currentIndex={currentSlideIndex}
         onIndexChange={handleSlideIndexChange}
+        onDeletePost={onDeletePost}
       />
     </div>
   )
