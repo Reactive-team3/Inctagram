@@ -37,7 +37,6 @@ const MyPost = ({
   onDeletePost,
 }: MyPostProps) => {
   const userMe = useSelector(selectUser)
-
   // Подготавливаем слайды для всех постов
   const slides = useMemo(() => {
     return posts.map((post, index) => ({
