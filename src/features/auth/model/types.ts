@@ -25,3 +25,8 @@ export type User = {
   email: string
   userId: string
 }
+
+export type UpdatePost = {
+  id: number
+  description: string
+}

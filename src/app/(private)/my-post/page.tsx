@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { Typography } from '@/shared/ui/typography/Typography'
 import { Modal } from '@/shared/ui/modal/Modal'
@@ -10,6 +10,9 @@ import styles from './myPost.module.scss'
 import { DropdownMenu } from '@/shared/ui/dropdownMenu/dropdownMenu'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/shared/model/user/userSlice'
+import { useUpdatePostMutation } from '@/features/postApi/model/postApi'
+import { TextArea } from '@/shared/ui/textArea/TextArea'
+import { Button } from '@/shared/ui/button/Button'
 
 type Post = {
   id: number
@@ -20,6 +23,7 @@ type Post = {
 type MyPostProps = {
   isOpen: boolean
   onClose: () => void
+  onEdit: boolean
   posts: Post[]
   currentIndex: number
   onIndexChange: (index: number) => void
@@ -30,12 +34,19 @@ type MyPostProps = {
 const MyPost = ({
   isOpen,
   onClose,
+  onEdit,
   posts,
   currentIndex,
   onIndexChange,
   onEditPost,
   onDeletePost,
 }: MyPostProps) => {
+  const [Edit, setEdit] = useState(onEdit)
+  const [inputValue, setInputValue] = useState('')
+  useEffect(() => {
+    setEdit(onEdit)
+  }, [onEdit])
+  const [updatePost] = useUpdatePostMutation()
   const userMe = useSelector(selectUser)
   // Подготавливаем слайды для всех постов
   const slides = useMemo(() => {
@@ -75,7 +86,17 @@ const MyPost = ({
       onDeletePost(currentPost.id)
     }
   }
-
+  const handleEditPostText = () => {
+    const currentPost = posts[currentIndex]
+    const id = currentPost.id
+    if (currentPost) {
+      updatePost({ id, description: inputValue })
+      setEdit(!Edit)
+    }
+  }
+  const handleTextareaChange = (value: string) => {
+    setInputValue(value)
+  }
   if (!isOpen || slides.length === 0) {
     return null
   }
@@ -129,6 +150,18 @@ const MyPost = ({
             <Typography as="p" variant="body1">
               {currentPost.description}
             </Typography>
+          )}
+          {Edit && (
+            <>
+              <TextArea
+                label="Add publication descriptions"
+                name="Add publication descriptions"
+                maxLength={500}
+                width="100%"
+                onChange={value => handleTextareaChange(value)}
+              />
+              <Button onClick={handleEditPostText}>save change</Button>
+            </>
           )}
         </div>
       </div>

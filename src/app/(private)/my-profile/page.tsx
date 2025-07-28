@@ -16,7 +16,7 @@ import MyPost from '@/app/(private)/my-post/page'
 const MyProfile = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
-
+  const [onEdit, setEdit] = useState(false)
   // Состояния для модального окна
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
@@ -92,6 +92,10 @@ const MyProfile = () => {
   const handleSlideIndexChange = useCallback((newIndex: number) => {
     setCurrentSlideIndex(newIndex)
   }, [])
+
+  const onEditPost = () => {
+    setEdit(!onEdit)
+  }
 
   const onDeletePost = useCallback(
     (id: number) => {
@@ -225,9 +229,11 @@ const MyProfile = () => {
       <MyPost
         isOpen={isModalOpen}
         onClose={handleCloseModal}
+        onEdit={onEdit}
         posts={data?.items || []}
         currentIndex={currentSlideIndex}
         onIndexChange={handleSlideIndexChange}
+        onEditPost={onEditPost}
         onDeletePost={onDeletePost}
       />
     </div>
