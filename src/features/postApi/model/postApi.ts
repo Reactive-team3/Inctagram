@@ -10,6 +10,7 @@ export const postApi = baseApi.injectEndpoints({
         method: 'POST',
         body: formData,
       }),
+      invalidatesTags: ['Posts'],
     }),
     getUserPosts: builder.query<GetUserPostsResponse, GetUserPostsRequest>({
       query: ({
@@ -50,8 +51,16 @@ export const postApi = baseApi.injectEndpoints({
         const previousPage = previousArg?.pageNumber ?? 1
         return currentPage !== previousPage
       },
+      providesTags: ['Posts'],
+    }),
+    deletePost: builder.mutation<void, { id: number }>({
+      query: ({ id }) => ({
+        url: `/posts/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Posts'],
     }),
   }),
 })
 
-export const { useCreatePostMutation, useGetUserPostsQuery } = postApi
+export const { useCreatePostMutation, useGetUserPostsQuery, useDeletePostMutation } = postApi
