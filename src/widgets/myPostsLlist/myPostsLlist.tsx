@@ -10,7 +10,7 @@ import { Typography } from '@/shared/ui/typography/Typography'
 import MyPost from '@/widgets/myPost/ui/myPost'
 import styles from './myPostsLlist.module.scss'
 
-const MyPostsLlist = () => {
+const MyPostsList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
 
@@ -162,4 +162,4 @@ const MyPostsLlist = () => {
   )
 }
 
-export default MyPostsLlist
+export default MyPostsList
