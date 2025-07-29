@@ -5,7 +5,7 @@ import s from './modal.module.scss'
 import { clsx } from 'clsx'
 import Icon from '@/shared/ui/icon/Icon'
 
-type ModalSize = 'xl' | 'lg' | 'md' | 'sm'
+export type ModalSize = 'xl' | 'lg' | 'md' | 'sm'
 
 export type ModalProps = {
   /** The controlled open state of the Modal*/
