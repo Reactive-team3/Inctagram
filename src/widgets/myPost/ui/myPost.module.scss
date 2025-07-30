@@ -1,13 +1,13 @@
 .modalProfile {
   display: flex;
   position: relative;
-  margin-top: -13px;
+  margin-top: rem(-13);
   .customCloseButton {
     position: absolute;
-    top: -43px;
-    right: -43px;
-    width: 40px;
-    height: 40px;
+    top: rem(-43);
+    right: rem(-43);
+    width: rem(40);
+    height: rem(40);
     cursor: pointer;
     z-index: 10;
   }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { CSSProperties, useEffect, useRef, useState } from 'react'
 import styles from './slider.module.scss'
 import { Button } from '@/shared/ui/button/Button'
 import Icon from '@/shared/ui/icon/Icon'
@@ -17,14 +17,14 @@ type SliderCustomStyles = {
 }
 
 type SliderInlineStyles = {
-  sliderContainer?: React.CSSProperties
-  sliderWrapper?: React.CSSProperties
-  sliderInner?: React.CSSProperties
-  slide?: React.CSSProperties
-  sliderArrowPrev?: React.CSSProperties
-  sliderArrowNext?: React.CSSProperties
-  dotsContainer?: React.CSSProperties
-  sliderDots?: React.CSSProperties
+  sliderContainer?: CSSProperties
+  sliderWrapper?: CSSProperties
+  sliderInner?: CSSProperties
+  slide?: CSSProperties
+  sliderArrowPrev?: CSSProperties
+  sliderArrowNext?: CSSProperties
+  dotsContainer?: CSSProperties
+  sliderDots?: CSSProperties
 }
 
 export const Slider: React.FC<{
@@ -146,24 +146,27 @@ export const Slider: React.FC<{
           ))}
         </div>
       </div>
+      {slides.length > 1 && (
+        <>
+          <Button
+            variant="transparent"
+            onClick={handlePrev}
+            className={combineClasses(styles.sliderArrowPrev, customStyles?.sliderArrowPrev)}
+            style={inlineStyles?.sliderArrowPrev}
+          >
+            <Icon name="arrow-ios-back" />
+          </Button>
 
-      <Button
-        variant="transparent"
-        onClick={handlePrev}
-        className={combineClasses(styles.sliderArrowPrev, customStyles?.sliderArrowPrev)}
-        style={inlineStyles?.sliderArrowPrev}
-      >
-        <Icon name="arrow-ios-back" />
-      </Button>
-
-      <Button
-        variant="transparent"
-        onClick={handleNext}
-        className={combineClasses(styles.sliderArrowNext, customStyles?.sliderArrowNext)}
-        style={inlineStyles?.sliderArrowNext}
-      >
-        <Icon name="arrow-ios-forward" />
-      </Button>
+          <Button
+            variant="transparent"
+            onClick={handleNext}
+            className={combineClasses(styles.sliderArrowNext, customStyles?.sliderArrowNext)}
+            style={inlineStyles?.sliderArrowNext}
+          >
+            <Icon name="arrow-ios-forward" />
+          </Button>
+        </>
+      )}
 
       {showDots && slides.length > 1 && (
         <div
