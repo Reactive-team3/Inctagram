@@ -1,63 +1,109 @@
 .modalProfile {
   display: flex;
   position: relative;
-  margin-top: rem(-13);
+  margin-top: -13px;
+
   .customCloseButton {
     position: absolute;
-    top: rem(-43);
-    right: rem(-43);
-    width: rem(40);
-    height: rem(40);
+    top: -43px;
+    right: -43px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     z-index: 10;
   }
+
   .wrapperSlider {
     width: rem(490);
+
     .imagModal {
       max-width: 100%;
       //max-height: rem(564);
       max-height: 100%;
       object-fit: cover;
     }
+
+    .imagUpdateModal {
+      max-height: rem(503);
+      object-fit: cover;
+    }
   }
 
   .informationBlockPost {
     width: rem(480);
-    .userBlock {
+
+    .updateMainTextArea {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: rem(59);
-      border-bottom: 1px solid var(--color-dark-100);
-      .wrapper {
+      flex-direction: column;
+      padding: rem(24);
+      gap: rem(24);
+
+      .updateWrapper {
         display: flex;
+        gap: rem(12);
         align-items: center;
-        justify-content: space-between;
-        width: rem(130);
-        margin-left: rem(24);
+
         .userPhoto {
           overflow: hidden;
           border-radius: 50%;
           object-fit: cover;
         }
-        .userUrl {
+      }
+
+      .textAreaContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: rem(395);
+
+        :last-child {
+          align-self: flex-end;
+        }
+      }
+    }
+
+    .userBlock {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--color-dark-100);
+
+      .wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: rem(12);
+        width: rem(130);
+        margin-left: rem(24);
+
+        .userPhoto {
+          height: rem(48);
+          background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .confirmModal {
+          padding: rem(30) rem(24) rem(36);
+
+          .text {
+            text-align: left;
+          }
+
+          .btn_field {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: rem(30);
+            gap: rem(24);
+          }
+
+          .btn_1 {
+            padding: rem(6) rem(34);
+          }
+
+          .btn_2 {
+            padding: rem(6) rem(37);
+          }
         }
       }
     }
   }
-}
-
-.content {
-  width: rem(137);
-  background-color: #0d0d0d;
-}
-
-.customArrowPrev,
-.customArrowNext {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: rem(48);
-  height: rem(48);
-  background-color: rgba(255, 255, 255, 0.3);
 }
