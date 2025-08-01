@@ -13,7 +13,7 @@ import styles from './myPostsLlist.module.scss'
 const MyPostsList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
-
+  const [onEdit, setEdit] = useState(false)
   // Состояния для модального окна
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
@@ -87,7 +87,9 @@ const MyPostsList = () => {
   const handleSlideIndexChange = useCallback((newIndex: number) => {
     setCurrentSlideIndex(newIndex)
   }, [])
-
+  const onEditPost = () => {
+    setEdit(!onEdit)
+  }
   //Show the download if the user data is not yet loaded
   if (isLoading) {
     return (
@@ -154,8 +156,10 @@ const MyPostsList = () => {
       <MyPost
         isOpen={isModalOpen}
         onClose={handleCloseModal}
+        onEdit={onEdit}
         posts={data?.items || []}
         currentIndex={currentSlideIndex}
+        onEditPost={onEditPost}
         onIndexChange={handleSlideIndexChange}
       />
     </>
