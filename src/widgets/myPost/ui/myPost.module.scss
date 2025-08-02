@@ -73,8 +73,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: rem(130);
         margin-left: rem(24);
+        gap: rem(12);
 
         .userPhoto {
           overflow: hidden;
