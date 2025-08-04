@@ -33,79 +33,106 @@ type MyPostProps = {
   onDeletePost?: (postId: number) => void
 }
 
-const MyPost = ({
-  isOpen,
-  onClose,
-  onEdit,
-  posts,
-  currentIndex,
-  onIndexChange,
-  onDeletePost,
-}: MyPostProps) => {
+const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: MyPostProps) => {
   const [Edit, setEdit] = useState(onEdit)
   const [inputValue, setInputValue] = useState('')
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
   const [openConfirmUpdateModal, setOpenConfirmUpdateModal] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0) // Индекс изображения внутри поста
+
   useEffect(() => {
     setEdit(onEdit)
   }, [onEdit])
+
+  // Сброс индекса изображения при смене поста
+  useEffect(() => {
+    setCurrentImageIndex(0)
+  }, [currentIndex])
+
   const [updatePost] = useUpdatePostMutation()
   const userMe = useSelector(selectUser)
-  // Подготавливаем слайды для всех постов
+
+  // Подготавливаем слайды для изображений ТЕКУЩЕГО поста
   const slides = useMemo(() => {
-    return posts.map((post, index) => ({
-      id: `post-${post.id}`,
+    const currentPost = posts[currentIndex]
+    if (!currentPost || !currentPost.imageUrl || currentPost.imageUrl.length === 0) {
+      return [
+        {
+          id: 'no-image',
+          content: (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '562px',
+              }}
+            >
+              <Typography as="span" variant="body2">
+                No image available
+              </Typography>
+            </div>
+          ),
+        },
+      ]
+    }
+
+    // Создаем слайд для каждого изображения в текущем посте
+    return currentPost.imageUrl.map((imageUrl, imageIndex) => ({
+      id: `post-${currentPost.id}-image-${imageIndex}`,
       content: (
         <div>
-          {/* Основное изображение поста */}
-          {post.imageUrl && post.imageUrl[0] ? (
-            <Image
-              src={post.imageUrl[0]}
-              alt={post.description || `Post ${index + 1}`}
-              width={490}
-              height={562}
-              className={styles.imagModal}
-            />
-          ) : (
-            <Typography as="span" variant="body2">
-              No image available
-            </Typography>
-          )}
+          <Image
+            src={imageUrl}
+            alt={currentPost.description || `Post ${currentIndex + 1} Image ${imageIndex + 1}`}
+            width={490}
+            height={562}
+            className={styles.imagModal}
+          />
         </div>
       ),
     }))
-  }, [posts])
+  }, [posts, currentIndex])
 
   const slidesForUpdate = useMemo(() => {
-    return posts.map((post, index) => ({
-      id: `post-${post.id}`,
+    const currentPost = posts[currentIndex]
+    if (!currentPost || !currentPost.imageUrl || currentPost.imageUrl.length === 0) {
+      return [
+        {
+          id: 'no-image',
+          content: (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '503px',
+              }}
+            >
+              <Typography as="span" variant="body2">
+                No image available
+              </Typography>
+            </div>
+          ),
+        },
+      ]
+    }
+
+    return currentPost.imageUrl.map((imageUrl, imageIndex) => ({
+      id: `post-${currentPost.id}-image-${imageIndex}`,
       content: (
         <div>
-          {/* Основное изображение поста */}
-          {post.imageUrl && post.imageUrl[0] ? (
-            <Image
-              src={post.imageUrl[0]}
-              alt={post.description || `Post ${index + 1}`}
-              width={490}
-              height={503}
-              className={styles.imagUpdateModal}
-            />
-          ) : (
-            <Typography as="span" variant="body2">
-              No image available
-            </Typography>
-          )}
+          <Image
+            src={imageUrl}
+            alt={currentPost.description || `Post ${currentIndex + 1} Image ${imageIndex + 1}`}
+            width={490}
+            height={503}
+            className={styles.imagUpdateModal}
+          />
         </div>
       ),
     }))
-  }, [posts])
-
-  // const handleEditPost = () => {
-  //   const currentPost = posts[currentIndex]
-  //   if (currentPost && onEditPost) {
-  //     onEditPost(currentPost.id)
-  //   }
-  // }
+  }, [posts, currentIndex])
 
   const handleDeletePost = () => {
     const currentPost = posts[currentIndex]
@@ -124,20 +151,29 @@ const MyPost = ({
       closeModal()
     }
   }
+
   const handleTextareaChange = (value: string) => {
     setInputValue(value)
   }
+
   const openModal = () => {
     setOpenUpdateModal(true)
   }
+
   const closeModal = () => {
     setOpenUpdateModal(false)
   }
+
   const openConfirmUpModal = () => {
     setOpenConfirmUpdateModal(true)
   }
+
   const closeConfirmUpModal = () => {
     setOpenConfirmUpdateModal(false)
+  }
+
+  const handleImageIndexChange = (newIndex: number) => {
+    setCurrentImageIndex(newIndex)
   }
 
   if (!isOpen || slides.length === 0) {
@@ -151,9 +187,9 @@ const MyPost = ({
       <div className={styles.wrapperSlider}>
         <Slider
           slides={slidesForUpdate}
-          currentIndex={currentIndex}
-          onIndexChangeAction={onIndexChange}
-          showDots={slides.length > 1}
+          currentIndex={currentImageIndex}
+          onIndexChangeAction={handleImageIndexChange}
+          showDots={slidesForUpdate.length > 1}
           customStyles={{
             sliderArrowPrev: styles.customArrowPrev,
             sliderArrowNext: styles.customArrowNext,
@@ -185,10 +221,12 @@ const MyPost = ({
       </div>
     </div>
   )
+
   const childrenForConfirmUpdate = (
     <div>
       <Typography variant={'body1'} className={styles.text}>
-        Do you really want to close the edition of the publication? If you close changes won’t be
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
+        Do you really want to close the edition of the publication? If you close changes won't be
         saved
       </Typography>
       <div className={styles.btn_field}>
@@ -219,8 +257,8 @@ const MyPost = ({
       <div className={styles.wrapperSlider}>
         <Slider
           slides={slides}
-          currentIndex={currentIndex}
-          onIndexChangeAction={onIndexChange}
+          currentIndex={currentImageIndex}
+          onIndexChangeAction={handleImageIndexChange}
           showDots={slides.length > 1}
           customStyles={{
             sliderArrowPrev: styles.customArrowPrev,
