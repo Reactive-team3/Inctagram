@@ -1,5 +1,6 @@
 import { baseApi } from '@/shared/api/baseApi'
 import type { CreatePostResponse, GetUserPostsRequest, GetUserPostsResponse } from './types'
+import { UpdatePost } from '@/features/auth/model/types'
 
 export const postApi = baseApi.injectEndpoints({
   overrideExisting: true,
@@ -53,6 +54,14 @@ export const postApi = baseApi.injectEndpoints({
       },
       providesTags: ['Posts'],
     }),
+    updatePost: builder.mutation<void, UpdatePost>({
+      query: ({ id, ...description }) => ({
+        url: `/posts/${id}`,
+        method: 'PUT',
+        body: description,
+      }),
+      invalidatesTags: ['Posts'],
+    }),
     deletePost: builder.mutation<void, { id: number }>({
       query: ({ id }) => ({
         url: `/posts/${id}`,
@@ -63,4 +72,9 @@ export const postApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useCreatePostMutation, useGetUserPostsQuery, useDeletePostMutation } = postApi
+export const {
+  useCreatePostMutation,
+  useGetUserPostsQuery,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+} = postApi
