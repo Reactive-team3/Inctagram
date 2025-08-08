@@ -15,7 +15,6 @@ const MyPostsList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [onEdit, setEdit] = useState(false)
-  // Состояния для модального окна
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const userMe = useSelector(selectUser)
@@ -77,16 +76,15 @@ const MyPostsList = () => {
     const currentUrl = new URL(window.location.href)
     currentUrl.searchParams.set('id', postId.toString())
 
-    // Обновляем URL без перезагрузки страницы
+    // We update the URL without reloading the page
     window.history.pushState({}, '', currentUrl.toString())
 
-    // Открываем модалку
     setIsModalOpen(true)
   }, [])
 
   // Function for closing the modal window
   const handleCloseModal = useCallback(() => {
-    // Удаляем id из URL при закрытии модалки
+    // We remove the ID from the URL when closing the model
     const currentUrl = new URL(window.location.href)
     currentUrl.searchParams.delete('id')
     window.history.pushState({}, '', currentUrl.toString())
