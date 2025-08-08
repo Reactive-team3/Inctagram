@@ -1,0 +1,44 @@
+.userCommentBlock {
+  display: flex;
+  flex-direction: column;
+  width: rem(453);
+  height: rem(336);
+  padding: rem(18) 0 rem(8) 0;
+  margin-left: rem(24);
+  .wrapperUserComment {
+    display: flex;
+    .userPhoto {
+      img {
+        overflow: hidden;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    .textInformationWrapper {
+      display: flex;
+      flex-direction: column;
+      margin: rem(0) rem(24) rem(15) rem(12) ;
+      .discriptionWrapper {
+        width: rem(345);
+        text-align: left;
+
+        font-size: rem(14);
+        font-weight: 400;
+        line-height: rem(24);
+      }
+      .hoursLikeAnswerWrappe {
+        display: flex;
+        width: rem(173);
+        height: rem(16);
+      }
+    }
+    .btnIcon {
+      width: rem(16);
+      height: rem(16);
+      transform: translateY(70%);
+    }
+
+  }
+
+}
+
