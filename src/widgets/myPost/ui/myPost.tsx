@@ -8,66 +8,59 @@ import Icon from '@/shared/ui/icon/Icon'
 import { Slider } from '@/shared/ui/slider/slider'
 import styles from './myPost.module.scss'
 import { DropdownMenu } from '@/shared/ui/dropdownMenu/dropdownMenu'
-import { useSelector } from 'react-redux'
-import { selectUser } from '@/shared/model/user/userSlice'
-import { useUpdatePostMutation } from '@/features/postApi/model/postApi'
+import { useGetPostByIdQuery, useUpdatePostMutation } from '@/features/postApi/model/postApi'
 import { TextArea } from '@/shared/ui/textArea/TextArea'
 import { Button } from '@/shared/ui/button/Button'
 import { ConfirmUpdatePostModal } from '@/features/ui/updatePostModal/confirmUpdatePostModal/ConfirmUpdatePostModal'
 import { UpdatePostModal } from '@/features/ui/updatePostModal/UpdatePostModal'
-
-type Post = {
-  id: number
-  imageUrl?: string[]
-  description?: string
-}
+import { useSearchParams } from 'next/navigation'
+import FeedbackMyPost from '@/widgets/feedbackBlock/ui/feedbackMyPost'
+import MyPostMeta from '@/widgets/myPostMeta/ui/myPostMeta'
 
 type MyPostProps = {
   isOpen: boolean
   onClose: () => void
   onEdit: boolean
-  posts: Post[]
-  currentIndex: number
-  onIndexChange: (index: number) => void
-  onEditPost?: (postId: number) => void
+  onEditToggle: () => void
   onDeletePost?: (postId: number) => void
 }
 
-const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: MyPostProps) => {
-  const [Edit, setEdit] = useState(onEdit)
+const MyPost = ({ isOpen, onClose, onEditToggle, onDeletePost }: MyPostProps) => {
   const [inputValue, setInputValue] = useState('')
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
   const [openConfirmUpdateModal, setOpenConfirmUpdateModal] = useState(false)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0) // Индекс изображения внутри поста
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  useEffect(() => {
-    setEdit(onEdit)
-  }, [onEdit])
+  // Get ID post from URL
+  const searchParams = useSearchParams()
+  const postId = searchParams.get('id')
 
-  // Сброс индекса изображения при смене поста
-  useEffect(() => {
-    setCurrentImageIndex(0)
-  }, [currentIndex])
+  const { data: post } = useGetPostByIdQuery(Number(postId), {
+    skip: !postId,
+  })
 
   const [updatePost] = useUpdatePostMutation()
-  const userMe = useSelector(selectUser)
 
-  // Подготавливаем слайды для изображений ТЕКУЩЕГО поста
+  // Resetting the image index when changing the post
+  useEffect(() => {
+    setCurrentImageIndex(0)
+  }, [post?.id])
+
+  // Set the initial value of Description from the resulting post
+  useEffect(() => {
+    if (post?.description) {
+      setInputValue(post.description)
+    }
+  }, [post?.description])
+
+  // Prepare slides for images of the current post
   const slides = useMemo(() => {
-    const currentPost = posts[currentIndex]
-    if (!currentPost || !currentPost.imageUrl || currentPost.imageUrl.length === 0) {
+    if (!post || !post.imageUrl || post.imageUrl.length === 0) {
       return [
         {
           id: 'no-image',
           content: (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '562px',
-              }}
-            >
+            <div className={styles.contentNoImade}>
               <Typography as="span" variant="body2">
                 No image available
               </Typography>
@@ -77,14 +70,13 @@ const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: 
       ]
     }
 
-    // Создаем слайд для каждого изображения в текущем посте
-    return currentPost.imageUrl.map((imageUrl, imageIndex) => ({
-      id: `post-${currentPost.id}-image-${imageIndex}`,
+    return post.imageUrl.map((imageUrl, imageIndex) => ({
+      id: `post-${post.id}-image-${imageIndex}`,
       content: (
         <div>
           <Image
             src={imageUrl}
-            alt={currentPost.description || `Post ${currentIndex + 1} Image ${imageIndex + 1}`}
+            alt={post.description || `Post Image ${imageIndex + 1}`}
             width={490}
             height={562}
             className={styles.imagModal}
@@ -92,11 +84,10 @@ const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: 
         </div>
       ),
     }))
-  }, [posts, currentIndex])
+  }, [post])
 
   const slidesForUpdate = useMemo(() => {
-    const currentPost = posts[currentIndex]
-    if (!currentPost || !currentPost.imageUrl || currentPost.imageUrl.length === 0) {
+    if (!post || !post.imageUrl || post.imageUrl.length === 0) {
       return [
         {
           id: 'no-image',
@@ -118,13 +109,13 @@ const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: 
       ]
     }
 
-    return currentPost.imageUrl.map((imageUrl, imageIndex) => ({
-      id: `post-${currentPost.id}-image-${imageIndex}`,
+    return post.imageUrl.map((imageUrl, imageIndex) => ({
+      id: `post-${post.id}-image-${imageIndex}`,
       content: (
         <div>
           <Image
             src={imageUrl}
-            alt={currentPost.description || `Post ${currentIndex + 1} Image ${imageIndex + 1}`}
+            alt={post.description || `Post Image ${imageIndex + 1}`}
             width={490}
             height={503}
             className={styles.imagUpdateModal}
@@ -132,21 +123,18 @@ const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: 
         </div>
       ),
     }))
-  }, [posts, currentIndex])
+  }, [post])
 
   const handleDeletePost = () => {
-    const currentPost = posts[currentIndex]
-    if (currentPost && onDeletePost) {
-      onDeletePost(currentPost.id)
+    if (post && onDeletePost) {
+      onDeletePost(post.id)
     }
   }
 
   const handleEditPostText = () => {
-    const currentPost = posts[currentIndex]
-    const id = currentPost.id
-    if (currentPost) {
-      updatePost({ id, description: inputValue })
-      setEdit(!Edit)
+    if (post) {
+      updatePost({ id: post.id, description: inputValue })
+      onEditToggle()
       closeConfirmUpModal()
       closeModal()
     }
@@ -180,8 +168,6 @@ const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: 
     return null
   }
 
-  const currentPost = posts[currentIndex]
-
   const childrenForUpdateModal = (
     <div style={{ display: 'flex', marginTop: '12px' }}>
       <div className={styles.wrapperSlider}>
@@ -203,7 +189,7 @@ const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: 
               <Image src="/user-images/image.png" alt="photo" width={36} height={36} />
             </div>
             <Typography as="span" variant="h3" className={styles.userUrl}>
-              {userMe?.username}
+              {post?.username}
             </Typography>
           </div>
           <div className={styles.textAreaContainer}>
@@ -212,7 +198,7 @@ const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: 
               name="Add publication descriptions"
               maxLength={500}
               width="100%"
-              initialValue={currentPost.description}
+              initialValue={post?.description}
               onChange={value => handleTextareaChange(value)}
             />
             <Button onClick={openConfirmUpModal}>save change</Button>
@@ -273,7 +259,7 @@ const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: 
               <Image src="/user-images/image.png" alt="photo" width={36} height={36} />
             </div>
             <Typography as="span" variant="h3" className={styles.userUrl}>
-              {userMe?.username}
+              {post?.username}
             </Typography>
           </div>
           <DropdownMenu
@@ -282,27 +268,34 @@ const MyPost = ({ isOpen, onClose, onEdit, posts, currentIndex, onDeletePost }: 
             onDeleteClick={handleDeletePost}
           />
         </div>
-        <div>
-          {currentPost?.description && (
-            <Typography as="p" variant="body1">
-              {currentPost.description}
-            </Typography>
-          )}
-          <UpdatePostModal
-            open={openUpdateModal}
-            onClose={closeModal}
-            className={styles.modalProfile}
-          >
-            {childrenForUpdateModal}
-          </UpdatePostModal>
-          <ConfirmUpdatePostModal
-            open={openConfirmUpdateModal}
-            onClose={closeConfirmUpModal}
-            className={styles.confirmModal}
-          >
-            {childrenForConfirmUpdate}
-          </ConfirmUpdatePostModal>
+        {post && <FeedbackMyPost post={post} />}
+        <MyPostMeta />
+        <div className={styles.textAreaPostBlock}>
+          <TextArea
+            label=""
+            name="сomment"
+            placeholder="Add a Comment..."
+            className={styles.textAreaPost}
+          />
+          <Button as="button" variant="text">
+            Publish
+          </Button>
         </div>
+
+        <UpdatePostModal
+          open={openUpdateModal}
+          onClose={closeModal}
+          className={styles.modalProfile}
+        >
+          {childrenForUpdateModal}
+        </UpdatePostModal>
+        <ConfirmUpdatePostModal
+          open={openConfirmUpdateModal}
+          onClose={closeConfirmUpModal}
+          className={styles.confirmModal}
+        >
+          {childrenForConfirmUpdate}
+        </ConfirmUpdatePostModal>
       </div>
     </Modal>
   )

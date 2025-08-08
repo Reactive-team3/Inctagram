@@ -1,14 +1,15 @@
 'use client'
-import React, { useCallback, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectUser } from '@/shared/model/user/userSlice'
-import { useGetUserPostsQuery } from '@/features/postApi/model/postApi'
+import { useGetUserPostsQuery, postApi } from '@/features/postApi/model/postApi'
 import { Loader } from '@/shared/ui/loader/Loader'
 import { Scroll } from '@/shared/ui/scroll/Scroll'
 import Image from 'next/image'
 import { Typography } from '@/shared/ui/typography/Typography'
 import MyPost from '@/widgets/myPost/ui/myPost'
 import styles from './myPostsLlist.module.scss'
+import { AppDispatch } from '@/app/store'
 
 const MyPostsList = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -16,9 +17,9 @@ const MyPostsList = () => {
   const [onEdit, setEdit] = useState(false)
   // Состояния для модального окна
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
 
   const userMe = useSelector(selectUser)
+  const dispatch = useDispatch<AppDispatch>()
 
   const pageSize = 8
   const userId = userMe?.userId ? parseInt(userMe.userId) : undefined
@@ -35,6 +36,14 @@ const MyPostsList = () => {
       // Do not reboot the data when re -mount the component
       refetchOnMountOrArgChange: false,
     }
+  )
+
+  // Function for the pre -load of the post
+  const prefetchPost = useCallback(
+    (postId: number) => {
+      dispatch(postApi.util.prefetch('getPostById', postId, { force: true }))
+    },
+    [dispatch]
   )
 
   // handler for endless scrolling
@@ -56,40 +65,39 @@ const MyPostsList = () => {
   )
 
   // Update hasMore when receiving new data
-  React.useEffect(() => {
+  useEffect(() => {
     if (data) {
       setHasMore(currentPage < data.pagesCount)
     }
   }, [data, currentPage])
 
-  // Функция для открытия модального окна на конкретном посте
-  const handleOpenModal = useCallback(
-    (postId: number) => {
-      if (!data?.items) return
+  // Function for opening a modal window on a specific post
+  const handleOpenModal = useCallback((postId: number) => {
+    // Устанавливаем postId в URL параметры
+    const currentUrl = new URL(window.location.href)
+    currentUrl.searchParams.set('id', postId.toString())
 
-      // Находим индекс поста в массиве всех постов
-      const postIndex = data.items.findIndex(post => post.id === postId)
-      if (postIndex !== -1) {
-        setCurrentSlideIndex(postIndex)
-        setIsModalOpen(true)
-      }
-    },
-    [data?.items]
-  )
+    // Обновляем URL без перезагрузки страницы
+    window.history.pushState({}, '', currentUrl.toString())
 
-  // Функция для закрытия модального окна
+    // Открываем модалку
+    setIsModalOpen(true)
+  }, [])
+
+  // Function for closing the modal window
   const handleCloseModal = useCallback(() => {
+    // Удаляем id из URL при закрытии модалки
+    const currentUrl = new URL(window.location.href)
+    currentUrl.searchParams.delete('id')
+    window.history.pushState({}, '', currentUrl.toString())
+
     setIsModalOpen(false)
-    setCurrentSlideIndex(0)
   }, [])
 
-  // Функция для изменения индекса слайда
-  const handleSlideIndexChange = useCallback((newIndex: number) => {
-    setCurrentSlideIndex(newIndex)
-  }, [])
-  const onEditPost = () => {
+  const handleEditToggle = () => {
     setEdit(!onEdit)
   }
+
   //Show the download if the user data is not yet loaded
   if (isLoading) {
     return (
@@ -120,6 +128,7 @@ const MyPostsList = () => {
                       cursor: 'pointer',
                     }}
                     onClick={() => handleOpenModal(post.id)}
+                    onMouseEnter={() => prefetchPost(post.id)}
                   />
                 ) : (
                   <div
@@ -157,10 +166,7 @@ const MyPostsList = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onEdit={onEdit}
-        posts={data?.items || []}
-        currentIndex={currentSlideIndex}
-        onEditPost={onEditPost}
-        onIndexChange={handleSlideIndexChange}
+        onEditToggle={handleEditToggle}
       />
     </>
   )

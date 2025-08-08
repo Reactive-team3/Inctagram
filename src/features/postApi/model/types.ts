@@ -35,3 +35,11 @@ export type GetUserPostsRequest = {
   sortDirection?: 'asc' | 'desc'
   sortBy?: 'createdAt'
 }
+
+export type GetPostByIdResponse = {
+  id: number
+  username: string
+  description: string
+  imageUrl: string[]
+  createdAt: string
+}
