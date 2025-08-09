@@ -75,12 +75,7 @@ export const postApi = baseApi.injectEndpoints({
       invalidatesTags: ['Posts'],
     }),
     getPostById: builder.query<GetPostByIdResponse, number>({
-      query: id => ({
-        url: `/posts/${id}`,
-        method: 'GET',
-      }),
-      keepUnusedDataFor: 300,
-      providesTags: (result, error, id) => [{ type: 'Posts', id }],
+      query: id => ({ url: `/posts/${id}`, method: 'GET' }),
     }),
   }),
 })
@@ -91,4 +86,5 @@ export const {
   useUpdatePostMutation,
   useDeletePostMutation,
   useGetPostByIdQuery,
+  useLazyGetPostByIdQuery,
 } = postApi

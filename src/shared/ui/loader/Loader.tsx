@@ -1,9 +1,13 @@
 import styles from './loader.module.scss'
 
-export const Loader = () => {
+type Loader = {
+  className?: string
+}
+
+export const Loader = ({ className }: Loader) => {
   return (
     <div className={styles.loaderWrapper}>
-      <div className={styles.loader}></div>
+      <div className={`${styles.loader} ${className}`}></div>
     </div>
   )
 }
