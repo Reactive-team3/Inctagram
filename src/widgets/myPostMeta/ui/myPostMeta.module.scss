@@ -1,0 +1,44 @@
+.statisticsBlock {
+  height: rem(107);
+  border-bottom: 1px solid var(--color-dark-100);
+  border-top: 1px solid var(--color-dark-100);
+  .PostActionsWrapper {
+    display: flex;
+    height: rem(55);
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 rem(24);
+    .buttonLikeMail {
+      display: flex;
+      width: rem(72);
+      justify-content: space-between;
+    }
+  }
+  .visualInformationWrapper {
+    display: flex;
+    margin: 0 rem(25);
+    gap: rem(12);
+    .fotoBlock {
+      display: flex;
+      flex-direction: column;
+      .avatarGroup {
+        display: flex;
+        .avatar {
+          overflow: hidden;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-left: -5px;
+          position: relative;
+          z-index: 1;
+          .avatar:first-child {
+            margin-left: 0;
+          }
+
+          .avatar:hover {
+            z-index: 10;
+          }
+        }
+      }
+    }
+  }
+}

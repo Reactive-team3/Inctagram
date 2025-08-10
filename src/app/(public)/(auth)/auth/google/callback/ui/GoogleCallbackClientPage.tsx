@@ -3,26 +3,28 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import { setAccessToken } from '@/shared/model/auth/authSlice'
-import { publicRoutes } from '@/shared/config/routes/routes'
-import { useGoogleOAuthCallbackQuery } from '@/features/auth/model/authApi'
+import { privateRoutes, publicRoutes } from '@/shared/config/routes/routes'
+import { useMeQuery } from '@/features/auth/model/authApi'
 import { Loader } from '@/shared/ui/loader/Loader'
+import { setUser } from '@/shared/model/user/userSlice'
 
 export default function GoogleCallbackClientPage() {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  const { data, isError, isSuccess } = useGoogleOAuthCallbackQuery()
+  const { data, isLoading, isError } = useMeQuery()
+
   useEffect(() => {
-    if (isSuccess && data?.accessToken) {
-      dispatch(setAccessToken(data.accessToken))
-      router.push(publicRoutes.MAIN_PAGE)
+    if (!isLoading && data) {
+      // сохраняем данные пользователя в стор
+      dispatch(setUser(data))
+      router.push(privateRoutes.MY_PROFILE)
     }
 
-    if (isError) {
+    if (!isLoading && isError) {
       router.push(publicRoutes.auth.SIGNIN)
     }
-  }, [isSuccess, isError, data, dispatch, router])
+  }, [isLoading, data, isError, router, dispatch])
 
-  return <Loader />
+  return <>{isLoading && <Loader />}</>
 }

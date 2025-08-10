@@ -5,7 +5,7 @@ import s from './modal.module.scss'
 import { clsx } from 'clsx'
 import Icon from '@/shared/ui/icon/Icon'
 
-type ModalSize = 'lg' | 'md' | 'sm'
+type ModalSize = 'xl' | 'lg' | 'md' | 'sm'
 
 export type ModalProps = {
   /** The controlled open state of the Modal*/
@@ -13,14 +13,17 @@ export type ModalProps = {
   /** Close modal handler*/
   onClose: () => void
   /** Modal title*/
-  modalTitle: string
+  modalTitle?: string
   /** 'sm' | 'md' | 'lg':
    * sm - 378px,
    * md - 438px,
-   * lg - 764px.
+   * lg - 764px,
+   * xl- 940px,
    * Default: 'md
    * For other values use className */
   size?: ModalSize
+  hideCloseButton?: boolean
+  hideDivider?: boolean
 } & ComponentPropsWithoutRef<'div'>
 
 export const Modal = ({
@@ -30,6 +33,8 @@ export const Modal = ({
   onClose,
   size = 'md',
   className,
+  hideCloseButton = false,
+  hideDivider = false,
   ...rest
 }: ModalProps) => (
   <Dialog.Root open={open} onOpenChange={onClose} {...rest}>
@@ -37,13 +42,15 @@ export const Modal = ({
       <Dialog.Overlay className={s.Overlay} />
       <Dialog.Content className={clsx(s.Content, s[size])} aria-describedby={undefined}>
         <Dialog.Title className={s.Title}>{modalTitle}</Dialog.Title>
-        <hr className={s.divider} />
+        {!hideDivider && <hr className={s.divider} />}
         <div className={className}>{children}</div>
-        <Dialog.Close asChild>
-          <button className={s.IconButton}>
-            <Icon name={'close'} />
-          </button>
-        </Dialog.Close>
+        {!hideCloseButton && (
+          <Dialog.Close asChild>
+            <button className={s.IconButton}>
+              <Icon name={'close'} />
+            </button>
+          </Dialog.Close>
+        )}
       </Dialog.Content>
     </Dialog.Portal>
   </Dialog.Root>

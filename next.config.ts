@@ -3,6 +3,16 @@ import type { NextConfig } from 'next'
 import type { RuleSetRule } from 'webpack'
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'storage.yandexcloud.net',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   webpack(config) {
     config.resolve = config.resolve || {}
     config.resolve.alias = {

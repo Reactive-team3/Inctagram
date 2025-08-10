@@ -56,7 +56,7 @@ export const LogOutModalChildren = ({ onClick, emailName }: logOutModalChildrenP
       </Typography>
       <Typography variant={'body1'} className={s.text}>
         {`"`}
-        <span className={s.span}>${emailName}</span>
+        <span className={s.span}>{emailName}</span>
         {`"`}
       </Typography>
       <div className={s.btn_field}>
