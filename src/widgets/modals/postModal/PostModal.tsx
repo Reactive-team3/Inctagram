@@ -20,11 +20,12 @@ type MyPostProps = {
   isOpen: boolean
   onClose: () => void
   onEdit?: boolean
-  onEditPost: (id: number, description: string) => void
+  onEditPost: (id: number, description: string) => Promise<unknown>
   onEditToggle?: () => void
   onDeletePost?: (postId: number) => void
   post?: Post
   loading: boolean
+  editLoading?: boolean
 }
 
 export const PostModal = ({
@@ -35,6 +36,7 @@ export const PostModal = ({
   post,
   loading,
   onEditPost,
+  editLoading,
 }: MyPostProps) => {
   const [inputValue, setInputValue] = useState('')
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
@@ -131,12 +133,24 @@ export const PostModal = ({
     }
   }
 
-  const handleEditPostText = () => {
-    if (post) {
-      onEditPost(post.id, inputValue)
-      // onEditToggle()
+  // const handleEditPostText = () => {
+  //   if (post) {
+  //     onEditPost(post.id, inputValue)
+  //     // onEditToggle()
+  //     closeConfirmUpModal()
+  //     closeModal()
+  //   }
+  // }
+
+  const handleEditPostText = async () => {
+    if (!post) return
+
+    try {
+      await onEditPost(post.id, inputValue)
       closeConfirmUpModal()
       closeModal()
+    } catch (error) {
+      console.error('Ошибка при обновлении поста:', error)
     }
   }
 
@@ -223,6 +237,7 @@ export const PostModal = ({
           No
         </Button>
       </div>
+      {editLoading && <Loader />}
     </div>
   )
 

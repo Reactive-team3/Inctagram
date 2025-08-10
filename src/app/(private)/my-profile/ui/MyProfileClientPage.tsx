@@ -29,12 +29,9 @@ export const MyProfileClientPage = () => {
     isFetching: allPostFetching,
     isLoading: allPostLoading,
   } = useGetUserPostsQuery(
+    userId ? { userId, pageNumber: currentPage, pageSize } : { userId: 0, pageNumber: 1, pageSize },
     {
-      userId: userId!,
-      pageNumber: currentPage,
-      pageSize,
-    },
-    {
+      skip: !userId,
       refetchOnMountOrArgChange: false,
     }
   )
@@ -44,7 +41,7 @@ export const MyProfileClientPage = () => {
     { data: post, isLoading: postIsLoading, isFetching: postIsFetching, isUninitialized },
   ] = useLazyGetPostByIdQuery()
 
-  const [updatePost] = useUpdatePostMutation()
+  const [updatePost, { isLoading: updatePostLoading }] = useUpdatePostMutation()
   const loadingMoreRef = useRef(false)
 
   const requestNextPage = useCallback(() => {
@@ -76,16 +73,6 @@ export const MyProfileClientPage = () => {
     [hasMore, allPostFetching, requestNextPage]
   )
 
-  useEffect(() => {
-    if (allPosts) {
-      setHasMore(currentPage < allPosts.pagesCount)
-    }
-  }, [allPosts, currentPage])
-
-  useEffect(() => {
-    if (!allPostFetching) loadingMoreRef.current = false
-  }, [allPostFetching])
-
   const onOpenPostModal = (id: number) => {
     setIsModalOpen(true)
     fetchPost(id)
@@ -96,8 +83,18 @@ export const MyProfileClientPage = () => {
   }
 
   const onEditPost = (id: number, description: string) => {
-    updatePost({ id, description })
+    return updatePost({ id, description }).unwrap()
   }
+
+  useEffect(() => {
+    if (allPosts) {
+      setHasMore(currentPage < allPosts.pagesCount)
+    }
+  }, [allPosts, currentPage])
+
+  useEffect(() => {
+    if (!allPostFetching) loadingMoreRef.current = false
+  }, [allPostFetching])
 
   return (
     <div className={styles.container}>
@@ -117,6 +114,7 @@ export const MyProfileClientPage = () => {
         post={postIsFetching ? undefined : post}
         loading={postIsLoading || postIsFetching || isUninitialized}
         onEditPost={onEditPost}
+        editLoading={updatePostLoading}
       />
     </div>
   )
