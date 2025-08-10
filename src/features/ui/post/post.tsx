@@ -4,13 +4,14 @@ import { Typography } from '@/shared/ui/typography/Typography'
 import { Button } from '@/shared/ui/button/Button'
 import Link from 'next/link'
 import { privateRoutes } from '@/shared/config/routes/routes'
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { selectUser } from '@/shared/model/user/userSlice'
+import { UserState } from '@/shared/model/user/userSlice'
 import styles from '@/features/ui/post/post.module.scss'
 
-const Post = () => {
-  const userMe = useSelector(selectUser)
+type Post = {
+  user?: UserState
+}
+
+export const Post = ({ user }: Post) => {
   return (
     <div className={styles.wrapperPhotoProfile}>
       <div className={styles.photo}>
@@ -26,7 +27,7 @@ const Post = () => {
       <div className={styles.wrapperProfilleInformation}>
         <div className={styles.profileBlock}>
           <Typography as="h1" variant="h1">
-            {userMe?.username || 'Пользователь'}
+            {user?.username || 'Пользователь'}
           </Typography>
           <Button as={Link} href={privateRoutes.PROFILE_SETTINGS} variant="secondary">
             Profile Settings
@@ -70,4 +71,3 @@ const Post = () => {
     </div>
   )
 }
-export default Post

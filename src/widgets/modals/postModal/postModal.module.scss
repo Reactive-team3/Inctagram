@@ -1,8 +1,12 @@
+.modalWrapper {
+  height: rem(586);
+}
+
 .modalProfile {
   display: flex;
   position: relative;
   margin-top: rem(-13);
-
+  min-height: rem(562);
   .customCloseButton {
     position: absolute;
     top: rem(-43);

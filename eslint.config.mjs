@@ -6,10 +6,9 @@ import js from '@eslint/js'
 import * as tseslint from 'typescript-eslint'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-
+import prettier from 'eslint-config-prettier'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
@@ -49,6 +48,7 @@ export default [
         'react/react-in-jsx-scope': 'off',
         'react/jsx-uses-react': 'off',
       },
-    }
+    },
+    prettier
   ),
 ]
