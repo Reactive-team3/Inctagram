@@ -6,23 +6,37 @@ import Link from 'next/link'
 import { privateRoutes } from '@/shared/config/routes/routes'
 import { UserState } from '@/shared/model/user/userSlice'
 import styles from '@/features/ui/post/post.module.scss'
+import { useGetProfileQuery } from '@/features/profile/model/profileApi'
 
 type Post = {
   user?: UserState
 }
 
 export const Post = ({ user }: Post) => {
+  const { data } = useGetProfileQuery()
+  const url = data?.avatar?.url
   return (
     <div className={styles.wrapperPhotoProfile}>
       <div className={styles.photo}>
-        <Image
-          src="/user-images/image.png"
-          alt="Profile photo"
-          width={204}
-          height={204}
-          className={styles.noPostsImage}
-          style={{ borderRadius: '100px' }}
-        />
+        {url ? (
+          <Image
+            src={url}
+            alt="Profile photo"
+            width={204}
+            height={204}
+            className={styles.noPostsImage}
+            style={{ borderRadius: '100px' }}
+          />
+        ) : (
+          <Image
+            src="/user-images/image.png"
+            alt="Profile photo"
+            width={204}
+            height={204}
+            className={styles.noPostsImage}
+            style={{ borderRadius: '100px' }}
+          />
+        )}
       </div>
       <div className={styles.wrapperProfilleInformation}>
         <div className={styles.profileBlock}>

@@ -10,6 +10,7 @@ import { addNotification } from '@/shared/model/notifications/notificationsSlice
 import { nanoid } from 'nanoid'
 import { useDispatch } from 'react-redux'
 import { Loader } from '@/shared/ui/loader/Loader'
+import style from './ProfileUpdatePhoto.module.scss'
 
 // утилита для получения обрезанного изображения
 async function getCroppedImg(
@@ -110,7 +111,7 @@ export const ProfileUpdatePhoto = ({
       )
       setImageSrc(null) // закрыть cropper
     } catch (err) {
-      alert(err)
+      console.error(err)
     } finally {
       onClose()
     }
@@ -134,7 +135,7 @@ export const ProfileUpdatePhoto = ({
         size="md"
       >
         {imageSrc && (
-          <div style={{ position: 'relative', width: '100%', height: 340 }}>
+          <div className={style.cropper}>
             {isLoading ? (
               <Loader />
             ) : (
@@ -152,15 +153,7 @@ export const ProfileUpdatePhoto = ({
             )}
           </div>
         )}
-        <div
-          style={{
-            marginTop: 36,
-            marginBottom: 36,
-            marginRight: 24,
-            display: 'flex',
-            justifyContent: 'end',
-          }}
-        >
+        <div className={style.btn}>
           <Button onClick={handleCropSave}>Save</Button>
         </div>
       </Modal>
