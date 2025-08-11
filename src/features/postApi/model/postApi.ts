@@ -1,5 +1,10 @@
 import { baseApi } from '@/shared/api/baseApi'
-import type { CreatePostResponse, GetUserPostsRequest, GetUserPostsResponse } from './types'
+import type {
+  CreatePostResponse,
+  GetPostByIdResponse,
+  GetUserPostsRequest,
+  GetUserPostsResponse,
+} from './types'
 import { UpdatePost } from '@/features/auth/model/types'
 
 export const postApi = baseApi.injectEndpoints({
@@ -35,24 +40,33 @@ export const postApi = baseApi.injectEndpoints({
         const { ...rest } = queryArgs
         return `userId:${rest.userId}-pageSize:${rest.pageSize}-sort:${rest.sortBy}-dir:${rest.sortDirection}`
       },
-      merge: (currentCache, newItems, { arg }) => {
+      merge: (currentCache, newPage, { arg }) => {
         const pageNumber = arg.pageNumber ?? 1
+        if (pageNumber === 1 || !currentCache?.items?.length) return newPage
 
-        if (pageNumber === 1) {
-          return newItems
+        const merged = [...currentCache.items]
+        const idxById = new Map(merged.map((p, i) => [p.id, i]))
+
+        for (const item of newPage.items) {
+          const i = idxById.get(item.id)
+          if (i !== undefined) merged[i] = item
+          else merged.push(item)
         }
 
-        return {
-          ...newItems,
-          items: [...currentCache.items, ...newItems.items],
-        }
+        return { ...newPage, items: merged }
       },
       forceRefetch: ({ currentArg, previousArg }) => {
         const currentPage = currentArg?.pageNumber ?? 1
         const previousPage = previousArg?.pageNumber ?? 1
         return currentPage !== previousPage
       },
-      providesTags: ['Posts'],
+      providesTags: result =>
+        result
+          ? [
+              { type: 'Posts', id: 'LIST' },
+              ...result.items.map(p => ({ type: 'Posts' as const, id: p.id })),
+            ]
+          : [{ type: 'Posts', id: 'LIST' }],
     }),
     updatePost: builder.mutation<void, UpdatePost>({
       query: ({ id, ...description }) => ({
@@ -60,14 +74,21 @@ export const postApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: description,
       }),
-      invalidatesTags: ['Posts'],
+      invalidatesTags: (res, err, { id }) => [
+        { type: 'Posts', id },
+        { type: 'Posts', id: 'LIST' },
+      ],
     }),
     deletePost: builder.mutation<void, { id: number }>({
-      query: ({ id }) => ({
-        url: `/posts/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Posts'],
+      query: ({ id }) => ({ url: `/posts/${id}`, method: 'DELETE' }),
+      invalidatesTags: (res, err, { id }) => [
+        { type: 'Posts', id },
+        { type: 'Posts', id: 'LIST' },
+      ],
+    }),
+    getPostById: builder.query<GetPostByIdResponse, number>({
+      query: id => ({ url: `/posts/${id}`, method: 'GET' }),
+      providesTags: (result, error, id) => [{ type: 'Posts', id }],
     }),
   }),
 })
@@ -77,4 +98,6 @@ export const {
   useGetUserPostsQuery,
   useUpdatePostMutation,
   useDeletePostMutation,
+  useGetPostByIdQuery,
+  useLazyGetPostByIdQuery,
 } = postApi

@@ -1,45 +1,47 @@
-'use client'
+import styles from './postModal.module.scss'
 import React, { useEffect, useMemo, useState } from 'react'
-import Image from 'next/image'
 import { Typography } from '@/shared/ui/typography/Typography'
+import Image from 'next/image'
+import { Slider } from '@/shared/ui/slider/slider'
+import { TextArea } from '@/shared/ui/textArea/TextArea'
+import { Button } from '@/shared/ui/button/Button'
 import { Modal } from '@/shared/ui/modal/Modal'
 import { Dialog } from 'radix-ui'
 import Icon from '@/shared/ui/icon/Icon'
-import { Slider } from '@/shared/ui/slider/slider'
-import styles from './myPost.module.scss'
 import { DropdownMenu } from '@/shared/ui/dropdownMenu/dropdownMenu'
-import { useGetPostByIdQuery, useUpdatePostMutation } from '@/features/postApi/model/postApi'
-import { TextArea } from '@/shared/ui/textArea/TextArea'
-import { Button } from '@/shared/ui/button/Button'
-import { ConfirmUpdatePostModal } from '@/features/ui/updatePostModal/confirmUpdatePostModal/ConfirmUpdatePostModal'
-import { UpdatePostModal } from '@/features/ui/updatePostModal/UpdatePostModal'
-import { useSearchParams } from 'next/navigation'
 import FeedbackMyPost from '@/widgets/feedbackBlock/ui/feedbackMyPost'
 import MyPostMeta from '@/widgets/myPostMeta/ui/myPostMeta'
+import { UpdatePostModal } from '@/features/ui/updatePostModal/UpdatePostModal'
+import { ConfirmUpdatePostModal } from '@/features/ui/updatePostModal/confirmUpdatePostModal/ConfirmUpdatePostModal'
+import { Post } from '@/features/postApi/model/types'
+import { Loader } from '@/shared/ui/loader/Loader'
 
 type MyPostProps = {
   isOpen: boolean
   onClose: () => void
-  onEdit: boolean
-  onEditToggle: () => void
+  onEdit?: boolean
+  onEditPost: (id: number, description: string) => Promise<unknown>
+  onEditToggle?: () => void
   onDeletePost?: (postId: number) => void
+  post?: Post
+  loading: boolean
+  editLoading?: boolean
 }
 
-const MyPost = ({ isOpen, onClose, onEditToggle, onDeletePost }: MyPostProps) => {
+export const PostModal = ({
+  isOpen,
+  onClose,
+  // onEditToggle,
+  onDeletePost,
+  post,
+  loading,
+  onEditPost,
+  editLoading,
+}: MyPostProps) => {
   const [inputValue, setInputValue] = useState('')
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
   const [openConfirmUpdateModal, setOpenConfirmUpdateModal] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-
-  // Get ID post from URL
-  const searchParams = useSearchParams()
-  const postId = searchParams.get('id')
-
-  const { data: post } = useGetPostByIdQuery(Number(postId), {
-    skip: !postId,
-  })
-
-  const [updatePost] = useUpdatePostMutation()
 
   // Resetting the image index when changing the post
   useEffect(() => {
@@ -131,12 +133,24 @@ const MyPost = ({ isOpen, onClose, onEditToggle, onDeletePost }: MyPostProps) =>
     }
   }
 
-  const handleEditPostText = () => {
-    if (post) {
-      updatePost({ id: post.id, description: inputValue })
-      onEditToggle()
+  // const handleEditPostText = () => {
+  //   if (post) {
+  //     onEditPost(post.id, inputValue)
+  //     // onEditToggle()
+  //     closeConfirmUpModal()
+  //     closeModal()
+  //   }
+  // }
+
+  const handleEditPostText = async () => {
+    if (!post) return
+
+    try {
+      await onEditPost(post.id, inputValue)
       closeConfirmUpModal()
       closeModal()
+    } catch (error) {
+      console.error('Ошибка при обновлении поста:', error)
     }
   }
 
@@ -223,6 +237,7 @@ const MyPost = ({ isOpen, onClose, onEditToggle, onDeletePost }: MyPostProps) =>
           No
         </Button>
       </div>
+      {editLoading && <Loader />}
     </div>
   )
 
@@ -235,69 +250,76 @@ const MyPost = ({ isOpen, onClose, onEditToggle, onDeletePost }: MyPostProps) =>
       hideCloseButton={true}
       hideDivider={true}
     >
-      <Dialog.Close asChild>
-        <button className={styles.customCloseButton}>
-          <Icon name="close" />
-        </button>
-      </Dialog.Close>
-      <div className={styles.wrapperSlider}>
-        <Slider
-          slides={slides}
-          currentIndex={currentImageIndex}
-          onIndexChangeAction={handleImageIndexChange}
-          showDots={slides.length > 1}
-          customStyles={{
-            sliderArrowPrev: styles.customArrowPrev,
-            sliderArrowNext: styles.customArrowNext,
-          }}
-        />
-      </div>
-      <div className={styles.informationBlockPost}>
-        <div className={styles.userBlock}>
-          <div className={styles.wrapper}>
-            <div className={styles.userPhoto}>
-              <Image src="/user-images/image.png" alt="photo" width={36} height={36} />
-            </div>
-            <Typography as="span" variant="h3" className={styles.userUrl}>
-              {post?.username}
-            </Typography>
+      {loading || !post ? (
+        <div className="loader-wrapper">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <Dialog.Close asChild>
+            <button className={styles.customCloseButton}>
+              <Icon name="close" />
+            </button>
+          </Dialog.Close>
+          <div className={styles.wrapperSlider}>
+            <Slider
+              slides={slides}
+              currentIndex={currentImageIndex}
+              onIndexChangeAction={handleImageIndexChange}
+              showDots={slides.length > 1}
+              customStyles={{
+                sliderArrowPrev: styles.customArrowPrev,
+                sliderArrowNext: styles.customArrowNext,
+              }}
+            />
           </div>
-          <DropdownMenu
-            className={styles.buttonIcon}
-            onEditClick={openModal}
-            onDeleteClick={handleDeletePost}
-          />
-        </div>
-        {post && <FeedbackMyPost post={post} />}
-        <MyPostMeta />
-        <div className={styles.textAreaPostBlock}>
-          <TextArea
-            label=""
-            name="сomment"
-            placeholder="Add a Comment..."
-            className={styles.textAreaPost}
-          />
-          <Button as="button" variant="text">
-            Publish
-          </Button>
-        </div>
+          <div className={styles.informationBlockPost}>
+            <div className={styles.userBlock}>
+              <div className={styles.wrapper}>
+                <div className={styles.userPhoto}>
+                  <Image src="/user-images/image.png" alt="photo" width={36} height={36} />
+                </div>
+                <Typography as="span" variant="h3" className={styles.userUrl}>
+                  {post?.username}
+                </Typography>
+              </div>
+              <DropdownMenu
+                className={styles.buttonIcon}
+                onEditClick={openModal}
+                onDeleteClick={handleDeletePost}
+              />
+            </div>
+            {post && <FeedbackMyPost post={post} />}
+            <MyPostMeta />
+            <div className={styles.textAreaPostBlock}>
+              <TextArea
+                label=""
+                name="сomment"
+                placeholder="Add a Comment..."
+                className={styles.textAreaPost}
+              />
+              <Button as="button" variant="text">
+                Publish
+              </Button>
+            </div>
 
-        <UpdatePostModal
-          open={openUpdateModal}
-          onClose={closeModal}
-          className={styles.modalProfile}
-        >
-          {childrenForUpdateModal}
-        </UpdatePostModal>
-        <ConfirmUpdatePostModal
-          open={openConfirmUpdateModal}
-          onClose={closeConfirmUpModal}
-          className={styles.confirmModal}
-        >
-          {childrenForConfirmUpdate}
-        </ConfirmUpdatePostModal>
-      </div>
+            <UpdatePostModal
+              open={openUpdateModal}
+              onClose={closeModal}
+              className={styles.modalProfile}
+            >
+              {childrenForUpdateModal}
+            </UpdatePostModal>
+            <ConfirmUpdatePostModal
+              open={openConfirmUpdateModal}
+              onClose={closeConfirmUpModal}
+              className={styles.confirmModal}
+            >
+              {childrenForConfirmUpdate}
+            </ConfirmUpdatePostModal>
+          </div>
+        </>
+      )}
     </Modal>
   )
 }
-export default MyPost

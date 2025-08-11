@@ -1,4 +1,6 @@
 .scrollContainer {
+  max-width: 100%;
+  height: auto;
   margin-top: rem(48);
   .wrapperUserPhoto {
     display: grid;
@@ -7,7 +9,6 @@
     .userPhoto {
       width: 100%;
       height: rem(228);
-      background-color: #990f2b;
     }
   }
 
@@ -18,7 +19,6 @@
     .noPostsImage {
       width: 100%;
       height: rem(228);
-      background-color: #990f2b;
     }
   }
 }
