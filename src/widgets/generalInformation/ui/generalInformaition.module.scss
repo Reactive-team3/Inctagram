@@ -7,7 +7,6 @@
   display: flex;
   gap: rem(40);
 }
-
 .photo {
   display: flex;
   flex-direction: column;
@@ -30,4 +29,24 @@
 .saveBtn {
   display: flex;
   justify-content: end;
+}
+.deleteBtn {
+  width: rem(24);
+  height: rem(24);
+  background-color: var(--color-dark-700);
+  right: rem(12);
+  border-radius: 50%;
+  padding: rem(4);
+  position: absolute;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.deleteIcon {
+  background-color: var(--color-danger-500);
+  border-radius: 50%;
+}
+.profileImage {
+  position: relative;
 }

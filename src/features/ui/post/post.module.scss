@@ -5,9 +5,11 @@
     display: block;
     width: rem(204);
     height: rem(204);
-    border-radius: 50%;
-    background-color: white;
     margin-right: 38px;
+
+    .postImage {
+      border-radius: 50%;
+    }
   }
   .wrapperProfilleInformation {
     width: rem(730);

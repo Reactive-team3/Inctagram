@@ -10,13 +10,26 @@ export const profileApi = baseApi.injectEndpoints({
         method: 'POST',
         body: formData,
       }),
+      invalidatesTags: ['Profile'],
     }),
     getProfile: builder.query<ProfileData, void>({
       query: () => ({
         url: '/users/profile',
         method: 'GET',
       }),
+      providesTags: ['Profile'],
+    }),
+    deleteProfileAvatar: builder.mutation<void, void>({
+      query: () => ({
+        url: '/users/profile/avatar',
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Profile'],
     }),
   }),
 })
-export const { useUploadProfileAvatarMutation, useGetProfileQuery } = profileApi
+export const {
+  useUploadProfileAvatarMutation,
+  useGetProfileQuery,
+  useDeleteProfileAvatarMutation,
+} = profileApi

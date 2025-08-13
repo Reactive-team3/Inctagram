@@ -1,42 +1,46 @@
 import React, { useState } from 'react'
-import style from './GeneralInformaition.module.scss'
+import style from './generalInformaition.module.scss'
 import { Button } from '@/shared/ui/button/Button'
-import Image from 'next/image'
+
 import { Modal } from '@/shared/ui/modal/Modal'
 import styles from '@/app/(private)/create/ui/createPostModalPage.module.scss'
 import Icon from '@/shared/ui/icon/Icon'
 import { ProfileUpdatePhoto } from '@/widgets/generalInformation/ui/profileUpdatePhoto/ProfileUpdatePhoto'
 import { useGetProfileQuery } from '@/features/profile/model/profileApi'
+import { DeleteAvatarModal } from '@/widgets/modals/deleteAvatarModal/DeleteAvatarModal'
 
 export const GeneralInformaition = () => {
   const [open, setOpen] = useState(false)
+  const [deleteAvatarOpenModal, setDeleteAvatarOpenModal] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-  const { data } = useGetProfileQuery()
+  const { data, isLoading } = useGetProfileQuery()
   const url = data?.avatar?.url
+  const handleDeleteOpenModal = () => setDeleteAvatarOpenModal(true)
+  const handleDeleteCloseModal = () => setDeleteAvatarOpenModal(false)
+
   return (
     <>
       <div className={style.container}>
         <div className={style.main}>
           <div className={style.photo}>
             <div>
-              {url ? (
-                <Image
-                  src={url}
-                  alt="photo"
-                  className={style.profilePhoto}
-                  width={192}
-                  height={192}
-                />
-              ) : (
-                <Image
-                  src="/user-images/image.png"
-                  alt="photo"
-                  className={style.profilePhoto}
-                  width={192}
-                  height={192}
-                />
+              {url && !isLoading && (
+                <>
+                  <div className={style.profileImage}>
+                    <button className={style.deleteBtn} onClick={handleDeleteOpenModal}>
+                      <Icon name={'close'} className={style.deleteIcon} width={16} height={16} />
+                    </button>
+                  </div>
+                </>
               )}
+              {/*<ExtendedPicture*/}
+              {/*  src={url}*/}
+              {/*  alt="photo"*/}
+              {/*  className={style.profilePhoto}*/}
+              {/*  width={192}*/}
+              {/*  height={192}*/}
+              {/*/>*/}
             </div>
             <Button onClick={handleOpen} variant={'outline'}>
               Select Profile Photo
@@ -61,6 +65,7 @@ export const GeneralInformaition = () => {
           </div>
         }
       </Modal>
+      <DeleteAvatarModal open={deleteAvatarOpenModal} onClose={handleDeleteCloseModal} />
     </>
   )
 }

@@ -10,7 +10,7 @@ import { addNotification } from '@/shared/model/notifications/notificationsSlice
 import { nanoid } from 'nanoid'
 import { useDispatch } from 'react-redux'
 import { Loader } from '@/shared/ui/loader/Loader'
-import style from './ProfileUpdatePhoto.module.scss'
+import style from './profileUpdatePhoto.module.scss'
 
 // утилита для получения обрезанного изображения
 async function getCroppedImg(
