@@ -8,6 +8,7 @@ import Icon from '@/shared/ui/icon/Icon'
 import { ProfileUpdatePhoto } from '@/widgets/generalInformation/ui/profileUpdatePhoto/ProfileUpdatePhoto'
 import { useGetProfileQuery } from '@/features/profile/model/profileApi'
 import { DeleteAvatarModal } from '@/widgets/modals/deleteAvatarModal/DeleteAvatarModal'
+import { ExtendedPicture } from '@/shared/ui/extendedPicture/ExtendedPicture'
 
 export const GeneralInformaition = () => {
   const [open, setOpen] = useState(false)
@@ -34,13 +35,13 @@ export const GeneralInformaition = () => {
                   </div>
                 </>
               )}
-              {/*<ExtendedPicture*/}
-              {/*  src={url}*/}
-              {/*  alt="photo"*/}
-              {/*  className={style.profilePhoto}*/}
-              {/*  width={192}*/}
-              {/*  height={192}*/}
-              {/*/>*/}
+              <ExtendedPicture
+                src={url}
+                alt="photo"
+                className={style.profilePhoto}
+                width={192}
+                height={192}
+              />
             </div>
             <Button onClick={handleOpen} variant={'outline'}>
               Select Profile Photo
