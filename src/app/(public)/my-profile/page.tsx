@@ -1,4 +1,4 @@
-import { MyProfileClientPage } from '@/app/(private)/my-profile/ui/MyProfileClientPage'
+import { MyProfileClientPage } from '@/app/(public)/my-profile/ui/MyProfileClientPage'
 
 const MyProfile = () => {
   return <MyProfileClientPage />

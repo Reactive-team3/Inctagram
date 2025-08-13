@@ -1,6 +1,6 @@
 import { Post } from '@/features/postApi/model/types'
 import { Scroll } from '@/shared/ui/scroll/Scroll'
-import styles from '@/widgets/myPostsLlist/myPostsLlist.module.scss'
+import styles from './myPostList.module.scss'
 import { Typography } from '@/shared/ui/typography/Typography'
 import { Loader } from '@/shared/ui/loader/Loader'
 import React, { forwardRef } from 'react'
