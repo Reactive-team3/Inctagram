@@ -1,0 +1,11 @@
+.errorSize {
+  width: 100%;
+  border: var(--color-danger-500);
+  border-radius: rem(2);
+  background-color: var(--color-danger-900);
+  padding: rem(6) rem(24);
+  text-align: center;
+  line-height: rem(24);
+  font-weight: 400;
+  font-size: rem(16);
+}

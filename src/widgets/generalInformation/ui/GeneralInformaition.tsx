@@ -9,12 +9,18 @@ import { ProfileUpdatePhoto } from '@/widgets/generalInformation/ui/profileUpdat
 import { useGetProfileQuery } from '@/features/profile/model/profileApi'
 import { DeleteAvatarModal } from '@/widgets/modals/deleteAvatarModal/DeleteAvatarModal'
 import { ExtendedPicture } from '@/shared/ui/extendedPicture/ExtendedPicture'
+import { ErrorBlock, Format } from '@/widgets/generalInformation/ui/errorBlock/ErrorBlock'
 
 export const GeneralInformaition = () => {
   const [open, setOpen] = useState(false)
+  const [isError, setIsError] = useState(false)
   const [deleteAvatarOpenModal, setDeleteAvatarOpenModal] = useState(false)
+  const [errorFormat, setErrorFormat] = useState<Format>('size')
   const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const handleClose = () => {
+    setOpen(false)
+    setIsError(false)
+  }
   const { data, isLoading } = useGetProfileQuery()
   const url = data?.avatar?.url
   const handleDeleteOpenModal = () => setDeleteAvatarOpenModal(true)
@@ -57,10 +63,15 @@ export const GeneralInformaition = () => {
       <Modal open={open} onClose={handleClose} modalTitle={'Add a Profile Photo'}>
         {
           <div className={styles.placeholder}>
+            {isError && <ErrorBlock name={errorFormat} />}
             <div className={styles.imageFrame}>
               <Icon name="image-outline" width={48} height={48} />
             </div>
-            <ProfileUpdatePhoto onClose={handleClose}>
+            <ProfileUpdatePhoto
+              setError={setIsError}
+              setErrorFormat={setErrorFormat}
+              onClose={handleClose}
+            >
               <Button>Select from computer</Button>
             </ProfileUpdatePhoto>
           </div>

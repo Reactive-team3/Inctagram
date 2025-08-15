@@ -4,3 +4,12 @@
   object-fit: cover;
   cursor: pointer;
 }
+.undefined {
+  width: rem(192);
+  height: rem(192);
+  background-color: var(--color-dark-500);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,8 +1,17 @@
 import Image, { ImageProps } from 'next/image'
 import styles from './extendedPicture.module.scss'
+import Icon from '@/shared/ui/icon/Icon'
 
 export const ExtendedPicture = ({ ...props }: ImageProps) => {
   const src = props.src ? props.src : '/common-images/photo-not-available.jpg'
   const className = props.className ? props.className : styles.extendedPicture
-  return <Image {...props} src={src} alt={props.alt} className={className} />
+  if (props.src) {
+    return <Image {...props} src={src} alt={props.alt} className={className} />
+  } else {
+    return (
+      <div className={styles.undefined}>
+        <Icon name={'image-outline'} width={48} height={48} />
+      </div>
+    )
+  }
 }
