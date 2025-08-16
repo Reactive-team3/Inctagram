@@ -41,7 +41,14 @@ export const GeneralInformaition = () => {
   const url = data?.avatar?.url
   const handleDeleteOpenModal = () => setDeleteAvatarOpenModal(true)
   const handleDeleteCloseModal = () => setDeleteAvatarOpenModal(false)
-
+  const [selectedCountry, setSelectedCountry] = useState('1')
+  const [selectedCity, setSelectedCity] = useState('1')
+  const handleCountryChange = (value: string) => {
+    setSelectedCountry(value)
+  }
+  const handleCityChange = (value: string) => {
+    setSelectedCity(value)
+  }
   return (
     <>
       <div className={style.container}>
@@ -77,14 +84,14 @@ export const GeneralInformaition = () => {
             {/*<Input name={'DateOfBirth'} label={'Date of birth'} />*/}
             <div className={style.selectedGroup}>
               <SelectComponent
-                defaultValue={'Country'}
-                onChangeAction={() => {}}
+                defaultValue={selectedCountry}
+                onChangeAction={handleCountryChange}
                 options={countryOptions}
                 className={style.select}
               />
               <SelectComponent
-                defaultValue={'City'}
-                onChangeAction={() => {}}
+                defaultValue={selectedCity}
+                onChangeAction={handleCityChange}
                 options={cityOptions}
                 className={style.select}
               />
