@@ -81,12 +81,6 @@ export const postApi = baseApi.injectEndpoints({
             Object.assign(draft, patch)
           })
         )
-        // dispatch(
-        //   postApi.util.updateQueryData('getPosts', undefined, draft => {
-        //     const post = draft.find(p => p.id === id)
-        //     if (post) Object.assign(post, patch)
-        //   })
-        // )
 
         try {
           await queryFulfilled // Ждём завершения запроса
@@ -95,18 +89,6 @@ export const postApi = baseApi.injectEndpoints({
         }
       },
     }),
-
-    // updatePost: builder.mutation<void, UpdatePost>({
-    //   query: ({ id, ...description }) => ({
-    //     url: `/posts/${id}`,
-    //     method: 'PUT',
-    //     body: description,
-    //   }),
-    //   invalidatesTags: (res, err, { id }) => [
-    //     { type: 'Posts', id },
-    //     { type: 'Posts', id: 'LIST' },
-    //   ],
-    // }),
     deletePost: builder.mutation<void, { id: number }>({
       query: ({ id }) => ({ url: `/posts/${id}`, method: 'DELETE' }),
       invalidatesTags: (res, err, { id }) => [
