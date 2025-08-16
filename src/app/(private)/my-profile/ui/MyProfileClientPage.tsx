@@ -41,7 +41,7 @@ export const MyProfileClientPage = () => {
     { data: post, isLoading: postIsLoading, isFetching: postIsFetching, isUninitialized },
   ] = useLazyGetPostByIdQuery()
 
-  const [updatePost, { isLoading: updatePostLoading }] = useUpdatePostMutation()
+  const [updatePost] = useUpdatePostMutation()
   const loadingMoreRef = useRef(false)
 
   const requestNextPage = useCallback(() => {
@@ -114,7 +114,6 @@ export const MyProfileClientPage = () => {
         post={postIsFetching ? undefined : post}
         loading={postIsLoading || postIsFetching || isUninitialized}
         onEditPost={onEditPost}
-        editLoading={updatePostLoading}
       />
     </div>
   )

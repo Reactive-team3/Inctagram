@@ -74,11 +74,39 @@ export const postApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: description,
       }),
-      invalidatesTags: (res, err, { id }) => [
-        { type: 'Posts', id },
-        { type: 'Posts', id: 'LIST' },
-      ],
+      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+        // Оптимистично обновляем кэш для конкретного поста
+        const patchResult = dispatch(
+          postApi.util.updateQueryData('getPostById', id, draft => {
+            Object.assign(draft, patch)
+          })
+        )
+        // dispatch(
+        //   postApi.util.updateQueryData('getPosts', undefined, draft => {
+        //     const post = draft.find(p => p.id === id)
+        //     if (post) Object.assign(post, patch)
+        //   })
+        // )
+
+        try {
+          await queryFulfilled // Ждём завершения запроса
+        } catch {
+          patchResult.undo() // Откатываем при ошибке
+        }
+      },
     }),
+
+    // updatePost: builder.mutation<void, UpdatePost>({
+    //   query: ({ id, ...description }) => ({
+    //     url: `/posts/${id}`,
+    //     method: 'PUT',
+    //     body: description,
+    //   }),
+    //   invalidatesTags: (res, err, { id }) => [
+    //     { type: 'Posts', id },
+    //     { type: 'Posts', id: 'LIST' },
+    //   ],
+    // }),
     deletePost: builder.mutation<void, { id: number }>({
       query: ({ id }) => ({ url: `/posts/${id}`, method: 'DELETE' }),
       invalidatesTags: (res, err, { id }) => [
