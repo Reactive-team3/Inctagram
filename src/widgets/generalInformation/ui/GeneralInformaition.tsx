@@ -10,8 +10,24 @@ import { useGetProfileQuery } from '@/features/profile/model/profileApi'
 import { DeleteAvatarModal } from '@/widgets/modals/deleteAvatarModal/DeleteAvatarModal'
 import { ExtendedPicture } from '@/shared/ui/extendedPicture/ExtendedPicture'
 import { ErrorBlock, Format } from '@/widgets/generalInformation/ui/errorBlock/ErrorBlock'
+import { Input } from '@/shared/ui/Input/Input'
+import { SelectComponent } from '@/shared/ui/select/SelectComponent'
+import { TextArea } from '@/shared/ui/textArea/TextArea'
+import CustomDatePicker from '@/shared/ui/datePicker/DatePicker'
 
 export const GeneralInformaition = () => {
+  const countryOptions = [
+    { value: '1', label: 'Belarus' },
+    { value: '2', label: 'Russia' },
+    { value: '3', label: 'Poland' },
+    { value: '4', label: 'USA' },
+  ]
+  const cityOptions = [
+    { value: '1', label: 'Minsk' },
+    { value: '2', label: 'Moscow' },
+    { value: '3', label: 'Warsaw' },
+    { value: '4', label: 'Washington' },
+  ]
   const [open, setOpen] = useState(false)
   const [isError, setIsError] = useState(false)
   const [deleteAvatarOpenModal, setDeleteAvatarOpenModal] = useState(false)
@@ -53,7 +69,28 @@ export const GeneralInformaition = () => {
               Select Profile Photo
             </Button>
           </div>
-          <div className={style.info}></div>
+          <div className={style.info}>
+            <Input name={'UserName'} label={'Username'} />
+            <Input name={'FirstName'} label={'First Name'} />
+            <Input name={'LastName'} label={'Last Name'} />
+            <CustomDatePicker label={'Date of birth'} />
+            {/*<Input name={'DateOfBirth'} label={'Date of birth'} />*/}
+            <div className={style.selectedGroup}>
+              <SelectComponent
+                defaultValue={'Country'}
+                onChangeAction={() => {}}
+                options={countryOptions}
+                className={style.select}
+              />
+              <SelectComponent
+                defaultValue={'City'}
+                onChangeAction={() => {}}
+                options={cityOptions}
+                className={style.select}
+              />
+            </div>
+            <TextArea label={'About Me'} name={'AboutMe'} />
+          </div>
         </div>
         <hr className={style.divider} />
         <div className={style.saveBtn}>

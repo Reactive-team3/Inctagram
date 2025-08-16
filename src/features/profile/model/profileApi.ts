@@ -1,5 +1,5 @@
 import { baseApi } from '@/shared/api/baseApi'
-import { ProfileData } from '@/features/profile/model/types'
+import { ProfileData, UpdateProfile } from '@/features/profile/model/types'
 
 export const profileApi = baseApi.injectEndpoints({
   overrideExisting: true,
@@ -25,6 +25,13 @@ export const profileApi = baseApi.injectEndpoints({
         method: 'DELETE',
       }),
       invalidatesTags: ['Profile'],
+    }),
+    updateProfileData: builder.mutation<void, UpdateProfile>({
+      query: body => ({
+        url: '/users/profile',
+        method: 'PUT',
+        body: body,
+      }),
     }),
   }),
 })

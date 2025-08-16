@@ -28,7 +28,7 @@
   width: 100%;
   padding: rem(6) rem(12);
   border: rem(1) solid var(--color-dark-100);
-  background-color: var(--color-dark-500);
+  background-color: transparent;
   border-radius: rem(4);
   font-size: rem(16);
   line-height: rem(24);
@@ -46,6 +46,7 @@
   &:focus {
     outline: none;
     border-color: var(--color-accent-500);
+    background-color: var(--color-dark-500);
     color: var(--color-light-100);
   }
 
