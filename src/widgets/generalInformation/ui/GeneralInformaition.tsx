@@ -81,7 +81,6 @@ export const GeneralInformaition = () => {
             <Input name={'FirstName'} label={'First Name'} />
             <Input name={'LastName'} label={'Last Name'} />
             <CustomDatePicker label={'Date of birth'} />
-            {/*<Input name={'DateOfBirth'} label={'Date of birth'} />*/}
             <div className={style.selectedGroup}>
               <SelectComponent
                 defaultValue={selectedCountry}
