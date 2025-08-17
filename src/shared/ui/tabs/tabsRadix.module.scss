@@ -28,7 +28,6 @@
   border: none;
   border-bottom: rem(2) solid var(--color-dark-100);
   cursor: pointer;
-  //transition: all 0.2s ease;
 
   // Inactive condition
   &[data-state='inactive'] {
