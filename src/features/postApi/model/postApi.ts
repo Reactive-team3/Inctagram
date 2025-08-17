@@ -75,7 +75,7 @@ export const postApi = baseApi.injectEndpoints({
         body: description,
       }),
       async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-        // Оптимистично обновляем кэш для конкретного поста
+        
         const patchResult = dispatch(
           postApi.util.updateQueryData('getPostById', id, draft => {
             Object.assign(draft, patch)
@@ -83,9 +83,9 @@ export const postApi = baseApi.injectEndpoints({
         )
 
         try {
-          await queryFulfilled // Ждём завершения запроса
+          await queryFulfilled 
         } catch {
-          patchResult.undo() // Откатываем при ошибке
+          patchResult.undo() 
         }
       },
     }),
