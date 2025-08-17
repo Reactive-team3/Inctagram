@@ -74,10 +74,20 @@ export const postApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: description,
       }),
-      invalidatesTags: (res, err, { id }) => [
-        { type: 'Posts', id },
-        { type: 'Posts', id: 'LIST' },
-      ],
+      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+        
+        const patchResult = dispatch(
+          postApi.util.updateQueryData('getPostById', id, draft => {
+            Object.assign(draft, patch)
+          })
+        )
+
+        try {
+          await queryFulfilled 
+        } catch {
+          patchResult.undo() 
+        }
+      },
     }),
     deletePost: builder.mutation<void, { id: number }>({
       query: ({ id }) => ({ url: `/posts/${id}`, method: 'DELETE' }),
