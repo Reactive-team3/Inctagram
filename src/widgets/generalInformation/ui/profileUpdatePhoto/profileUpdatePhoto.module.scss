@@ -1,0 +1,15 @@
+.cropper {
+  position: relative;
+  width: 100%;
+  height: rem(340);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  margin-top: rem(36);
+  margin-bottom: rem(36);
+  margin-right: rem(24);
+  display: flex;
+  justify-content: end;
+}

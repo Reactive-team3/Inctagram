@@ -5,8 +5,10 @@ import DatePicker, { DateObject } from 'react-multi-date-picker'
 import styles from './datePicker.module.scss'
 import Icon from '@/shared/ui/icon/Icon'
 import { clsx } from 'clsx'
-
-export default function CustomDatePicker() {
+type Props = {
+  label?: string
+}
+export default function CustomDatePicker({ label }: Props) {
   const today = new DateObject()
   const [value, setValue] = useState<(DateObject | null)[]>([])
   const [error, setError] = useState<string | null>(null)
@@ -40,7 +42,7 @@ export default function CustomDatePicker() {
 
   return (
     <div className={styles.container}>
-      <h3>Date</h3>
+      <h3 className={styles.label}>{label}</h3>
       <div className={styles.datePickerWrapper}>
         <DatePicker
           inputClass={error ? styles.datePickerCustomInputError : styles.datePickerCustomInput}

@@ -10,7 +10,7 @@
   align-items: center;
   padding: rem(6) rem(12);
   border: rem(1) solid var(--color-dark-100);
-  background-color: var(--color-dark-900);
+  background-color: transparent;
   color: var(--color-light-900);
   cursor: pointer;
   transition: all 0.2s ease;
@@ -23,6 +23,7 @@
   &:focus {
     outline: none;
     box-shadow: 0 0 0 rem(2) var(--color-accent-700);
+    background-color: var(--color-dark-500);
   }
   &:focus-visible {
     outline: none;

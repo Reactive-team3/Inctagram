@@ -1,6 +1,7 @@
 @mixin color-accent-hover {
   &:hover {
     background-color: var(--color-accent-900);
+    border-bottom: rem(2) solid var(--color-accent-500);
   }
 }
 
@@ -14,6 +15,7 @@
 }
 
 .trigger {
+  box-sizing: border-box;
   flex: 1;
   height: rem(36);
   background-color: transparent;
@@ -21,12 +23,11 @@
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: fluid(14, 16);
-  line-height: 1.5;
+  line-height: rem(24);
   text-align: center;
   border: none;
   border-bottom: rem(2) solid var(--color-dark-100);
   cursor: pointer;
-  transition: all 0.2s ease;
 
   // Inactive condition
   &[data-state='inactive'] {
@@ -41,7 +42,6 @@
   // Active condition
   &[data-state='active'] {
     color: var(--color-accent-500);
-    background-color: var(--color-accent-100);
     border-bottom: rem(2) solid var(--color-accent-500);
 
     &:hover {
@@ -52,7 +52,7 @@
   // Focus
   &:focus {
     outline: none;
-    border: rem(2) solid var(--color-accent-500);
+    border: rem(2) solid var(--color-accent-700);
     border-radius: rem(2);
     background-color: transparent;
   }

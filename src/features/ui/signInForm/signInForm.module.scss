@@ -7,3 +7,8 @@
 .forgotPasswordButton {
   align-self: flex-end;
 }
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24);
+}
