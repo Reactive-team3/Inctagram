@@ -17,7 +17,7 @@ export const MyPostsList = forwardRef<HTMLDivElement, MyPostsListProps>(
   ({ posts, loading, fetching, handleOpenModal }, ref) => {
     if (loading) {
       return (
-        <div className={styles.container}>
+        <div className={styles.wrapperLoader}>
           <Loader />
         </div>
       )
@@ -46,7 +46,11 @@ export const MyPostsList = forwardRef<HTMLDivElement, MyPostsListProps>(
             </Typography>
           )}
 
-          {fetching && <Loader />}
+          {fetching && (
+            <div className={styles.fetchingLoader}>
+              <Loader />
+            </div>
+          )}
         </div>
       </Scroll>
     )

@@ -18,8 +18,8 @@ export const publicRoutes = {
 export const privateRoutes = {
   FEED: '/feed',
   CREATE: '/create',
-  MY_PROFILE: '/my-profile',
   PROFILE_SETTINGS: '/profile-settings',
+  MY_PROFILE: '/my-profile',
   MESSENGER: '/messenger',
   SEARCH: '/search',
   STATISTICS: '/statistics',

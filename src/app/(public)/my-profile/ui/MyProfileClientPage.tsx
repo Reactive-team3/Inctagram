@@ -99,7 +99,6 @@ export const MyProfileClientPage = () => {
   return (
     <div className={styles.container}>
       <Post user={userMe} />
-      {/*<MyPostsList />*/}
       <MyPostsList
         ref={lastPostRef}
         posts={allPosts?.items}
