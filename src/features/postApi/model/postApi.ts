@@ -6,6 +6,8 @@ import type {
   GetUserPostsResponse,
 } from './types'
 import { UpdatePost } from '@/features/auth/model/types'
+import { RootState } from '@/app/store'
+import { selectUser } from '@/shared/model/user/userSlice'
 
 export const postApi = baseApi.injectEndpoints({
   overrideExisting: true,
@@ -75,7 +77,6 @@ export const postApi = baseApi.injectEndpoints({
         body: description,
       }),
       async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-        
         const patchResult = dispatch(
           postApi.util.updateQueryData('getPostById', id, draft => {
             Object.assign(draft, patch)
@@ -83,9 +84,9 @@ export const postApi = baseApi.injectEndpoints({
         )
 
         try {
-          await queryFulfilled 
+          await queryFulfilled
         } catch {
-          patchResult.undo() 
+          patchResult.undo()
         }
       },
     }),
@@ -95,6 +96,27 @@ export const postApi = baseApi.injectEndpoints({
         { type: 'Posts', id },
         { type: 'Posts', id: 'LIST' },
       ],
+      async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
+        const state = getState() as RootState
+
+        const user = selectUser(state)
+        if (!user) return
+
+        const parsedUserId = parseInt(user.userId)
+        const args = { userId: parsedUserId, pageNumber: 1, pageSize: 8 }
+
+        const patchResult = dispatch(
+          postApi.util.updateQueryData('getUserPosts', args, draft => {
+            draft.items = draft.items.filter(post => post.id !== id)
+          })
+        )
+
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
     }),
     getPostById: builder.query<GetPostByIdResponse, number>({
       query: id => ({ url: `/posts/${id}`, method: 'GET' }),
