@@ -45,8 +45,6 @@ export const MyPostsList = forwardRef<HTMLDivElement, MyPostsListProps>(
               There are no posts yet
             </Typography>
           )}
-
-          {fetching && <Loader />}
         </div>
       </Scroll>
     )

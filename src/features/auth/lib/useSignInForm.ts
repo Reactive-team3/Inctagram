@@ -26,8 +26,6 @@ export const useSignInForm = () => {
     })
 
     if (!('error' in result)) {
-      // Store access token in Redux
-      // dispatch(setAccessToken(result.data.accessToken))
       dispatch(setIsLoggingIn(true))
       dispatch(
         addNotification({

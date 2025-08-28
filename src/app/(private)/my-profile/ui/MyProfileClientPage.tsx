@@ -6,12 +6,14 @@ import { useSelector } from 'react-redux'
 import { selectUser } from '@/shared/model/user/userSlice'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
+  useDeletePostMutation,
+  useGetPostByIdQuery,
   useGetUserPostsQuery,
-  useLazyGetPostByIdQuery,
   useUpdatePostMutation,
 } from '@/features/postApi/model/postApi'
 import { MyPostsList } from '@/widgets/myPostsList/MyPostsList'
 import { PostModal } from '@/widgets/modals/postModal/PostModal'
+import { LoadingOverlay } from '@/shared/ui/loadingOverlay/LoadingOverlay'
 
 export const MyProfileClientPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -20,6 +22,7 @@ export const MyProfileClientPage = () => {
   // const [onEdit, setEdit] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const userMe = useSelector(selectUser)
+  const [currentPostId, setCurrentPostId] = useState<number | null>(null)
 
   const userId = userMe?.userId ? parseInt(userMe.userId) : undefined
 
@@ -32,16 +35,24 @@ export const MyProfileClientPage = () => {
     userId ? { userId, pageNumber: currentPage, pageSize } : { userId: 0, pageNumber: 1, pageSize },
     {
       skip: !userId,
-      refetchOnMountOrArgChange: false,
+      refetchOnMountOrArgChange: true,
     }
   )
 
-  const [
-    fetchPost,
-    { data: post, isLoading: postIsLoading, isFetching: postIsFetching, isUninitialized },
-  ] = useLazyGetPostByIdQuery()
+  // const [
+  //   fetchPost,
+  //   { data: post, isLoading: postIsLoading, isFetching: postIsFetching, isUninitialized },
+  // ] = useLazyGetPostByIdQuery()
+  const {
+    data: post,
+    isLoading: postIsLoading,
+    isFetching: postIsFetching,
+  } = useGetPostByIdQuery(currentPostId ?? 0, {
+    skip: !isModalOpen || currentPostId === null,
+  })
 
   const [updatePost] = useUpdatePostMutation()
+  const [deletePost, { isLoading: deleteLoading }] = useDeletePostMutation()
   const loadingMoreRef = useRef(false)
 
   const requestNextPage = useCallback(() => {
@@ -74,8 +85,8 @@ export const MyProfileClientPage = () => {
   )
 
   const onOpenPostModal = (id: number) => {
+    setCurrentPostId(id)
     setIsModalOpen(true)
-    fetchPost(id)
   }
 
   const onClosePostModal = () => {
@@ -84,6 +95,11 @@ export const MyProfileClientPage = () => {
 
   const onEditPost = (id: number, description: string) => {
     return updatePost({ id, description }).unwrap()
+  }
+
+  const onDeletePost = (id: number) => {
+    setCurrentPostId(null)
+    return deletePost({ id }).unwrap()
   }
 
   useEffect(() => {
@@ -98,12 +114,13 @@ export const MyProfileClientPage = () => {
 
   return (
     <div className={styles.container}>
+      {deleteLoading && <LoadingOverlay />}
       <Post user={userMe} />
       {/*<MyPostsList />*/}
       <MyPostsList
         ref={lastPostRef}
         posts={allPosts?.items}
-        loading={allPostLoading}
+        loading={!allPosts && allPostLoading && !deleteLoading}
         fetching={allPostFetching}
         handleOpenModal={onOpenPostModal}
       />
@@ -111,9 +128,10 @@ export const MyProfileClientPage = () => {
       <PostModal
         onClose={onClosePostModal}
         isOpen={isModalOpen}
-        post={postIsFetching ? undefined : post}
-        loading={postIsLoading || postIsFetching || isUninitialized}
+        post={!postIsFetching && currentPostId ? post : undefined}
+        loading={isModalOpen && (postIsLoading || postIsFetching)}
         onEditPost={onEditPost}
+        onDeletePost={onDeletePost}
       />
     </div>
   )

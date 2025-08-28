@@ -22,7 +22,7 @@ type MyPostProps = {
   onEdit?: boolean
   onEditPost: (id: number, description: string) => Promise<unknown>
   onEditToggle?: () => void
-  onDeletePost?: (postId: number) => void
+  onDeletePost?: (postId: number) => Promise<unknown>
   post?: Post
   loading: boolean
 }
@@ -38,6 +38,7 @@ export const PostModal = ({
 }: MyPostProps) => {
   const [inputValue, setInputValue] = useState('')
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [openConfirmUpdateModal, setOpenConfirmUpdateModal] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
@@ -125,12 +126,6 @@ export const PostModal = ({
     }))
   }, [post])
 
-  const handleDeletePost = () => {
-    if (post && onDeletePost) {
-      onDeletePost(post.id)
-    }
-  }
-
   // const handleEditPostText = () => {
   //   if (post) {
   //     onEditPost(post.id, inputValue)
@@ -142,13 +137,16 @@ export const PostModal = ({
 
   const handleEditPostText = async () => {
     if (!post) return
+    await onEditPost(post.id, inputValue)
+    closeConfirmUpModal()
+    closeModal()
+  }
 
-    try {
-      await onEditPost(post.id, inputValue)
-      closeConfirmUpModal()
-      closeModal()
-    } catch (error) {
-      console.error('Ошибка при обновлении поста:', error)
+  const handleDeletePost = async () => {
+    if (post && onDeletePost) {
+      onClose()
+      await onDeletePost(post.id)
+      openCloseDeleteModal()
     }
   }
 
@@ -170,6 +168,10 @@ export const PostModal = ({
 
   const closeConfirmUpModal = () => {
     setOpenConfirmUpdateModal(false)
+  }
+
+  const openCloseDeleteModal = () => {
+    setOpenDeleteModal(!openDeleteModal)
   }
 
   const handleImageIndexChange = (newIndex: number) => {
@@ -223,8 +225,7 @@ export const PostModal = ({
   const childrenForConfirmUpdate = (
     <div>
       <Typography variant={'body1'} className={styles.text}>
-        {/* eslint-disable-next-line react/no-unescaped-entities */}
-        Do you really want to close the edition of the publication? If you close changes won't be
+        Do you really want to close the edition of the publication? If you close changes will not be
         saved
       </Typography>
       <div className={styles.btn_field}>
@@ -236,6 +237,22 @@ export const PostModal = ({
         </Button>
       </div>
     </div>
+  )
+
+  const childrenForConfirmDelete = (
+    <>
+      <Typography variant={'body1'} className={styles.text}>
+        Do you really want to delete post?
+      </Typography>
+      <div className={styles.btn_field}>
+        <Button variant={'outline'} onClick={handleDeletePost} className={styles.btn_1}>
+          Yes
+        </Button>
+        <Button variant={'primary'} onClick={openCloseDeleteModal} className={styles.btn_2}>
+          No
+        </Button>
+      </div>
+    </>
   )
 
   return (
@@ -283,7 +300,7 @@ export const PostModal = ({
               <DropdownMenu
                 className={styles.buttonIcon}
                 onEditClick={openModal}
-                onDeleteClick={handleDeletePost}
+                onDeleteClick={openCloseDeleteModal}
               />
             </div>
             {post && <FeedbackMyPost post={post} />}
@@ -313,6 +330,13 @@ export const PostModal = ({
               className={styles.confirmModal}
             >
               {childrenForConfirmUpdate}
+            </ConfirmUpdatePostModal>
+            <ConfirmUpdatePostModal
+              open={openDeleteModal}
+              onClose={openCloseDeleteModal}
+              className={styles.confirmModal}
+            >
+              {childrenForConfirmDelete}
             </ConfirmUpdatePostModal>
           </div>
         </>

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { RootState } from '@/app/store'
 
 export type UserState = {
   userId: string
@@ -17,5 +18,5 @@ export const userSlice = createSlice({
   },
 })
 export const { setUser, clearUser } = userSlice.actions
-export const selectUser = (state: { user: UserState }) => state.user
+export const selectUser = (state: RootState): UserState | null => state.user
 export default userSlice.reducer
