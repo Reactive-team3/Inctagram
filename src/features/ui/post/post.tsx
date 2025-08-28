@@ -9,7 +9,7 @@ import { useGetProfileQuery } from '@/features/profile/model/profileApi'
 import { ExtendedPicture } from '@/shared/ui/extendedPicture/ExtendedPicture'
 
 type Post = {
-  user?: UserState
+  user?: UserState | null
 }
 
 export const Post = ({ user }: Post) => {
