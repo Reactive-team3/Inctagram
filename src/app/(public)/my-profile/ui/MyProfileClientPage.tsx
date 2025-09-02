@@ -1,6 +1,6 @@
 'use client'
 
-import styles from '@/app/(private)/my-profile/ui/muProfile.module.scss'
+import styles from '@/app/(public)/my-profile/ui/muProfile.module.scss'
 import { Post } from '@/features/ui/post/post'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/shared/model/user/userSlice'
@@ -116,7 +116,6 @@ export const MyProfileClientPage = () => {
     <div className={styles.container}>
       {deleteLoading && <LoadingOverlay />}
       <Post user={userMe} />
-      {/*<MyPostsList />*/}
       <MyPostsList
         ref={lastPostRef}
         posts={allPosts?.items}

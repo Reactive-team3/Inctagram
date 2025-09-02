@@ -21,9 +21,9 @@
     width: rem(490);
 
     .imagModal {
-      max-width: 100%;
-      max-height: 100%;
+      width: 100%;
       object-fit: cover;
+      max-height: 85vh;
     }
 
     .imagUpdateModal {
@@ -34,7 +34,6 @@
 
   .informationBlockPost {
     width: rem(480);
-
     .updateMainTextArea {
       display: flex;
       flex-direction: column;
@@ -144,4 +143,11 @@
   .btn_2 {
     padding: rem(6) rem(37);
   }
+}
+
+.noImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 503px;
 }

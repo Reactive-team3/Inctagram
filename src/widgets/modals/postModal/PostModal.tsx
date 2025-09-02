@@ -15,6 +15,8 @@ import { UpdatePostModal } from '@/features/ui/updatePostModal/UpdatePostModal'
 import { ConfirmUpdatePostModal } from '@/features/ui/updatePostModal/confirmUpdatePostModal/ConfirmUpdatePostModal'
 import { Post } from '@/features/postApi/model/types'
 import { Loader } from '@/shared/ui/loader/Loader'
+import { useSelector } from 'react-redux'
+import { selectUser } from '@/shared/model/user/userSlice'
 
 type MyPostProps = {
   isOpen: boolean
@@ -22,7 +24,7 @@ type MyPostProps = {
   onEdit?: boolean
   onEditPost: (id: number, description: string) => Promise<unknown>
   onEditToggle?: () => void
-  onDeletePost?: (postId: number) => Promise<unknown>
+  onDeletePost?: (postId: number) => void
   post?: Post
   loading: boolean
 }
@@ -38,9 +40,11 @@ export const PostModal = ({
 }: MyPostProps) => {
   const [inputValue, setInputValue] = useState('')
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
-  const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [openConfirmUpdateModal, setOpenConfirmUpdateModal] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  const userMe = useSelector(selectUser)
+  const isPostOwner = userMe?.username === post?.username
 
   // Resetting the image index when changing the post
   useEffect(() => {
@@ -93,14 +97,7 @@ export const PostModal = ({
         {
           id: 'no-image',
           content: (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '503px',
-              }}
-            >
+            <div className={styles.noImage}>
               <Typography as="span" variant="body2">
                 No image available
               </Typography>
@@ -126,27 +123,21 @@ export const PostModal = ({
     }))
   }, [post])
 
-  // const handleEditPostText = () => {
-  //   if (post) {
-  //     onEditPost(post.id, inputValue)
-  //     // onEditToggle()
-  //     closeConfirmUpModal()
-  //     closeModal()
-  //   }
-  // }
+  const handleDeletePost = () => {
+    if (post && onDeletePost) {
+      onDeletePost(post.id)
+    }
+  }
 
   const handleEditPostText = async () => {
     if (!post) return
-    await onEditPost(post.id, inputValue)
-    closeConfirmUpModal()
-    closeModal()
-  }
 
-  const handleDeletePost = async () => {
-    if (post && onDeletePost) {
-      onClose()
-      await onDeletePost(post.id)
-      openCloseDeleteModal()
+    try {
+      await onEditPost(post.id, inputValue)
+      closeConfirmUpModal()
+      closeModal()
+    } catch (error) {
+      console.error('Ошибка при обновлении поста:', error)
     }
   }
 
@@ -168,10 +159,6 @@ export const PostModal = ({
 
   const closeConfirmUpModal = () => {
     setOpenConfirmUpdateModal(false)
-  }
-
-  const openCloseDeleteModal = () => {
-    setOpenDeleteModal(!openDeleteModal)
   }
 
   const handleImageIndexChange = (newIndex: number) => {
@@ -225,7 +212,8 @@ export const PostModal = ({
   const childrenForConfirmUpdate = (
     <div>
       <Typography variant={'body1'} className={styles.text}>
-        Do you really want to close the edition of the publication? If you close changes will not be
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
+        Do you really want to close the edition of the publication? If you close changes won't be
         saved
       </Typography>
       <div className={styles.btn_field}>
@@ -237,22 +225,6 @@ export const PostModal = ({
         </Button>
       </div>
     </div>
-  )
-
-  const childrenForConfirmDelete = (
-    <>
-      <Typography variant={'body1'} className={styles.text}>
-        Do you really want to delete post?
-      </Typography>
-      <div className={styles.btn_field}>
-        <Button variant={'outline'} onClick={handleDeletePost} className={styles.btn_1}>
-          Yes
-        </Button>
-        <Button variant={'primary'} onClick={openCloseDeleteModal} className={styles.btn_2}>
-          No
-        </Button>
-      </div>
-    </>
   )
 
   return (
@@ -297,11 +269,13 @@ export const PostModal = ({
                   {post?.username}
                 </Typography>
               </div>
-              <DropdownMenu
-                className={styles.buttonIcon}
-                onEditClick={openModal}
-                onDeleteClick={openCloseDeleteModal}
-              />
+              {isPostOwner && (
+                <DropdownMenu
+                  className={styles.buttonIcon}
+                  onEditClick={openModal}
+                  onDeleteClick={handleDeletePost}
+                />
+              )}
             </div>
             {post && <FeedbackMyPost post={post} />}
             <MyPostMeta />
@@ -330,13 +304,6 @@ export const PostModal = ({
               className={styles.confirmModal}
             >
               {childrenForConfirmUpdate}
-            </ConfirmUpdatePostModal>
-            <ConfirmUpdatePostModal
-              open={openDeleteModal}
-              onClose={openCloseDeleteModal}
-              className={styles.confirmModal}
-            >
-              {childrenForConfirmDelete}
             </ConfirmUpdatePostModal>
           </div>
         </>

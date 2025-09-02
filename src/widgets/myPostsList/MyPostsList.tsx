@@ -1,6 +1,6 @@
 import { Post } from '@/features/postApi/model/types'
 import { Scroll } from '@/shared/ui/scroll/Scroll'
-import styles from '@/widgets/myPostsLlist/myPostsLlist.module.scss'
+import styles from './myPostList.module.scss'
 import { Typography } from '@/shared/ui/typography/Typography'
 import { Loader } from '@/shared/ui/loader/Loader'
 import React, { forwardRef } from 'react'
@@ -17,7 +17,7 @@ export const MyPostsList = forwardRef<HTMLDivElement, MyPostsListProps>(
   ({ posts, loading, fetching, handleOpenModal }, ref) => {
     if (loading) {
       return (
-        <div className={styles.container}>
+        <div className={styles.wrapperLoader}>
           <Loader />
         </div>
       )
@@ -44,6 +44,12 @@ export const MyPostsList = forwardRef<HTMLDivElement, MyPostsListProps>(
             <Typography as="span" variant="body1" className={styles.noPostsText}>
               There are no posts yet
             </Typography>
+          )}
+
+          {fetching && (
+            <div className={styles.fetchingLoader}>
+              <Loader />
+            </div>
           )}
         </div>
       </Scroll>

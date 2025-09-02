@@ -1,0 +1,96 @@
+.scrollContainer {
+  max-width: 100%;
+  height: auto;
+  margin-top: rem(48);
+}
+
+.wrapperUserPhoto {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(rem(234), 1fr));
+  gap: rem(12);
+}
+
+.userPhoto {
+  width: 100%;
+  height: rem(228);
+}
+
+.noPostsWrapper {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(rem(234), 1fr));
+  gap: rem(12);
+}
+
+.noPostsImage {
+  width: 100%;
+  height: rem(228);
+}
+
+.noPostsText {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+}
+
+.wrapperLoader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.fetchingLoader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scrollContainer {
+  max-width: 100%;
+  height: auto;
+  margin-top: rem(48);
+}
+
+.wrapperUserPhoto {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(rem(234), 1fr));
+  gap: rem(12);
+}
+
+.userPhoto {
+  width: 100%;
+  height: rem(228);
+}
+
+.noPostsWrapper {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(rem(234), 1fr));
+  gap: rem(12);
+}
+
+.noPostsImage {
+  width: 100%;
+  height: rem(228);
+}
+
+
+
+.noPostsText {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+}
+
+.wrapperLoader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.fetchingLoader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
